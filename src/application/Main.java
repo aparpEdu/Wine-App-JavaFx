@@ -15,6 +15,8 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			LoginForm login =  new LoginForm();
+			login.formLoad(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -22,7 +24,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
-		LoginForm login =  new LoginForm();
+		
 		
 	}
 }
