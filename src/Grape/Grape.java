@@ -6,7 +6,7 @@ import enums.Color;
 public class Grape {
 	private Color grapeColor;
 	private int winePerKg;
-	private String grapeVariety;
+	private String grapeVariety;	
 	public Grape(Color grapeColor, String grapeVariety) {
 		
 		this.grapeColor = grapeColor;

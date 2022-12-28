@@ -1,5 +1,7 @@
 package application;
 
+
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,13 +19,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
+import sqlconnection.LoginChecker;
 
 public class LoginForm {
 	public LoginForm()
 	{
 		
 	}
-	public void formLoad(Stage primaryStage)
+	public void formLoad(final Stage primaryStage)
 	{
 		try {
 			GridPane grid = new GridPane();
@@ -42,16 +46,19 @@ public class LoginForm {
 			Label userName = new Label("User Name:");
 			grid.add(userName, 0, 1);
 
-			TextField userTextField = new TextField();
+			final TextField userTextField = new TextField();
+			userTextField.setText("Leonellus");
 			grid.add(userTextField, 1, 1);
 
 			Label pw = new Label("Password:");
 			grid.add(pw, 0, 2);
 
-			PasswordField pwBox = new PasswordField();
+			final PasswordField pwBox = new PasswordField();
+			pwBox.setText("pass123");
 			grid.add(pwBox, 1, 2);
 			
 			Button btn = new Button("Log in");
+			
 			HBox hbBtn = new HBox(10);
 			hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
 			hbBtn.getChildren().add(btn);
@@ -62,22 +69,21 @@ public class LoginForm {
 	        	 
 	            @Override
 	            public void handle(ActionEvent e) {
-	            	if(userTextField.getText().equals("dancho39") && pwBox.getText().equals("rr12345"))
-	            	{Alert alert = new Alert(AlertType.INFORMATION);
-	            	alert.setTitle("Correct Login");
-	            	alert.setHeaderText("Welcome Dancho39");
-	            	alert.setContentText("The next form is Loading");
-	            	alert.show();
+	            	LoginChecker lc=new LoginChecker();
+	            	if(lc.check(userTextField.getText(), pwBox.getText()))
+	            	{
+	            		JOptionPane.showMessageDialog(null, "You Logged In");
+	            		LoggedForm f=new LoggedForm();
+	            		f.formLoad();
+	            		primaryStage.close();
+	            	}
+	            	else
+	            	{
+	            		JOptionPane.showMessageDialog(null, "Try Again");
+	            		
+	            		
 	            		
 	            	}
-	            	else {
-	            		Alert alert = new Alert(AlertType.INFORMATION);
-		            	alert.setTitle("Error");
-		            	alert.setHeaderText("Sorry but username/password is wrong");
-		            	alert.setContentText("Please try again");
-		            	alert.show();
-	                }
-	            	
 	            }
 	            
 	        }

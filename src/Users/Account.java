@@ -1,13 +1,24 @@
 package Users;
 
-public abstract class Account {
+public  class Account {
 	private String username;
 	private String password;
+	private String role;
+	private static Account instance = null;
 	
-	public Account(String username,String password)
-	{
-		this.username=username;
-		this.password=password;
+//	public Account(String username,String password)
+//	{
+//		this.username=username;
+//		this.password=password;
+//	}
+	private Account() {
+		
+	}
+	public static Account getInstance() {
+		if(instance == null) {
+			instance = new Account();
+		}
+		return instance;
 	}
 
 	public String getUsername() {
@@ -25,6 +36,14 @@ public abstract class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public static void resetInstance() {
+		instance = null;
+	}
 
 }
