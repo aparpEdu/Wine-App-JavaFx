@@ -73,8 +73,8 @@ public class LoginForm {
 	            	if(lc.check(userTextField.getText(), pwBox.getText()))
 	            	{
 	            		JOptionPane.showMessageDialog(null, "You Logged In");
-	            		LoggedForm f=new LoggedForm();
-	            		f.formLoad();
+	            		LoggedForm f = new LoggedForm();
+	            		f.formLoad(new Stage());
 	            		primaryStage.close();
 	            	}
 	            	else

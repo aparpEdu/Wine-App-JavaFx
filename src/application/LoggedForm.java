@@ -1,18 +1,22 @@
 package application;
 
-
-
 import javax.swing.JOptionPane;
 
+import Storage.StorageUI;
 import Users.Account;
+import enums.Roles;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -23,57 +27,31 @@ import sqlconnection.LoginChecker;
 
 public class LoggedForm {
 	
-public LoggedForm() {}
-
-public void formLoad()
-{
-	 final Stage secondStage=new Stage();
-	GridPane grid = new GridPane();
-	grid.setAlignment(Pos.TOP_LEFT);
-	grid.setHgap(5);
-	grid.setVgap(1);
-	grid.setPadding(new Insets(25, 25, 25, 25));
-	Label welcomeLabel = new Label("Welcome,");
-	//Label label = new Label(Account.getInstance().getUsername());
-	Label label2 = new Label("Role: " + Account.getInstance().getRole());
-	Text username = new Text(Account.getInstance().getUsername());
-	
-	//label2.setTextFill(Color.RED);
-	label2.setFont(new Font("Ariel",20));
-	//welcomeLabel.setTextFill(Color.RED);
-	welcomeLabel.setFont(new Font("Ariel",20));
-	//label.setFont(new Font("Ariel",20));
-	 Font font = Font.font("Ariel", FontWeight.BOLD, 20);
-	 username.setFont(font);
-	//label.setTextFill(Color.RED);
-	Button button = new Button("Log out");
-	button.setPrefSize(80, 40);
-	button.setOnAction(new EventHandler<ActionEvent>() {
-    	 
-         @Override
-         public void handle(ActionEvent e) {
-         Account.resetInstance();
-         secondStage.close();
-         JOptionPane.showMessageDialog(null, "See you next time!");
-         LoginForm f = new LoginForm();
-         f.formLoad(new Stage());
-         }
-             }
-     );
+	 
     
-	
-	grid.add(label2, 0, 3);
-	grid.add(welcomeLabel, 0, 0);
-	grid.add(username, 0, 1);
-	grid.add(button, 0, 4);
-	Scene scene = new Scene(grid, 800, 800);
-	secondStage.setScene(scene);
-	
-	secondStage.show();
+	private Stage stage;
+
+	public void formLoad(final Stage secondStage) {
+		this.stage = secondStage;
+		secondStage.setTitle("close suka");
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.TOP_LEFT);
+		grid.setHgap(5);
+		grid.setVgap(1);
+		grid.setPadding(new Insets(25, 25, 25, 25));
+		StorageUI.profileSettings(grid, secondStage);
+		Buttons.adminButton(grid, this);
+		Scene scene = new Scene(grid, 800, 800);
+		secondStage.setScene(scene);
+		secondStage.show();
+		
+		
+
+	}
+	public void closeStage() {
+        stage.close();
+    }
 	
 
 	
-	
-	
-	}
 }
