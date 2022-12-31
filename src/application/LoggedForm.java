@@ -41,6 +41,7 @@ public class LoggedForm {
 		grid.setPadding(new Insets(25, 25, 25, 25));
 		StorageUI.profileSettings(grid, secondStage);
 		Buttons.adminButton(grid, this);
+		Buttons.hostButton(grid, this);
 		Scene scene = new Scene(grid, 800, 800);
 		secondStage.setScene(scene);
 		secondStage.show();

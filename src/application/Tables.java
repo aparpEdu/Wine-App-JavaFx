@@ -19,11 +19,29 @@ public class Tables {
         TableColumn pass = new TableColumn("pass");
         TableColumn role = new TableColumn("Role");
         table.getColumns().addAll(id, username, pass,role);
+        table.setPrefSize(650, 300);
         VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(50, 0, 0, 200));
+        vbox.setPadding(new Insets(0, 100, 0, 100));
+        vbox.setPrefSize(650, 1000);
         vbox.getChildren().addAll(table);
-        grid.add(vbox, 1, 5);
+        grid.add(vbox, 5,5);
+	}
+	public static void someTable(GridPane grid) {
+		TableView table = new TableView();
+
+        TableColumn id = new TableColumn("id");
+        TableColumn username = new TableColumn("username");
+        TableColumn pass = new TableColumn("pass");
+        TableColumn role = new TableColumn("Role");
+        table.getColumns().addAll(id, username, pass,role);
+        table.setPrefSize(650, 300);
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(0, 100, 0, 100));
+        vbox.setPrefSize(650, 1000);
+        vbox.getChildren().addAll(table);
+        grid.add(vbox, 5,5);
 	}
 
 }

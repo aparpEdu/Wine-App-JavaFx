@@ -4,18 +4,14 @@ import Storage.StorageUI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AdminForm {
+public class StorageForm {
 
-	
-	public void formLoad(final Stage thirdStage) {
-        GridPane grid = new GridPane();
+	public void formLoad(final Stage fourthStage) {
+		GridPane grid = new GridPane();
         
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(5);
@@ -25,13 +21,11 @@ public class AdminForm {
         hbox.setAlignment(Pos.BOTTOM_RIGHT);
         Tables.userTable(grid);
 		LoggedForm f = new LoggedForm();
-		StorageUI.profileSettings(grid, thirdStage);
-		Buttons.backButton(grid, thirdStage, f, 0, 4);
-		StorageUI.userManagement(hbox, grid, 6, 0);
-		 Scene scene = new Scene(grid, 1150, 800);
-		thirdStage.setScene(scene);
-		thirdStage.show();
+		StorageUI.profileSettings(grid, fourthStage);
+		Buttons.backButton(grid, fourthStage, f, 0, 4);
+		Scene scene = new Scene(grid, 1150, 800);
+		fourthStage.setScene(scene);
+		fourthStage.show();
 	}
-	
 
 }
