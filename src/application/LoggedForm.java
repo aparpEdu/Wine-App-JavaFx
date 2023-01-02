@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -39,10 +40,11 @@ public class LoggedForm {
 		grid.setHgap(5);
 		grid.setVgap(1);
 		grid.setPadding(new Insets(25, 25, 25, 25));
+		HBox hbox = new HBox(10);
+		hbox.setAlignment(Pos.BOTTOM_RIGHT);
 		StorageUI.profileSettings(grid, secondStage);
-		Buttons.adminButton(grid, this);
-		Buttons.hostButton(grid, this);
-		Scene scene = new Scene(grid, 800, 800);
+		StorageUI.homePage(hbox, grid, 8, 5, this);
+		Scene scene = new Scene(grid, 800, 400);
 		secondStage.setScene(scene);
 		secondStage.show();
 		

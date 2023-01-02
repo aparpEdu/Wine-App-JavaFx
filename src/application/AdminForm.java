@@ -16,7 +16,6 @@ public class AdminForm {
 	
 	public void formLoad(final Stage thirdStage) {
         GridPane grid = new GridPane();
-        
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(5);
 		grid.setVgap(5);
@@ -28,7 +27,7 @@ public class AdminForm {
 		StorageUI.profileSettings(grid, thirdStage);
 		Buttons.backButton(grid, thirdStage, f, 0, 4);
 		StorageUI.userManagement(hbox, grid, 6, 0);
-		 Scene scene = new Scene(grid, 1150, 800);
+		 Scene scene = new Scene(grid, 1150, 600);
 		thirdStage.setScene(scene);
 		thirdStage.show();
 	}

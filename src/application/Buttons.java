@@ -37,7 +37,7 @@ public class Buttons {
 	 	});
 		 grid.add(back, x, y);
 	}
-	public static void adminButton(GridPane grid,final LoggedForm loggedForm ) {
+	public static void adminButton(HBox hbox,GridPane grid,final LoggedForm loggedForm ) {
 		 Button adminButton = new Button("User Management");
 		 adminButton.setPrefSize(160, 80);
 		 StorageUI.buttonVisibility(Roles.ADMIN.name(), adminButton); 
@@ -52,7 +52,8 @@ public class Buttons {
 					loggedForm.closeStage();
 				}
 			});
-		 grid.add(adminButton, 50, 50);
+		 hbox.getChildren().add(adminButton);
+		
 		 
 	}
 	public static void addUserButton(HBox hbox,final GridPane grid,final int x,final int y) {
@@ -106,7 +107,7 @@ public class Buttons {
 	}
 	public static void searchUserButton(HBox hbox,final GridPane grid,final int x,final int y) {
 		final Button searchButton = new Button("Search User");
-		searchButton.setPrefSize(120, 60);
+		searchButton.setPrefSize(140, 60);
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -230,11 +231,11 @@ public class Buttons {
 		});
 		hbox.getChildren().add(editButton);
 	}
-	public static void hostButton(GridPane grid,final LoggedForm loggedForm ) {
+	public static void hostButton(HBox hbox,final GridPane grid,final LoggedForm loggedForm ) {
 		Button hostButton = new Button("Storage Management");
-		hostButton.setPrefSize(160, 80);
+		hostButton.setPrefSize(170, 80);
 	 StorageUI.buttonVisibility(Roles.HOST.name(), hostButton); 
-	 StorageUI.buttonVisibility(Roles.ADMIN.name(), hostButton); 
+	
 	 hostButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -245,8 +246,28 @@ public class Buttons {
 				loggedForm.closeStage();
 			}
 		});
-	 grid.add(hostButton, 45, 50);
+	 hbox.getChildren().add(hostButton);
+
 	}
+	public static void wineProdButton(HBox hbox,final GridPane grid,final LoggedForm loggedForm ) {
+		Button wineProdButton = new Button("Wine Production");
+		wineProdButton.setPrefSize(160, 80);
+	 StorageUI.buttonVisibility(Roles.WINEPRODUCER.name(), wineProdButton); 
+	
+	 wineProdButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				
+				WineProductionForm wf = new WineProductionForm();
+				wf.formLoad(new Stage());
+				loggedForm.closeStage();
+			}
+		});
+	 hbox.getChildren().add(wineProdButton);
+
+	}
+	
 	
 	
 }

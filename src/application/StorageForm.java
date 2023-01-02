@@ -19,7 +19,7 @@ public class StorageForm {
 		grid.setPadding(new Insets(25, 25, 25, 25));
 		HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.BOTTOM_RIGHT);
-        Tables.userTable(grid);
+        //Tables.userTable(grid);
 		LoggedForm f = new LoggedForm();
 		StorageUI.profileSettings(grid, fourthStage);
 		Buttons.backButton(grid, fourthStage, f, 0, 4);

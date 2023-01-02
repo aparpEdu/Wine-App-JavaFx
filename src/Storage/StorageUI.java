@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import Users.Account;
 import application.Buttons;
+import application.LoggedForm;
 import application.LoginForm;
 import enums.Roles;
 import javafx.collections.ObservableList;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
 
 public class StorageUI {
 public static void buttonVisibility(String string,Button button) {
-	if(Account.getInstance().getRole().equalsIgnoreCase(string)) {
+	if(Account.getInstance().getRole().equalsIgnoreCase(string) || Account.getInstance().getRole().equalsIgnoreCase(Roles.ADMIN.name())) {
 		button.setVisible(true);
 	}else {
 		button.setVisible(false);
@@ -33,7 +34,7 @@ public static void profileSettings(GridPane grid,final Stage stage) {
 	Label welcomeLabel = new Label("Welcome,");
 	Label roleLabel = new Label("Role: " + Account.getInstance().getRole());
 	roleLabel.setFont(new Font("Ariel", 20));
-	roleLabel.setPrefSize(300, 10);
+	roleLabel.setPrefSize(400, 10);
 	welcomeLabel.setFont(new Font("Ariel", 20));
 	Text username = new Text(Account.getInstance().getUsername());
 	Font font = Font.font("Ariel", FontWeight.BOLD, 20);
@@ -68,6 +69,17 @@ public static void checkAvailability(VBox vbox,GridPane grid) {
 		ObservableList<Node> children = grid.getChildren();
 		children.remove(vbox);
 	}
+}
+public static void homePage(HBox hbox,GridPane grid,int x,int y,LoggedForm loggedForm) {
+	Buttons.wineProdButton(hbox, grid, loggedForm);
+	Buttons.adminButton(hbox, grid, loggedForm);
+	Buttons.hostButton(hbox, grid, loggedForm);
+	grid.add(hbox, x, y);
+}
+
+public static void storageManagement(HBox hbox,GridPane grid,int x,int y) {
+	
+	grid.add(hbox, x, y);
 }
 
 
