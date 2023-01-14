@@ -28,6 +28,7 @@ public class AdminForm {
 		StorageUI.profileSettings(grid, thirdStage,f);
 		StorageUI.adminHub(grid, 6, 0);
 		Scene scene = new Scene(grid, 1180, 600);
+		StorageUI.setIcon(thirdStage);
 		thirdStage.setScene(scene);
 		thirdStage.show();
 	}

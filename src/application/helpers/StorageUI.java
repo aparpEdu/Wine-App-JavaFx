@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -89,7 +90,13 @@ public static void profileSettings(GridPane grid,final Stage stage,LoggedForm lf
 		public void handle(ActionEvent e) {
 			Account.resetInstance();
 			stage.close();
-			JOptionPane.showMessageDialog(null, "See you next time!");
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    		alert.setTitle("Information Dialog");
+    		alert.setHeaderText(null);
+    		setIcon(stage);
+    		alert.setContentText("You have logged out successfully!");
+    		alert.initOwner(logOutVButton.getScene().getWindow());
+    		alert.showAndWait();
 			LoginForm f = new LoginForm();
 			f.formLoad(new Stage());
 		}
@@ -156,14 +163,24 @@ public static void homePage(HBox hbox,GridPane grid,int x,int y,LoggedForm logge
 }
 
 public static void storageManagement(HBox hbox,GridPane grid,int x,int y) {
+	HBox hbox2 = new HBox();
 	Buttons.addBottle(hbox, grid, x, y);
 	Buttons.addGrape(hbox, grid, x, y);
 	Buttons.removeFromStorage(hbox, grid, x, y);
+	Buttons.checkBottles(hbox2, grid, x, y);
 	TitledPane storageManagement = new TitledPane();
+	TitledPane storageCheck = new TitledPane();
 	storageManagement.setCollapsible(false);
+	storageCheck.setCollapsible(false);
 	storageManagement.setText("Storage Management");
+	storageCheck.setText("Storage Info");
 	storageManagement.setContent(hbox);
+	storageCheck.setContent(hbox2);
 	grid.add(storageManagement, x, y);
+	grid.add(storageCheck, x+1, y);
+}
+public static void setIcon(Stage stage) {
+	stage.getIcons().add(new Image("C:\\\\Users\\\\ShittyRestaurant\\\\eclipse-workspace\\\\WineProject\\\\ff.jpg"));
 }
 public static void wineManagement(HBox hbox,GridPane grid,int x,int y) {
 	Buttons.addBottledWine(hbox, grid, x, y);

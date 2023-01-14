@@ -1,22 +1,22 @@
 package application.helpers;
 
-import javax.swing.JOptionPane;
-
 import application.forms.AdminForm;
 import application.forms.LoggedForm;
 import application.forms.StorageForm;
 import application.forms.WineProductionForm;
+import enums.BottleSize;
 import enums.Roles;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -109,7 +109,6 @@ public class Buttons {
 
 	}
 
-
 	public static void searchUserButton(HBox hbox, final GridPane grid, final int x, final int y) {
 		final Button searchButton = new Button("Search User");
 		searchButton.setPrefSize(140, 60);
@@ -188,7 +187,7 @@ public class Buttons {
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
 				Tables.userTable(grid);
-				
+
 			}
 		});
 		hbox.getChildren().add(refreshButton);
@@ -295,49 +294,44 @@ public class Buttons {
 			@Override
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
-				
+
 				final ToggleGroup group = new ToggleGroup();
 				final RadioButton rb1 = new RadioButton("By Storage");
 				rb1.setUserData("st");
 				RadioButton rb2 = new RadioButton("By User");
 				rb2.setUserData("User");
-				
+
 				rb1.setToggleGroup(group);
 				rb2.setToggleGroup(group);
 
-			  group.selectToggle(rb1);
-			rb1.requestFocus();
-				
-				
+				group.selectToggle(rb1);
+				rb1.requestFocus();
+
 				final Button check = new Button("Check");
 				Label label = new Label("ID: ");
 				TextField t = new TextField();
 				if (group.getSelectedToggle() != null) {
-					if(group.getSelectedToggle().getUserData().toString().equals("st")) {
+					if (group.getSelectedToggle().getUserData().toString().equals("st")) {
 						check.setOnAction(new EventHandler<ActionEvent>() {
 
 							@Override
 							public void handle(ActionEvent e) {
 								Tables.storageTable(grid);
-								
-								
-								
+
 							}
 						});
-					}
-					else if(group.getSelectedToggle().getUserData().toString().compareToIgnoreCase("User") == 0) {
+					} else if (group.getSelectedToggle().getUserData().toString().compareToIgnoreCase("User") == 0) {
 						check.setOnAction(new EventHandler<ActionEvent>() {
 
 							@Override
 							public void handle(ActionEvent e) {
 								Tables.storageTable(grid);
-								
-								
+
 							}
 						});
 					}
 				}
-				
+
 				t.setPrefSize(100, 0);
 				HBox hbox2 = new HBox();
 				hbox2.setSpacing(5);
@@ -358,7 +352,6 @@ public class Buttons {
 		hbox.getChildren().add(checkStorageButton);
 
 	}
-	
 
 	public static void addStorageAccess(HBox hbox, final GridPane grid, final int x, final int y) {
 		Button checkStorageButton = new Button("Add Storage Access");
@@ -368,8 +361,7 @@ public class Buttons {
 			@Override
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
-				
-				
+
 				Button check = new Button("Add");
 				Label userLabel = new Label("User ID: ");
 				Label storageLabel = new Label("Storage ID: ");
@@ -387,11 +379,11 @@ public class Buttons {
 				hbox2.getChildren().add(t);
 				hbox3.getChildren().add(storageLabel);
 				hbox3.getChildren().add(storageField);
-				
+
 				VBox vbox = new VBox();
 				vbox.setPadding(new Insets(0, 120, 0, 120));
 				vbox.setSpacing(5);
-				
+
 				vbox.getChildren().add(hbox2);
 				vbox.getChildren().add(hbox3);
 				vbox.getChildren().add(check);
@@ -403,36 +395,97 @@ public class Buttons {
 		hbox.getChildren().add(checkStorageButton);
 
 	}
+
 	public static void addGrape(HBox hbox, final GridPane grid, final int x, final int y) {
-		Button addGrape = new Button("Add Grape");
+		Button addGrape = new Button("Store Grape");
 		addGrape.setPrefSize(120, 60);
-		
+
 		hbox.getChildren().add(addGrape);
 	}
+
 	public static void addWine(HBox hbox, final GridPane grid, final int x, final int y) {
 		Button addWine = new Button("Produce Wine");
 		addWine.setPrefSize(120, 60);
-		
+
 		hbox.getChildren().add(addWine);
 	}
+
 	public static void addBottle(HBox hbox, final GridPane grid, final int x, final int y) {
-		Button addBottle = new Button("Add Bottle");
+		Button addBottle = new Button("Store Bottle");
 		addBottle.setPrefSize(120, 60);
-		
+		addBottle.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				StorageUI.checkAvailability(vbox1, grid);
+
+				ComboBox cb = new ComboBox();
+			
+				Button check = new Button("Store");
+				Label userLabel = new Label("Size: ");
+				userLabel.setPrefSize(100, 0);
+				ObservableList<String> options = 
+					    FXCollections.observableArrayList(
+					    	BottleSize.LARGE.toString().concat(BottleSize.LARGE.getSize()),
+					    	BottleSize.MEDIUM.toString().concat(BottleSize.MEDIUM.getSize()),
+					    	BottleSize.SMALL.toString().concat(BottleSize.SMALL.getSize()),
+					    	BottleSize.TINY.toString().concat(BottleSize.TINY.getSize())
+					    	
+					    );
+				cb.setItems(options);
+				cb.getSelectionModel().selectFirst();
+				TextField t = new TextField();
+				t.setPrefSize(100, 0);
+				HBox hbox2 = new HBox();
+				
+				hbox2.setSpacing(5);
+			
+				hbox2.getChildren().add(userLabel);
+				hbox2.getChildren().add(cb);
+				VBox vbox = new VBox();
+				vbox.setPadding(new Insets(0, 120, 0, 120));
+				vbox.setSpacing(5);
+				vbox.getChildren().add(hbox2);
+				
+				vbox.getChildren().add(check);
+				grid.add(vbox, x, y + 5);
+				vbox1 = vbox;
+
+			}
+		});
+
 		hbox.getChildren().add(addBottle);
 	}
+
 	public static void addBottledWine(HBox hbox, final GridPane grid, final int x, final int y) {
 		Button addBottledWine = new Button("Fill bottle");
 		addBottledWine.setPrefSize(120, 60);
-		
+
 		hbox.getChildren().add(addBottledWine);
 	}
+
 	public static void removeFromStorage(HBox hbox, final GridPane grid, final int x, final int y) {
 		Button removeFromStorage = new Button("Remove item");
 		removeFromStorage.setPrefSize(120, 60);
-		
+
 		hbox.getChildren().add(removeFromStorage);
 	}
-	
-	
+	public static void checkBottles(HBox hbox, final GridPane grid, final int x, final int y) {
+		Button checkBottles = new Button("Bottles info");
+		checkBottles.setPrefSize(120, 60);
+		checkBottles.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				StorageUI.checkAvailability(vbox1, grid);
+				Tables.storageInfoTable(grid);
+				ToggleGroup rads = new ToggleGroup();
+				//RadioButton empty
+
+			}
+		});
+		hbox.getChildren().add(checkBottles);
+		
+	}
+
 }

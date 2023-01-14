@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
+import application.helpers.StorageUI;
 import sqlconnection.LoginChecker;
 
 public class LoginForm {
@@ -58,7 +59,7 @@ public class LoginForm {
 			grid.add(pwBox, 1, 2);
 			
 			Button btn = new Button("Log in");
-			
+			StorageUI.setIcon(primaryStage);
 			HBox hbBtn = new HBox(10);
 			hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
 			hbBtn.getChildren().add(btn);
@@ -76,6 +77,7 @@ public class LoginForm {
 	            		alert.setTitle("Information Dialog");
 	            		alert.setHeaderText(null);
 	            		alert.setContentText("You have logged in successfully!");
+	            		alert.initOwner(btn.getScene().getWindow());
 	            		alert.showAndWait();
 	            		LoggedForm f = new LoggedForm();
 	            		f.formLoad(new Stage());

@@ -45,6 +45,20 @@ public class Tables {
         vbox1 = vbox;
         grid.add(vbox, 5,5);
 	}
+	public static void storageInfoTable(GridPane grid) {
+		StorageUI.checkAvailability(vbox1, grid);
+		TableView table = new TableView();
+        TableColumn bottleSize = new TableColumn("Bottle Size");
+        table.getColumns().addAll(bottleSize);
+        table.setPrefSize(750, 300);
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(0, 165, 0, 100));
+        vbox.setPrefSize(750, 1000);
+        vbox.getChildren().addAll(table);
+        vbox1 = vbox;
+        grid.add(vbox, 5,5);
+	}
 	
 
 }

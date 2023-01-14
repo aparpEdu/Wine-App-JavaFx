@@ -29,4 +29,7 @@ public enum BottleSize {
 	    public int getValue() {
 	        return value;
 	    }
+	    public String getSize() {
+	    	return " (" + value + "ml)";
+	    }
 }
