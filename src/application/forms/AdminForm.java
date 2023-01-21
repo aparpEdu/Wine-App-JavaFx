@@ -1,8 +1,8 @@
 package application.forms;
 
-import application.helpers.Buttons;
 import application.helpers.StorageUI;
 import application.helpers.Tables;
+import application.helpers.Buttons.Buttons;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

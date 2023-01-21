@@ -1,6 +1,7 @@
 package application.forms;
 
 import application.helpers.StorageUI;
+import application.helpers.Tables;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,13 +18,11 @@ public class StorageForm {
         grid.setHgap(3);
 		grid.setVgap(2);
 		grid.setPadding(new Insets(25, 25, 25, 25));
-		HBox hbox = new HBox(10);
-        hbox.setAlignment(Pos.BOTTOM_RIGHT);
-        //Tables.userTable(grid);
+		Tables.storageInfoTable(grid, 5, 5);
         LoggedForm f = new LoggedForm();
 		StorageUI.profileSettings(grid, fourthStage,f);
-		StorageUI.storageManagement(hbox, grid, 4, 0);
-		Scene scene = new Scene(grid, 1180, 600);
+		StorageUI.storageManagement(grid, 6, 0);
+		Scene scene = new Scene(grid, 1300, 600);
 		StorageUI.setIcon(fourthStage);
 		fourthStage.setScene(scene);
 		fourthStage.show();

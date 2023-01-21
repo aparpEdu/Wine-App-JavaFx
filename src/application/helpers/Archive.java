@@ -1,7 +1,10 @@
 package application.helpers;
 
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 public class Archive {
 
@@ -73,5 +76,10 @@ public class Archive {
 //}
 //  TitledPane ff = new TitledPane();
 //  ff.setContent(hbox);
+	public static void removeFromStorage(HBox hbox, final GridPane grid, final int x, final int y) {
+		Button removeFromStorage = new Button("Remove item");
+		removeFromStorage.setPrefSize(120, 60);
 
+		hbox.getChildren().add(removeFromStorage);
+	}
 }

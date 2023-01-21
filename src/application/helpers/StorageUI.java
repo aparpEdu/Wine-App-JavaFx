@@ -5,6 +5,9 @@ import javax.swing.JOptionPane;
 import Users.Account;
 import application.forms.LoggedForm;
 import application.forms.LoginForm;
+import application.helpers.Buttons.AdminButtons;
+import application.helpers.Buttons.Buttons;
+import application.helpers.Buttons.StorageButtons;
 import enums.Roles;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -117,13 +121,13 @@ public static void profileSettings(GridPane grid,final Stage stage,LoggedForm lf
 public static void adminHub(GridPane grid,int x,int y) {
 	HBox hbox = new HBox(10);
 	HBox hbox2 = new HBox(10);
-	Buttons.addUserButton(hbox, grid, x, y);
-	Buttons.searchUserButton(hbox, grid, x, y);
-	Buttons.checkStorageButton(hbox2, grid, x, y);
-	Buttons.removeUserButton(hbox, grid, x, y);
-	Buttons.refreshButton(hbox, grid, x, y);
-	Buttons.editButton(hbox, grid, x, y);
-	Buttons.addStorageAccess(hbox2, grid, x, y);
+	AdminButtons.addUserButton(hbox, grid, x, y);
+	AdminButtons.searchUserButton(hbox, grid, x, y);
+	AdminButtons.checkStorageButton(hbox2, grid, x, y);
+	AdminButtons.removeUserButton(hbox, grid, x, y);
+	AdminButtons.refreshButton(hbox, grid, x, y);
+	AdminButtons.editButton(hbox, grid, x, y);
+	AdminButtons.addStorageAccess(hbox2, grid, x, y);
 	hbox.setAlignment(Pos.TOP_RIGHT);
 	TitledPane users = new TitledPane();
 	users.setCollapsible(false);
@@ -162,22 +166,32 @@ public static void homePage(HBox hbox,GridPane grid,int x,int y,LoggedForm logge
 	grid.add(hbox, x, y);
 }
 
-public static void storageManagement(HBox hbox,GridPane grid,int x,int y) {
+public static void storageManagement(GridPane grid,int x,int y) {
 	HBox hbox2 = new HBox();
-	Buttons.addBottle(hbox, grid, x, y);
-	Buttons.addGrape(hbox, grid, x, y);
-	Buttons.removeFromStorage(hbox, grid, x, y);
-	Buttons.checkBottles(hbox2, grid, x, y);
+	HBox hbox = new HBox();
+	BorderPane bp = new BorderPane();
+	bp.setPadding(new Insets(0,25,0,25));
+	StorageButtons.addBottle(hbox, grid, x, y);
+	StorageButtons.storeGrape(hbox, grid, x, y);
+	StorageButtons.checkGrapes(hbox2, grid, x, y);
+	StorageButtons.checkProduction(hbox2, grid, x, y);
+	//Buttons.removeFromStorage(hbox, grid, x, y);
+	StorageButtons.checkBottles(hbox2, grid, x, y);
 	TitledPane storageManagement = new TitledPane();
 	TitledPane storageCheck = new TitledPane();
 	storageManagement.setCollapsible(false);
+	storageManagement.setPrefWidth(250);
+	storageCheck.setMaxWidth(350);
 	storageCheck.setCollapsible(false);
 	storageManagement.setText("Storage Management");
 	storageCheck.setText("Storage Info");
 	storageManagement.setContent(hbox);
 	storageCheck.setContent(hbox2);
-	grid.add(storageManagement, x, y);
-	grid.add(storageCheck, x+1, y);
+//	grid.add(storageManagement, x+1, y);
+//	grid.add(storageCheck, x, y);
+	bp.setRight(storageCheck);
+	bp.setLeft(storageManagement);
+	grid.add(bp, x, y);
 }
 public static void setIcon(Stage stage) {
 	stage.getIcons().add(new Image("C:\\\\Users\\\\ShittyRestaurant\\\\eclipse-workspace\\\\WineProject\\\\ff.jpg"));
@@ -195,6 +209,7 @@ public static void wineManagement(HBox hbox,GridPane grid,int x,int y) {
 	hbox.setSpacing(30);
 	grid.add(wineManagement, x, y);
 }
+
 
 
 }

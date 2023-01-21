@@ -1,13 +1,14 @@
 package Grape;
 
 import enums.Color;
+import enums.Variety;
 
 
 public class Grape {
 	private Color grapeColor;
 	private int winePerKg;
-	private String grapeVariety;	
-	public Grape(Color grapeColor, String grapeVariety) {
+	private Variety grapeVariety;	
+	public Grape(Color grapeColor, Variety grapeVariety) {
 		
 		this.grapeColor = grapeColor;
 		//this.winePerKg = winePerKg;
@@ -25,10 +26,10 @@ public class Grape {
 	public void setWinePerKg(int winePerKg) {
 		this.winePerKg = winePerKg;
 	}
-	public String getGrapeVariety() {
+	public Variety getGrapeVariety() {
 		return grapeVariety;
 	}
-	public void setGrapeVariety(String grapeVariety) {
+	public void setGrapeVariety(Variety grapeVariety) {
 		this.grapeVariety = grapeVariety;
 	}
 	
