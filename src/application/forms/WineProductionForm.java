@@ -1,6 +1,7 @@
 package application.forms;
 
 import application.helpers.StorageUI;
+import application.helpers.Tables;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,13 +22,11 @@ public void formLoad(Stage fifthStage) {
     grid.setHgap(3);
 	grid.setVgap(2);
 	grid.setPadding(new Insets(25, 25, 25, 25));
-	HBox hbox = new HBox(10);
-    hbox.setAlignment(Pos.BOTTOM_RIGHT);
-    //Tables.userTable(grid);
+	Tables.wineVarietyPickerTable(grid, 5, 5);
     LoggedForm f = new LoggedForm();
 	StorageUI.profileSettings(grid, fifthStage,f);
-	StorageUI.wineManagement(hbox, grid, 4, 0);
-	Scene scene = new Scene(grid, 1180, 600);
+	StorageUI.wineManagement(grid, 6, 0);
+	Scene scene = new Scene(grid, 1300, 600);
 	StorageUI.setIcon(fifthStage);
 	fifthStage.setScene(scene);
 	fifthStage.show();

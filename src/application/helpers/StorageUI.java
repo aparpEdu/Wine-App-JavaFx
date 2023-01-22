@@ -7,6 +7,7 @@ import application.forms.LoggedForm;
 import application.forms.LoginForm;
 import application.helpers.Buttons.AdminButtons;
 import application.helpers.Buttons.Buttons;
+import application.helpers.Buttons.ProductionButtons;
 import application.helpers.Buttons.StorageButtons;
 import enums.Roles;
 import javafx.collections.ObservableList;
@@ -68,12 +69,7 @@ public static void profileSettings(GridPane grid,final Stage stage) {
 	vbox.getChildren().add(username);
 	vbox.getChildren().add(roleLabel);
 	vbox.getChildren().add(logOutVButton);
-	//vbox.getChildren().add(logOutVButton);
 	vbox.setSpacing(1);
-//	grid.add(logOutVButton, 0, 3);
-//	grid.add(roleLabel, 0, 2);
-//	grid.add(welcomeLabel, 0, 0);
-//	grid.add(username, 0, 1);
 	grid.add(vbox, 0, 0);
 }
 public static void profileSettings(GridPane grid,final Stage stage,LoggedForm lf) {
@@ -110,12 +106,7 @@ public static void profileSettings(GridPane grid,final Stage stage,LoggedForm lf
 	vbox.getChildren().add(username);
 	vbox.getChildren().add(roleLabel);
 	vbox.getChildren().add(logOutVButton);
-	//vbox.getChildren().add(logOutVButton);
 	vbox.setSpacing(1);
-//	grid.add(logOutVButton, 0, 3);
-//	grid.add(roleLabel, 0, 2);
-//	grid.add(welcomeLabel, 0, 0);
-//	grid.add(username, 0, 1);
 	grid.add(vbox, 0, 0);
 }
 public static void adminHub(GridPane grid,int x,int y) {
@@ -187,8 +178,6 @@ public static void storageManagement(GridPane grid,int x,int y) {
 	storageCheck.setText("Storage Info");
 	storageManagement.setContent(hbox);
 	storageCheck.setContent(hbox2);
-//	grid.add(storageManagement, x+1, y);
-//	grid.add(storageCheck, x, y);
 	bp.setRight(storageCheck);
 	bp.setLeft(storageManagement);
 	grid.add(bp, x, y);
@@ -196,20 +185,22 @@ public static void storageManagement(GridPane grid,int x,int y) {
 public static void setIcon(Stage stage) {
 	stage.getIcons().add(new Image("C:\\\\Users\\\\ShittyRestaurant\\\\eclipse-workspace\\\\WineProject\\\\ff.jpg"));
 }
-public static void wineManagement(HBox hbox,GridPane grid,int x,int y) {
-	Buttons.addBottledWine(hbox, grid, x, y);
-	Buttons.addWine(hbox, grid, x, y);
+public static void wineManagement(GridPane grid,int x,int y) {
+	HBox hbox = new HBox();
+	ProductionButtons.addBottledWine(hbox, grid, x, y);
+	ProductionButtons.addWine(hbox, grid, x, y);
 	
+	BorderPane bp = new BorderPane();
+	bp.setPadding(new Insets(0,25,0,25));
 	TitledPane wineManagement = new TitledPane();
 	wineManagement.setCollapsible(false);
 	wineManagement.setText("Wine Production");
 	wineManagement.setContent(hbox);
 	wineManagement.setPrefWidth(350);
+	wineManagement.setMaxWidth(350);
+	bp.setRight(wineManagement);
 	hbox.setPadding(new Insets(10,50,10,50));
 	hbox.setSpacing(30);
-	grid.add(wineManagement, x, y);
+	grid.add(bp, x, y);
 }
-
-
-
 }

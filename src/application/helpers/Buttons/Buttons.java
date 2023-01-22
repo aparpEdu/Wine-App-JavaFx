@@ -72,16 +72,6 @@ public class Buttons {
 
 	}
 
-	
-
-	
-
-	
-
-	
-
-	
-
 	public static void hostButton(HBox hbox, final GridPane grid, final LoggedForm loggedForm) {
 		Button hostButton = new Button("Storage Management");
 		hostButton.setPrefSize(170, 80);
@@ -125,21 +115,11 @@ public class Buttons {
 	
 
 
-	public static void addWine(HBox hbox, final GridPane grid, final int x, final int y) {
-		Button addWine = new Button("Produce Wine");
-		addWine.setPrefSize(120, 60);
-
-		hbox.getChildren().add(addWine);
-	}
+	
 
 	
 
-	public static void addBottledWine(HBox hbox, final GridPane grid, final int x, final int y) {
-		Button addBottledWine = new Button("Fill bottle");
-		addBottledWine.setPrefSize(120, 60);
-
-		hbox.getChildren().add(addBottledWine);
-	}
+	
 
 	
 	

@@ -15,5 +15,10 @@ public enum Variety {
 	Palomino,
 	Pinotage,
 	Cinsaut,
-	Viognier
+	Viognier;
+
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
