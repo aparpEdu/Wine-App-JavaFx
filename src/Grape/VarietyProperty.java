@@ -8,6 +8,7 @@ public class VarietyProperty {
 	 private Variety variety;
 	    private boolean picked;
 	    private Color color;
+	    private double quantity;
 
 	    public VarietyProperty(Variety variety,Color color) {
 	        this.variety = variety;
@@ -32,5 +33,13 @@ public class VarietyProperty {
 
 		public void setColor(Color color) {
 			this.color = color;
+		}
+
+		public double getQuantity() {
+			return quantity;
+		}
+
+		public void setQuantity(double quantity) {
+			this.quantity = quantity;
 		}
 }
