@@ -144,10 +144,10 @@ public static void checkAvailability(VBox vbox,GridPane grid) {
 		children.remove(vbox);
 	}
 }
-public static void checkAvailability(HBox hbox,GridPane grid) {
+public static void checkAvailability(HBox hbox,GridPane grid,VBox vbox) {
 	if(hbox != null) {
-		ObservableList<Node> children = grid.getChildren();
-		children.remove(hbox);
+		ObservableList<Node> vboxChildren = vbox.getChildren();
+		vboxChildren.remove(hbox);
 	}
 }
 public static void homePage(HBox hbox,GridPane grid,int x,int y,LoggedForm loggedForm) {
@@ -187,17 +187,16 @@ public static void setIcon(Stage stage) {
 }
 public static void wineManagement(GridPane grid,int x,int y) {
 	HBox hbox = new HBox();
-	ProductionButtons.addBottledWine(hbox, grid, x, y);
 	ProductionButtons.addWine(hbox, grid, x, y);
-	
+	ProductionButtons.evaluateGrapesButton(hbox, grid, x, y);
 	BorderPane bp = new BorderPane();
 	bp.setPadding(new Insets(0,25,0,25));
 	TitledPane wineManagement = new TitledPane();
 	wineManagement.setCollapsible(false);
 	wineManagement.setText("Wine Production");
 	wineManagement.setContent(hbox);
-	wineManagement.setPrefWidth(350);
-	wineManagement.setMaxWidth(350);
+	wineManagement.setPrefWidth(480);
+	wineManagement.setMaxWidth(480);
 	bp.setRight(wineManagement);
 	hbox.setPadding(new Insets(10,50,10,50));
 	hbox.setSpacing(30);

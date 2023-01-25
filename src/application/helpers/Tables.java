@@ -9,6 +9,7 @@ import Grape.VarietyProperty;
 import enums.Color;
 import enums.Variety;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
@@ -22,6 +23,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import properties.GrapeEvaluationProperty;
 import properties.PickedVariety;
 import javafx.beans.property.Property;
 
@@ -104,6 +106,96 @@ public class Tables {
 		grid.add(vbox, x, y);
 		vbox1 = vbox;
 	}
+	public static void grapeEvaluationTable(GridPane grid, int x, int y) {
+		StorageUI.checkAvailability(vbox1, grid);
+		TableView table = new TableView();
+		TableColumn grapeVariety = new TableColumn("Variety");
+		TableColumn kg = new TableColumn("KG");
+		TableColumn color = new TableColumn("Color");
+		TableColumn grapeDate = new TableColumn("Date");
+		
+		
+		Map<GrapeEvaluationProperty, CheckBox> checkboxMap = new HashMap<>();
+		Map<GrapeEvaluationProperty, TextField> textfieldMap = new HashMap<>();
+		TableColumn<GrapeEvaluationProperty, Double> winePerKG = new TableColumn<>("WKG");
+		winePerKG.setCellValueFactory(new PropertyValueFactory<>("winePerKG"));
+		winePerKG.setCellFactory(column -> {
+		        return new TableCell<GrapeEvaluationProperty, Double>() {
+		            private final TextField textField = new TextField();
+
+		            {
+		                textField.setEditable(false);
+		                textField.textProperty().addListener((obs, oldValue, newValue) -> {
+		                    if (!newValue.matches("\\d*")) {
+		                        textField.setText(newValue.replaceAll("[^\\d]", ""));
+		                    }
+		                });
+		            }
+
+		            @Override
+		            protected void updateItem(Double item, boolean empty) {
+		                super.updateItem(item, empty);
+
+		                if (empty || item == null) {
+		                    setGraphic(null);
+		                } else {
+		                    setGraphic(textField);
+		                    textField.setText(Double.toString(item));
+		                    GrapeEvaluationProperty variety = getTableView().getItems().get(getIndex());
+		                    textfieldMap.put(getTableView().getItems().get(getIndex()), textField);
+		                    CheckBox checkbox = checkboxMap.get(variety);
+		                    textField.setDisable(!checkbox.isSelected());
+		                }
+		            }
+		        };
+		    });
+		TableColumn<GrapeEvaluationProperty, Boolean> pickColumn = new TableColumn<>("Pick");
+		pickColumn.setCellValueFactory(new PropertyValueFactory<>("picked"));
+		pickColumn.setCellFactory(column -> {
+		    return new TableCell<GrapeEvaluationProperty, Boolean>() {
+		        private final CheckBox checkBox = new CheckBox();
+
+		        {
+		            checkBox.setOnAction(event -> {
+		            	GrapeEvaluationProperty item = getTableView().getItems().get(getIndex());
+		                item.setPicked(checkBox.isSelected());
+
+		                // Enable/disable the corresponding WinePerKG textfield
+		                TextField winePerKGTextField = textfieldMap.get(getTableView().getItems().get(getIndex()));
+		                winePerKGTextField.setDisable(!checkBox.isSelected());
+		            });
+		        }
+
+		        @Override
+		        protected void updateItem(Boolean item, boolean empty) {
+		        	super.updateItem(item, empty);
+
+					if (empty || item == null) {
+						setGraphic(null);
+					} else {
+						setGraphic(checkBox);
+						checkBox.setSelected(item);
+						checkboxMap.put(getTableView().getItems().get(getIndex()), checkBox);
+						TextField winePerKGTextField = textfieldMap.get(getTableView().getItems().get(getIndex()));
+					}
+				}
+			};
+		});
+		ArrayList<GrapeEvaluationProperty> myArrayList = new ArrayList<>();
+		// populate the array list with data
+		ObservableList<GrapeEvaluationProperty> myObservableList = FXCollections.observableArrayList(myArrayList);
+		table.setItems(myObservableList);
+		table.getColumns().addAll(grapeVariety, color, kg, grapeDate,pickColumn,winePerKG);
+		table.setPrefSize(900, 600);
+		VBox vbox = new VBox();
+		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(0, 0, 0, 240));
+		vbox.setPrefSize(900, 700);
+		vbox.getChildren().addAll(table);
+		grid.add(vbox, x, y);
+		vbox1 = vbox;
+	}
+	
 
 	public static void wineVarietyPickerTable(GridPane grid, int x, int y) {
 		StorageUI.checkAvailability(vbox1, grid);
