@@ -6,11 +6,6 @@ public  class Account {
 	private String role;
 	private static Account instance = null;
 	
-//	public Account(String username,String password)
-//	{
-//		this.username=username;
-//		this.password=password;
-//	}
 	private Account() {
 		
 	}

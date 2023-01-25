@@ -3,6 +3,7 @@ package application.helpers.Buttons;
 import application.helpers.NumberTextField;
 import application.helpers.StorageUI;
 import application.helpers.Tables;
+import controlers.AccountController;
 import enums.Roles;
 import enums.Variety;
 import javafx.beans.value.ChangeListener;
@@ -150,7 +151,7 @@ public class AdminButtons extends Buttons {
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
 				Button edit = new Button("Edit");
-				Label label = new Label("Input ID");
+				Label label = new Label("New Username");
 				Label label2 = new Label("Username: ");
 				Label label3 = new Label("Password: ");
 				Label label4 = new Label("Role: ");
@@ -158,16 +159,23 @@ public class AdminButtons extends Buttons {
 				label2.setPrefSize(100, 0);
 				label3.setPrefSize(100, 0);
 				label4.setPrefSize(100, 0);
-				NumberTextField id = new NumberTextField();
+				TextField newname = new TextField();
 				TextField username = new TextField();
 				PasswordField pass = new PasswordField();
 				ComboBox<Roles> role = new ComboBox<Roles>();
 				role.setItems(FXCollections.observableArrayList(Roles.values()));
 				role.getSelectionModel().select(0);
 				role.setPrefSize(170, 0);
-				id.setPrefSize(100, 0);
+				newname.setPrefSize(100, 0);
 				username.setPrefSize(100, 0);
 				pass.setPrefSize(100, 0);
+				edit.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						AccountController ac = new AccountController();
+						ac.editUser(username.getText(),newname.getText(), pass.getText(), role.getSelectionModel().getSelectedItem());
+					}
+				});
 				HBox hbox2 = new HBox();
 				HBox hbox3 = new HBox();
 				HBox hbox4 = new HBox();
@@ -176,14 +184,14 @@ public class AdminButtons extends Buttons {
 				hbox3.setSpacing(5);
 				hbox4.setSpacing(5);
 				hbox5.setSpacing(5);
-				hbox2.getChildren().addAll(label,id);
+				hbox2.getChildren().addAll(label,newname);
 				hbox3.getChildren().addAll(label2,username);
 				hbox4.getChildren().addAll(label3,pass);
 				hbox5.getChildren().addAll(label4,role);
 				VBox vbox = new VBox();
 				vbox.setPadding(new Insets(0, 120, 0, 120));
 				vbox.setSpacing(5);
-				vbox.getChildren().addAll(hbox2,hbox3,hbox4,hbox5,edit);
+				vbox.getChildren().addAll(hbox3,hbox2,hbox4,hbox5,edit);
 				vbox1 = vbox;
 				grid.add(vbox, x, y + 5);
 			}
@@ -212,11 +220,18 @@ public class AdminButtons extends Buttons {
 			@Override
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
-				Button add = new Button("Remove");
-				Label label = new Label("Input ID");
+				Button remove = new Button("Remove");
+				Label label = new Label("Input Username");
 				label.setPrefSize(100, 0);
-				NumberTextField t = new NumberTextField();
+				TextField t = new TextField();
 				t.setPrefSize(100, 0);
+				remove.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						AccountController ac = new AccountController();
+						ac.removeUser(t.getText());
+					}
+				});
 				HBox hbox2 = new HBox();
 				hbox2.setSpacing(5);
 				hbox2.getChildren().add(label);
@@ -225,7 +240,7 @@ public class AdminButtons extends Buttons {
 				vbox.setPadding(new Insets(0, 120, 0, 120));
 				vbox.setSpacing(5);
 				vbox.getChildren().add(hbox2);
-				vbox.getChildren().add(add);
+				vbox.getChildren().add(remove);
 				vbox1 = vbox;
 				grid.add(vbox, x, y + 5);
 			}
@@ -337,8 +352,16 @@ public class AdminButtons extends Buttons {
 				role.setItems(FXCollections.observableArrayList(Roles.values()));
 				role.getSelectionModel().select(0);
 				role.setPrefSize(100, 0);
+				
 				PasswordField pass = new PasswordField();
 				pass.setPrefSize(100, 0);
+				add.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						AccountController ac = new AccountController();
+						ac.insert(username.getText(), pass.getText(), role.getSelectionModel().getSelectedItem());
+					}
+				});
 				HBox hbox2 = new HBox();
 				hbox2.setSpacing(5);
 				hbox2.getChildren().add(label);
