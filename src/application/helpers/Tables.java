@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Grape.GrapeVariety;
-import Grape.VarietyProperty;
 import Users.Account;
 import controlers.AccountController;
 import enums.Color;
@@ -30,6 +29,7 @@ import javafx.scene.layout.VBox;
 import properties.GrapeEvaluationProperty;
 import properties.PickedVariety;
 import properties.UserProperties;
+import properties.VarietyProperty;
 import javafx.beans.property.Property;
 
 public class Tables {

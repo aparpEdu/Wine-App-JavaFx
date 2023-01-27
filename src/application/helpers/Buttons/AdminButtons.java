@@ -26,6 +26,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import properties.StorageProperties;
 
 public class AdminButtons extends Buttons {
 
@@ -47,13 +48,13 @@ public class AdminButtons extends Buttons {
 
 				Button add = new Button("Add");
 				Label userLabel = new Label("Username: ");
-				Label storageLabel = new Label("Storage Name: ");
+				Label storageLabel = new Label("Storage: ");
 				userLabel.setPrefSize(100, 0);
 				storageLabel.setPrefSize(100, 0);
 				TextField t = new TextField();
 				t.setPrefSize(100, 0);
-				TextField storageField = new TextField();
-				storageField.setPrefSize(100, 0);
+				ComboBox<String> storageCB = new ComboBox<String>();
+				storageCB.setPrefWidth(100);
 				HBox hbox2 = new HBox();
 				HBox hbox3 = new HBox();
 				hbox2.setSpacing(5);
@@ -61,12 +62,20 @@ public class AdminButtons extends Buttons {
 				hbox2.getChildren().add(userLabel);
 				hbox2.getChildren().add(t);
 				hbox3.getChildren().add(storageLabel);
-				hbox3.getChildren().add(storageField);
+				StorageAccessController  sac = new StorageAccessController();
+				try {
+					sac.viewAll(storageCB);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				storageCB.getSelectionModel().select(0);
+				hbox3.getChildren().add(storageCB);
 				add.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent e) {
-						StorageAccessController  sac = new StorageAccessController();
-						sac.grantAccess(t.getText(), storageField.getText());
+						
+						sac.grantAccess(t.getText(), storageCB.getSelectionModel().getSelectedItem().toString());
 
 					}
 				});
@@ -104,7 +113,8 @@ public class AdminButtons extends Buttons {
 
 				rb1.setToggleGroup(group);
 				rb2.setToggleGroup(group);
-
+				RadioButton rb3 = new RadioButton("All");
+				rb3.setToggleGroup(group);
 				group.selectToggle(rb1);
 				rb1.requestFocus();
 
@@ -141,6 +151,7 @@ public class AdminButtons extends Buttons {
 				VBox vbox = new VBox();
 				vbox.setPadding(new Insets(0, 120, 0, 120));
 				vbox.setSpacing(5);
+				vbox.getChildren().add(rb3);
 				vbox.getChildren().add(rb1);
 				vbox.getChildren().add(rb2);
 				vbox.getChildren().add(hbox2);

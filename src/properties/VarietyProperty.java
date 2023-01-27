@@ -1,4 +1,4 @@
-package Grape;
+package properties;
 
 import enums.Color;
 import enums.Variety;
