@@ -1,5 +1,7 @@
 package application.forms;
 
+import java.sql.SQLException;
+
 import application.helpers.StorageUI;
 import application.helpers.Tables;
 import application.helpers.Buttons.Buttons;
@@ -17,7 +19,7 @@ import javafx.stage.Stage;
 public class AdminForm {
 
 	
-	public void formLoad(final Stage thirdStage) {
+	public void formLoad(final Stage thirdStage) throws SQLException {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(3);

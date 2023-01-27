@@ -1,11 +1,15 @@
 package application.helpers;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import Grape.GrapeVariety;
 import Grape.VarietyProperty;
+import Users.Account;
+import controlers.AccountController;
 import enums.Color;
 import enums.Variety;
 import javafx.collections.FXCollections;
@@ -25,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import properties.GrapeEvaluationProperty;
 import properties.PickedVariety;
+import properties.UserProperties;
 import javafx.beans.property.Property;
 
 public class Tables {
@@ -37,17 +42,45 @@ public class Tables {
 
 	}
 
-	public static void userTable(GridPane grid) {
+	@SuppressWarnings("unchecked")
+	public static void userTable(GridPane grid) throws SQLException {
 		StorageUI.checkAvailability(vbox1, grid);
-		TableView table = new TableView();
-		TableColumn id = new TableColumn("id");
-		TableColumn username = new TableColumn("username");
-		TableColumn pass = new TableColumn("pass");
-		TableColumn role = new TableColumn("Role");
-		table.getColumns().addAll(id, username, pass, role);
+		TableView<UserProperties> table = new TableView<UserProperties>();
+		TableColumn <UserProperties, String>username = new TableColumn<UserProperties, String>("username");
+		TableColumn<UserProperties, String> pass = new TableColumn<UserProperties, String>("pass");
+		TableColumn<UserProperties, String> role = new TableColumn<UserProperties, String>("Role");
+		username.setCellValueFactory(new PropertyValueFactory<UserProperties, String>("username"));
+		pass.setCellValueFactory(new PropertyValueFactory<UserProperties, String>("password"));
+		role.setCellValueFactory(new PropertyValueFactory<UserProperties, String>("role"));
+		AccountController ac = new AccountController();
+		 ac.showAllUsers(table);
+		table.getColumns().addAll(username, pass, role);
 		table.setPrefSize(750, 300);
 		VBox vbox = new VBox();
-
+		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(0, 0, 0, 160));
+		vbox.setPrefSize(750, 1000);
+		vbox.getChildren().addAll(table);
+		grid.add(vbox, 5, 5);
+		vbox1 = vbox;
+		
+		
+	}
+	public static void userFinderTable(GridPane grid,String condition,String choice) throws SQLException {
+		StorageUI.checkAvailability(vbox1, grid);
+		TableView<UserProperties> table = new TableView<UserProperties>();
+		TableColumn <UserProperties, String>username = new TableColumn<UserProperties, String>("username");
+		TableColumn<UserProperties, String> pass = new TableColumn<UserProperties, String>("pass");
+		TableColumn<UserProperties, String> role = new TableColumn<UserProperties, String>("Role");
+		username.setCellValueFactory(new PropertyValueFactory<UserProperties, String>("username"));
+		pass.setCellValueFactory(new PropertyValueFactory<UserProperties, String>("password"));
+		role.setCellValueFactory(new PropertyValueFactory<UserProperties, String>("role"));
+		AccountController ac = new AccountController();
+		 ac.selectUser(table,condition,choice);
+		 
+		table.getColumns().addAll(username, pass, role);
+		table.setPrefSize(750, 300);
+		VBox vbox = new VBox();
 		vbox.setSpacing(5);
 		vbox.setPadding(new Insets(0, 0, 0, 160));
 		vbox.setPrefSize(750, 1000);

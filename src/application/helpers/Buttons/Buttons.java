@@ -1,5 +1,6 @@
 package application.helpers.Buttons;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import application.forms.AdminForm;
@@ -64,7 +65,12 @@ public class Buttons {
 			public void handle(ActionEvent e) {
 
 				AdminForm af = new AdminForm();
-				af.formLoad(new Stage());
+				try {
+					af.formLoad(new Stage());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				loggedForm.closeStage();
 			}
 		});

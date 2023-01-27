@@ -2,6 +2,7 @@ package sqlconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -29,6 +30,16 @@ public class JDBCON {
 		        if (conn != null) {
 		            conn.close();
 		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
+	 public static void closeResources(ResultSet result) {
+		    try {
+		        if (result != null) {
+		        	result.close();
+		        }
+		        
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    }

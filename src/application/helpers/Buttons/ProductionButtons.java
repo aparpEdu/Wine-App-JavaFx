@@ -30,13 +30,6 @@ public class ProductionButtons {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void addBottledWine(HBox hbox, final GridPane grid, final int x, final int y) {
-		Button addBottledWine = new Button("Fill bottle");
-		addBottledWine.setPrefSize(120, 60);
-
-		hbox.getChildren().add(addBottledWine);
-	}
-
 	public static void addWine(HBox hbox, final GridPane grid, final int x, final int y) {
 		Button addWine = new Button("Produce Wine");
 		addWine.setPrefSize(120, 60);

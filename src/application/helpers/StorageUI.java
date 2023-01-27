@@ -202,4 +202,9 @@ public static void wineManagement(GridPane grid,int x,int y) {
 	hbox.setSpacing(30);
 	grid.add(bp, x, y);
 }
+public static void conditionChecker(String condition ) {
+	if(condition.equalsIgnoreCase("")) {
+		
+	}
+}
 }

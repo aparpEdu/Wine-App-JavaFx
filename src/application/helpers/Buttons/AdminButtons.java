@@ -1,9 +1,12 @@
 package application.helpers.Buttons;
 
+import java.sql.SQLException;
+
 import application.helpers.NumberTextField;
 import application.helpers.StorageUI;
 import application.helpers.Tables;
 import controlers.AccountController;
+import controlers.StorageAccessController;
 import enums.Roles;
 import enums.Variety;
 import javafx.beans.value.ChangeListener;
@@ -42,9 +45,9 @@ public class AdminButtons extends Buttons {
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
 
-				Button check = new Button("Add");
-				Label userLabel = new Label("User ID: ");
-				Label storageLabel = new Label("Storage ID: ");
+				Button add = new Button("Add");
+				Label userLabel = new Label("Username: ");
+				Label storageLabel = new Label("Storage Name: ");
 				userLabel.setPrefSize(100, 0);
 				storageLabel.setPrefSize(100, 0);
 				TextField t = new TextField();
@@ -59,15 +62,23 @@ public class AdminButtons extends Buttons {
 				hbox2.getChildren().add(t);
 				hbox3.getChildren().add(storageLabel);
 				hbox3.getChildren().add(storageField);
+				add.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						StorageAccessController  sac = new StorageAccessController();
+						sac.grantAccess(t.getText(), storageField.getText());
 
+					}
+				});
 				VBox vbox = new VBox();
 				vbox.setPadding(new Insets(0, 120, 0, 120));
 				vbox.setSpacing(5);
-
+				
 				vbox.getChildren().add(hbox2);
 				vbox.getChildren().add(hbox3);
-				vbox.getChildren().add(check);
+				vbox.getChildren().add(add);
 				grid.add(vbox, x, y + 5);
+				
 				vbox1 = vbox;
 
 			}
@@ -206,7 +217,12 @@ public class AdminButtons extends Buttons {
 			@Override
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
-				Tables.userTable(grid);
+				try {
+					Tables.userTable(grid);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -291,6 +307,29 @@ public class AdminButtons extends Buttons {
 				vbox.setSpacing(5);
 				vbox.getChildren().addAll(rb1, rb2, rb3);
 				HBox searchHBox = new HBox();
+				search.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						if(group.getSelectedToggle().getUserData().toString().equalsIgnoreCase("role")){
+							try {
+								Tables.userFinderTable(grid, role.getSelectionModel().getSelectedItem().toString(),"byRole");
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						else if(group.getSelectedToggle().getUserData().toString().equalsIgnoreCase("username")) {
+							try {
+								Tables.userFinderTable(grid, t.getText(),"byName");
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+
+					}
+				});
+				
 				searchHBox.getChildren().add(search);
 				vbox.getChildren().add(roleHBox);
 				hbox1 = roleHBox;
@@ -321,6 +360,7 @@ public class AdminButtons extends Buttons {
 						}
 					}
 				});
+				
 
 				grid.add(vbox, x, y + 5);
 				vbox1 = vbox;
