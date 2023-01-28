@@ -127,7 +127,152 @@ public class SQLHelper {
         }
         return result;
 	}
-
+//	public static ResultSet selectWithJoin(String tableName, String condition, String keyCondition, String[] joinTables, String[] joinConditions,String[] tables,String column,String column2,String[] tables2) {
+//	    Connection conn = null;
+//	    PreparedStatement stmt = null;
+//	    ResultSet result = null;
+//	    try {
+//	        conn = JDBCON.getConnection();
+//	        String sql = "SELECT "+tables2[0]+"."+column+", "+ tables2[1]+"."+column2+" FROM "+tableName;
+//	        for (int i = 0; i < joinTables.length; i++) {
+//	            sql += " JOIN "+joinTables[i]+" ON "+tables[i]+"."+joinConditions[i]+" = "+joinTables[i]+"."+joinConditions[i];
+//	        }
+//	        sql += " WHERE "+joinTables[joinTables.length-1]+"."+keyCondition+" = \'"+condition+"\'";
+//	        stmt = conn.prepareStatement(sql);
+//	        result = stmt.executeQuery();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return result;
+//	}
+//	public static ResultSet selectWithJoin(String tableName, String condition, String keyCondition, String[] joinTables, String[] joinConditions) {
+//	    Connection conn = null;
+//	    PreparedStatement stmt = null;
+//	    ResultSet result = null;
+//	    try {
+//	        conn = JDBCON.getConnection();
+//	        String sql = "SELECT "+tableName+".* FROM "+tableName;
+//	        for (int i = 0; i < joinTables.length; i++) {
+//	            sql += " JOIN "+joinTables[i]+" ON "+tableName+"."+keyCondition+" = "+joinTables[i]+"."+joinConditions[i];
+//	        }
+//	        sql += " WHERE "+joinTables[joinTables.length-1]+"."+keyCondition+" = \'"+condition+"\'";
+//	        stmt = conn.prepareStatement(sql);
+//	        result = stmt.executeQuery();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return result;
+//	}
+//	public static ResultSet selectWithJoin(String tableName, String condition, String keyCondition, String[] joinTables, String[] joinConditions,String[] tables) {
+//	    Connection conn = null;
+//	    PreparedStatement stmt = null;
+//	    ResultSet result = null;
+//	    try {
+//	        conn = JDBCON.getConnection();
+//	        String sql = "SELECT "+tableName+".* FROM "+tableName;
+//	        for (int i = 0; i < joinTables.length; i++) {
+//	            sql += " JOIN "+joinTables[i]+" ON "+tables[i]+"."+joinConditions[i]+" = "+joinTables[i]+"."+joinConditions[i];
+//	        }
+//	        sql += " WHERE "+joinTables[joinTables.length-1]+"."+keyCondition+" = \'"+condition+"\'";
+//	        stmt = conn.prepareStatement(sql);
+//	        result = stmt.executeQuery();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return result;
+//	}
+	public static ResultSet selectAllWithJoin(String tableName, String[] joinTables, String[] joinConditions,String[] tables,String column,String column2,String[] tables2) {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet result = null;
+    try {
+        conn = JDBCON.getConnection();
+        String sql = "SELECT "+tables2[0]+"."+column+", "+ tables2[1]+"."+column2+" FROM "+tableName;
+        for (int i = 0; i < joinTables.length; i++) {
+            sql += " JOIN "+joinTables[i]+" ON "+tables[i]+"."+joinConditions[i]+" = "+joinTables[i]+"."+joinConditions[i];
+        }
+        
+        stmt = conn.prepareStatement(sql);
+        result = stmt.executeQuery();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return result;
+}
+	public static ResultSet selectWithJoin(String tableName, String condition, String keyCondition, String[] joinTables, String[] joinConditions, String joinType,String[] tables,String column,String column2,String[] tables2,String tableName2) {
+	    Connection conn = null;
+	    PreparedStatement stmt = null;
+	    ResultSet result = null;
+	    try {
+	        conn = JDBCON.getConnection();
+	        String sql =  "SELECT "+tables2[0]+"."+column+", "+ tables2[1]+"."+column2+" FROM "+tableName;
+	        for (int i = 0; i < joinTables.length; i++) {
+	            if(joinType.equalsIgnoreCase("condition1")){
+	                sql += " JOIN "+joinTables[i]+" ON "+tables[i]+"."+joinConditions[i]+" = "+joinTables[i]+"."+joinConditions[i];
+	            }else{
+	            	sql += " JOIN "+joinTables[i]+" ON "+tables[i]+"."+joinConditions[i]+" = "+joinTables[i]+"."+joinConditions[i];
+	            }
+	        }
+	        if(joinType.equalsIgnoreCase("condition1")){
+	            sql += " WHERE "+tableName2+"."+keyCondition+" = \'"+condition+"\'";
+	        }else{
+	        	sql += " WHERE "+joinTables[joinTables.length-1]+"."+keyCondition+" = \'"+condition+"\'";
+	        }
+	        stmt = conn.prepareStatement(sql);
+	        result = stmt.executeQuery();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return result;
+	}
+//	public static ResultSet selectWithJoin(String condition,String table,String table2,String table3) {
+//	    Connection conn = null;
+//	    PreparedStatement stmt = null;
+//	    ResultSet result = null;
+//	    try {
+//	        conn = JDBCON.getConnection();
+//	        String sql = "SELECT "+table+".username, "+table2+".storage_name FROM " +table +
+//	        		" JOIN "+table3+" ON "+table+".user_id = "+table3+".user_id" +
+//	        		" JOIN "+table2+" ON "+table2+".storage_id = "+table3+".storage_id" +
+//	        		" WHERE username = '"+condition+"';";
+//	        
+//	        stmt = conn.prepareStatement(sql);
+//	        result = stmt.executeQuery();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return result;
+//	}
+	public static ResultSet selectWithJoin(String condition,String table,String table2,String table3) {
+	    Connection conn = null;
+	    PreparedStatement stmt = null;
+	    ResultSet result = null;
+	    try {
+	        conn = JDBCON.getConnection();
+	        String sql = "SELECT "+table+".username, "+table2+".storage_name FROM " +table +
+	                    " JOIN "+table3+" ON "+table+".user_id = "+table3+".user_id" +
+	                    " JOIN "+table2+" ON "+table2+".storage_id = "+table3+".storage_id" +
+	                    " WHERE "+table+".username = ?";
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, condition);
+	        result = stmt.executeQuery();
+	    } catch (SQLException e) {
+	        // Add proper error handling here
+	    } finally {
+	        try {
+	            if (stmt != null) {
+	                stmt.close();
+	            }
+	            if (conn != null) {
+	                conn.close();
+	            }
+	        } catch (SQLException e) {
+	            // Add proper error handling here
+	        }
+	    }
+	    return result;
+	}
+	
 	public static ResultSet selectAllFromTable(String tableName) {
         Connection conn = null;
         PreparedStatement stmt = null;

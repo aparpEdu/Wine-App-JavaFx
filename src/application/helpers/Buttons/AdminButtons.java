@@ -104,56 +104,41 @@ public class AdminButtons extends Buttons {
 			@Override
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
-
-				final ToggleGroup group = new ToggleGroup();
-				final RadioButton rb1 = new RadioButton("By Storage");
-				rb1.setUserData("st");
-				RadioButton rb2 = new RadioButton("By User");
-				rb2.setUserData("User");
-
-				rb1.setToggleGroup(group);
-				rb2.setToggleGroup(group);
-				RadioButton rb3 = new RadioButton("All");
-				rb3.setToggleGroup(group);
-				group.selectToggle(rb1);
-				rb1.requestFocus();
+				ComboBox<String> storageCB = new ComboBox<String>();
+				StorageAccessController sac = new StorageAccessController();
+				try {
+					sac.viewAll(storageCB);
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				storageCB.getSelectionModel().select(0);
 
 				final Button check = new Button("Check");
-				Label label = new Label("ID: ");
-				NumberTextField t = new NumberTextField();
-				if (group.getSelectedToggle() != null) {
-					if (group.getSelectedToggle().getUserData().toString().equals("st")) {
+				Label label = new Label("storage: ");
+				
 						check.setOnAction(new EventHandler<ActionEvent>() {
 
 							@Override
 							public void handle(ActionEvent e) {
-								Tables.storageTable(grid);
+								try {
+									Tables.storageTable(grid, "storage_name", storageCB.getSelectionModel().getSelectedItem().toString());
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 
 							}
 						});
-					} else if (group.getSelectedToggle().getUserData().toString().compareToIgnoreCase("User") == 0) {
-						check.setOnAction(new EventHandler<ActionEvent>() {
 
-							@Override
-							public void handle(ActionEvent e) {
-								Tables.storageTable(grid);
-
-							}
-						});
-					}
-				}
-
-				t.setPrefSize(100, 0);
 				HBox hbox2 = new HBox();
 				hbox2.setSpacing(5);
-				hbox2.getChildren().add(label);
-				hbox2.getChildren().add(t);
+				hbox2.getChildren().addAll(label,storageCB);
+				
+				
 				VBox vbox = new VBox();
 				vbox.setPadding(new Insets(0, 120, 0, 120));
 				vbox.setSpacing(5);
-				vbox.getChildren().add(rb3);
-				vbox.getChildren().add(rb1);
-				vbox.getChildren().add(rb2);
 				vbox.getChildren().add(hbox2);
 				vbox.getChildren().add(check);
 				grid.add(vbox, x, y + 5);

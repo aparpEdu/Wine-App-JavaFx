@@ -9,6 +9,7 @@ import java.util.Map;
 import Grape.GrapeVariety;
 import Users.Account;
 import controlers.AccountController;
+import controlers.StorageAccessController;
 import enums.Color;
 import enums.Variety;
 import javafx.collections.FXCollections;
@@ -28,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import properties.GrapeEvaluationProperty;
 import properties.PickedVariety;
+import properties.StorageAccessProperties;
 import properties.UserProperties;
 import properties.VarietyProperty;
 import javafx.beans.property.Property;
@@ -89,12 +91,38 @@ public class Tables {
 		vbox1 = vbox;
 	}
 
-	public static void storageTable(GridPane grid) {
+	@SuppressWarnings("unchecked")
+	public static void storageTable(GridPane grid,String choice,String condition) throws SQLException {
+		StorageAccessController sac = new StorageAccessController();
 		StorageUI.checkAvailability(vbox1, grid);
-		TableView table = new TableView();
-		TableColumn id = new TableColumn("User id");
-		TableColumn username = new TableColumn("Storage ID");
-		table.getColumns().addAll(id, username);
+		TableView<StorageAccessProperties> table = new TableView<StorageAccessProperties>();
+		TableColumn<StorageAccessProperties, String> username = new TableColumn<StorageAccessProperties, String>("Username");
+		TableColumn<StorageAccessProperties, String> storage_name = new TableColumn<StorageAccessProperties, String>("Storage name");
+		username.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("username"));
+		storage_name.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("storage_name"));
+
+		sac.checkAccess(table, choice, condition);
+		table.getColumns().addAll(storage_name, username);
+		table.setPrefSize(750, 300);
+		VBox vbox = new VBox();
+		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(0, 230, 0, 100));
+		vbox.setPrefSize(750, 1000);
+		vbox.getChildren().addAll(table);
+		grid.add(vbox, 5, 5);
+		vbox1 = vbox;
+	}
+	public static void storageAllTable(GridPane grid) throws SQLException {
+		StorageAccessController sac = new StorageAccessController();
+		StorageUI.checkAvailability(vbox1, grid);
+		TableView<StorageAccessProperties> table = new TableView<StorageAccessProperties>();
+		TableColumn<StorageAccessProperties, String> username = new TableColumn<StorageAccessProperties, String>("Username");
+		TableColumn<StorageAccessProperties, String> storage_name = new TableColumn<StorageAccessProperties, String>("Storage name");
+		username.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("username"));
+		storage_name.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("storage_name"));
+
+		sac.showAll(table);
+		table.getColumns().addAll(storage_name, username);
 		table.setPrefSize(750, 300);
 		VBox vbox = new VBox();
 		vbox.setSpacing(5);
@@ -396,3 +424,4 @@ public class Tables {
 	}
 
 }
+	
