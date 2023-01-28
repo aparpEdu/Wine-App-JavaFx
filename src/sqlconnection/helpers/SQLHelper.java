@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -30,9 +31,21 @@ public class SQLHelper {
 	        stmt = conn.prepareStatement(sql);
 	        int i = 1;
 	        for (Map.Entry<String, Object> entry : data.entrySet()) {
-	            stmt.setObject(i, entry.getValue());
+	        	if(sqlConverter.doubleParser(entry.getValue()) == Types.NUMERIC) {
+	        		double d = Double.parseDouble((String) entry.getValue());
+	        		stmt.setObject(i,  d,Types.NUMERIC);
+	        		System.out.println("NUMERIC: "+ i);
+	        	}
+	        	else {
+	        		
+	        		stmt.setObject(i, entry.getValue(),sqlConverter.doubleParser(entry.getValue()));
+	        		System.out.println("VARCHAR: "+ i);
+	        	}
+	        
 	            i++;
+	        	
 	        }
+	      
 	        stmt.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();

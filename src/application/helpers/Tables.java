@@ -112,26 +112,7 @@ public class Tables {
 		grid.add(vbox, 5, 5);
 		vbox1 = vbox;
 	}
-	public static void storageAllTable(GridPane grid) throws SQLException {
-		StorageAccessController sac = new StorageAccessController();
-		StorageUI.checkAvailability(vbox1, grid);
-		TableView<StorageAccessProperties> table = new TableView<StorageAccessProperties>();
-		TableColumn<StorageAccessProperties, String> username = new TableColumn<StorageAccessProperties, String>("Username");
-		TableColumn<StorageAccessProperties, String> storage_name = new TableColumn<StorageAccessProperties, String>("Storage name");
-		username.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("username"));
-		storage_name.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("storage_name"));
-
-		sac.showAll(table);
-		table.getColumns().addAll(storage_name, username);
-		table.setPrefSize(750, 300);
-		VBox vbox = new VBox();
-		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(0, 230, 0, 100));
-		vbox.setPrefSize(750, 1000);
-		vbox.getChildren().addAll(table);
-		grid.add(vbox, 5, 5);
-		vbox1 = vbox;
-	}
+	
 
 	public static void storageInfoTable(GridPane grid, int x, int y) {
 		StorageUI.checkAvailability(vbox1, grid);

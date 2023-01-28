@@ -1,7 +1,10 @@
 package application.helpers.Buttons;
 
+import java.sql.SQLException;
+
 import application.helpers.StorageUI;
 import application.helpers.Tables;
+import controlers.GrapeController;
 import enums.BottleSize;
 import enums.Color;
 import enums.Variety;
@@ -310,7 +313,26 @@ public class StorageButtons {
 			        }
 			    }
 			});
+			
+			
 				Button storeGrapeButton = new Button("Store");
+				storeGrapeButton.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent e) {
+
+						GrapeController gc = new GrapeController();
+						try {
+							gc.storeGrapes(varietyCB.getSelectionModel().getSelectedItem(), Double.parseDouble(grapeKgField.getText()));
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
 				VBox vbox = new VBox();
 				HBox varietyHbox =  new HBox();
 				HBox kgHbox =  new HBox();
