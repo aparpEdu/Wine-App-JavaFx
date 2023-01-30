@@ -1,5 +1,7 @@
 package application.forms;
 
+import java.sql.SQLException;
+
 import application.helpers.StorageUI;
 import application.helpers.Tables;
 import javafx.geometry.Insets;
@@ -15,14 +17,13 @@ public class WineProductionForm {
 
 	}
 
-public void formLoad(Stage fifthStage) {
+public void formLoad(Stage fifthStage)  {
 	GridPane grid = new GridPane();
     
     grid.setAlignment(Pos.TOP_LEFT);
     grid.setHgap(3);
 	grid.setVgap(2);
 	grid.setPadding(new Insets(25, 25, 25, 25));
-	Tables.grapeEvaluationTable(grid, 5, 5);
     LoggedForm f = new LoggedForm();
 	StorageUI.profileSettings(grid, fifthStage,f);
 	StorageUI.wineManagement(grid, 6, 0);

@@ -1,11 +1,15 @@
 package properties;
 
+import javafx.scene.control.TextField;
+
 public class GrapeProperties {
 private String variety;
 private String color;
 private String kg;
 private String wkg;
 private String date;
+private boolean picked;
+private TextField winePerKGTextField;
 
 	public String getVariety() {
 	return variety;
@@ -45,6 +49,24 @@ public String getDate() {
 
 public void setDate(String date) {
 	this.date = date;
+}
+
+
+
+public TextField getWinePerKGTextField() {
+	return winePerKGTextField;
+}
+
+public void setWinePerKGTextField(TextField winePerKGTextField) {
+	this.winePerKGTextField = winePerKGTextField;
+}
+
+public boolean isPicked() {
+	return picked;
+}
+
+public void setPicked(boolean picked) {
+	this.picked = picked;
 }
 
 }

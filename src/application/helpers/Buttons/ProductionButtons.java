@@ -1,5 +1,6 @@
 package application.helpers.Buttons;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 import application.forms.StorageForm;
@@ -81,7 +82,12 @@ public class ProductionButtons {
 			@Override
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
-				Tables.grapeEvaluationTable(grid, x - 1, y + 5);
+				try {
+					Tables.grapeEvaluationTable(grid, x - 1, y + 5);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				evaluateButton(grid, x, y);
 
 			}
@@ -106,7 +112,12 @@ public class ProductionButtons {
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 
-					Tables.grapeEvaluationTable(grid, x - 1, y + 5);
+					try {
+						Tables.grapeEvaluationTable(grid, x - 1, y + 5);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
 				}
 

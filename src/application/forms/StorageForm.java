@@ -21,7 +21,7 @@ public class StorageForm {
         LoggedForm f = new LoggedForm();
 		StorageUI.profileSettings(grid, fourthStage,f);
 		StorageUI.storageManagement(grid, 6, 0);
-		Scene scene = new Scene(grid, 1300, 600);
+		Scene scene = new Scene(grid, 1500, 600);
 		StorageUI.setIcon(fourthStage);
 		fourthStage.setScene(scene);
 		fourthStage.show();

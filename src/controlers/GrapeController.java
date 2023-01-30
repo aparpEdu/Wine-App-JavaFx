@@ -10,6 +10,7 @@ import enums.Variety;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import properties.BottleProperties;
 import properties.GrapeProperties;
 import properties.UserProperties;
@@ -51,6 +52,7 @@ public void searchGrapes(TableView<GrapeProperties> table,String startDate,Strin
 		        String date = result.getString("date_stored");
 		        String color = result.getString("grape_color");
 		        float wkg = result.getFloat("wineperkg");
+		        
 		        GrapeProperties gp = new GrapeProperties();
 		        gp.setColor(color);
 		        gp.setKg(String.valueOf(kg));
@@ -65,6 +67,35 @@ public void searchGrapes(TableView<GrapeProperties> table,String startDate,Strin
 		
 		
 	}
+public void showGrapesForEvaluation(TableView<GrapeProperties> table) throws SQLException {
+	
+	
+	ResultSet result = SQLHelper.selectAllFromTable("storaged_goods_with_grapes");
+	    if(result==null) return;
+	   
+	    ObservableList<GrapeProperties> data = FXCollections.observableArrayList();
+	    while (result.next()) {
+	        String variety = result.getString("grape_variety");
+	        float kg = result.getFloat("grape_kg");
+	        String date = result.getString("date_stored");
+	        String color = result.getString("grape_color");
+	        float wkg = result.getFloat("wineperkg");
+	   
+	      
+	        GrapeProperties gp = new GrapeProperties();
+	        gp.setColor(color);
+	        gp.setKg(String.valueOf(kg));
+	        gp.setVariety(variety);
+	        gp.setWkg(String.valueOf(wkg));
+	        gp.setDate(date);
+	        data.add(gp);
+	    }
+	    table.setItems(data);
+	   
+	
+	
+	
+}
 public void searchByVariety(TableView<GrapeProperties> table,String startDate,String endDate,String condition) throws SQLException {
 	
 	

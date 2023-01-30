@@ -201,7 +201,38 @@ public class StorageButtons {
 					@Override
 					public void handle(ActionEvent e) {
 						
-						//. Tables.storedGrapesTable(grid, x-1, y+5);
+						 if(tg.getSelectedToggle() == everyVariety) {
+							 try {
+								Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), null, "all");
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						 }
+						 else if(tg.getSelectedToggle() == byVariety) {
+							 try {
+									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), varietyCB.getSelectionModel().getSelectedItem().toString(), "var");
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+						 }
+						 else if(tg.getSelectedToggle() == byColor) {
+							 try {
+									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), colorCB.getSelectionModel().getSelectedItem().toString(), "color");
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+						 }
+						 else if(tg.getSelectedToggle() == byBottle) {
+								try {
+									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), colorCB.getSelectionModel().getSelectedItem().toString(), "size");
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
 					}
 				});
 				varietyHbox.getChildren().addAll(varietyCB,colorCB,sizeCB);
@@ -315,6 +346,7 @@ public class StorageButtons {
 								e1.printStackTrace();
 							}
 						}
+						
 					}
 				});
 				varietyHbox.getChildren().addAll(varietyCB,colorCB);
