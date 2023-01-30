@@ -32,8 +32,8 @@ public class SQLHelper {
 	        int i = 1;
 	        for (Map.Entry<String, Object> entry : data.entrySet()) {
 	        	if(sqlConverter.doubleParser(entry.getValue()) == Types.NUMERIC) {
-	        		double d = Double.parseDouble((String) entry.getValue());
-	        		stmt.setObject(i,  d,Types.NUMERIC);
+	        		
+	        		stmt.setObject(i,sqlConverter.floatParse(entry.getValue()),Types.NUMERIC);
 	        		System.out.println("NUMERIC: "+ i);
 	        	}
 	        	else {
@@ -211,7 +211,9 @@ public class SQLHelper {
         e.printStackTrace();
     }
     return result;
+    
 }
+	
 	public static ResultSet selectWithJoin(String tableName, String condition, String keyCondition, String[] joinTables, String[] joinConditions, String joinType,String[] tables,String column,String column2,String[] tables2,String tableName2) {
 	    Connection conn = null;
 	    PreparedStatement stmt = null;
@@ -238,6 +240,74 @@ public class SQLHelper {
 	    }
 	    return result;
 	}
+//	public static ResultSet selectWithJoin(String tableName, int condition, String keyCondition,  String[] joinConditions,String[] tables,String[] tables2,String[] tables3) {
+//	    Connection conn = null;
+//	    PreparedStatement stmt = null;
+//	    ResultSet result = null;
+//	    int j = 0;
+//	    try {
+//	        conn = JDBCON.getConnection();
+//	        String sql =  "SELECT "+tables3[j]+".*, "+tables3[++j]+".*, "+tables3[++j]+".*, "+tables3[++j]+".*, "+tables3[++j]+".*, "+" FROM "+tableName;
+//	        for (int i = 0; i < tables2.length; i++) {
+//	            
+//	            
+//	            	sql += " JOIN "+tables2[i]+" ON "+tables[i]+"."+joinConditions[i]+" = "+tables2[i]+"."+joinConditions[i];
+//	            
+//	        }
+//	           	    sql += " WHERE "+tableName+"."+keyCondition+" = \'"+condition+"\'";
+//	        
+//	        stmt = conn.prepareStatement(sql);
+//	        result = stmt.executeQuery();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return result;
+//	}
+//	public static ResultSet selectWithJoin(String tableName, int condition, String keyCondition,  String[] joinConditions,String[] tables,String[] tables2) {
+//	    Connection conn = null;
+//	    PreparedStatement stmt = null;
+//	    ResultSet result = null;
+//	    int j = 0;
+//	    try {
+//	        conn = JDBCON.getConnection();
+//	        String sql =  "SELECT "+tableName+".user_id FROM  "+tableName;
+//	        for (int i = 0; i < tables2.length; i++) {
+//	            
+//	            
+//	            	sql += " JOIN "+tables2[i]+" ON "+tables[i]+"."+joinConditions[i]+" = "+tables2[i]+"."+joinConditions[i];
+//	            
+//	        }
+//	           	    //sql += " WHERE "+tableName+"."+keyCondition+" = "+condition;
+//	        		
+//	        stmt = conn.prepareStatement(sql);
+//	        result = stmt.executeQuery();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return result;
+//	}
+	public static ResultSet selectWithJoin(String tableName, int condition, String keyCondition,  String[] joinConditions,String[] tables,String[] tables2) {
+	    Connection conn = null;
+	    PreparedStatement stmt = null;
+	    ResultSet result = null;
+	    int j = 0;
+	    try {
+	        conn = JDBCON.getConnection();
+	        String sql = "SELECT storaged_goods.*, bottle.*, grape.*, wine.*, bottled_wine.* FROM userss.\"storageaccess\""
+	        		+" JOIN userss.\"storaged_goods\" ON storaged_goods.storage_id = storageaccess.storage_id"
+	        		+" JOIN userss.\"bottle\" ON storaged_goods.bottle_id = bottle.bottle_id"
+	        		+" JOIN userss.\"grape\" ON storaged_goods.grape_id = grape.grape_id"
+	        		+" JOIN userss.\"wine\" ON storaged_goods.wine_id = wine.wine_id"
+	        		+" JOIN userss.\"bottled_wine\" ON storaged_goods.bottled_wineid = bottled_wine.bottled_wineid"
+	        		+" WHERE storageaccess.user_id = 1;";
+	        stmt = conn.prepareStatement(sql);
+	        result = stmt.executeQuery();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return result;
+	}
+	
 //	public static ResultSet selectWithJoin(String condition,String table,String table2,String table3) {
 //	    Connection conn = null;
 //	    PreparedStatement stmt = null;
@@ -300,6 +370,53 @@ public class SQLHelper {
         }
         return result;
     }
+	public static ResultSet selectAllDate(String tableName,String startDate,String endDate) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            conn = JDBCON.getConnection();
+            String sql = "SELECT * FROM " + tableName
+            		+" WHERE date_stored BETWEEN '"+startDate+ "' AND '"+endDate+"'";
+            stmt = conn.prepareStatement(sql);
+            result = stmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+	public static ResultSet selectAllDateCondition(String tableName,String startDate,String endDate,String condition,String keyCondition) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            conn = JDBCON.getConnection();
+            String sql = "SELECT * FROM " + tableName
+            		+" WHERE date_stored BETWEEN '"+startDate+ "' AND '"+endDate+"'" + " "
+            				+ "AND "+keyCondition + " = '" + condition+"'";
+            stmt = conn.prepareStatement(sql);
+            result = stmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+	public static ResultSet selectJoin(String tableName,String table2,String keyCondition) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            conn = JDBCON.getConnection();
+            String sql = "SELECT "+tableName+".* FROM " + tableName
+            		+ " JOIN "+table2+" ON "+table2+"."+keyCondition + " = " + tableName+"."+keyCondition;
+            
+            stmt = conn.prepareStatement(sql);
+            result = stmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 	public static ResultSet getCurrentDate() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -314,6 +431,12 @@ public class SQLHelper {
         }
         return result;
     }
+//	public static ResultSet getStorageProperty(String property) {
+//	String	sql = " SELECT property FROM table"
+//					+ " JOIN "
+//		return null;
+//		
+//	}
 	
 	
 	

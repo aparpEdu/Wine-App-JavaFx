@@ -9,6 +9,7 @@ public class Wine {
 	private Color wineColor;
 	private int wineQuantity;
 	TreeMap<Integer,Grape> grapes=new TreeMap<Integer,Grape>();
+	private int id;
 	public Wine(TreeMap grapes)
 	{this.grapes=grapes;
 		
@@ -30,6 +31,12 @@ public class Wine {
 	}
 	public void setGrapes(TreeMap<Integer, Grape> grapes) {
 		this.grapes = grapes;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 

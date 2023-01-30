@@ -18,7 +18,6 @@ public class StorageForm {
         grid.setHgap(3);
 		grid.setVgap(2);
 		grid.setPadding(new Insets(25, 25, 25, 25));
-		Tables.storageInfoTable(grid, 5, 5);
         LoggedForm f = new LoggedForm();
 		StorageUI.profileSettings(grid, fourthStage,f);
 		StorageUI.storageManagement(grid, 6, 0);

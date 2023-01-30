@@ -114,28 +114,28 @@ public static void adminHub(GridPane grid,int x,int y) {
 	HBox hbox2 = new HBox(10);
 	AdminButtons.addUserButton(hbox, grid, x, y);
 	AdminButtons.searchUserButton(hbox, grid, x, y);
-	AdminButtons.checkStorageButton(hbox2, grid, x, y);
+	//AdminButtons.checkStorageButton(hbox2, grid, x, y);
 	AdminButtons.removeUserButton(hbox, grid, x, y);
 	AdminButtons.refreshButton(hbox, grid, x, y);
 	AdminButtons.editButton(hbox, grid, x, y);
-	AdminButtons.addStorageAccess(hbox2, grid, x, y);
+	//AdminButtons.addStorageAccess(hbox2, grid, x, y);
 	hbox.setAlignment(Pos.TOP_RIGHT);
 	TitledPane users = new TitledPane();
 	users.setCollapsible(false);
-	TitledPane storage = new TitledPane();
-	storage.setCollapsible(false);
+	//TitledPane storage = new TitledPane();
+	//storage.setCollapsible(false);
 //	users.setPrefWidth(20);
 //	users.setPrefHeight(20);
 	//storage.setPrefHeight(40);
-	storage.setPrefWidth(1);
+	//storage.setPrefWidth(1);
 	hbox2.setSpacing(30);
     hbox2.setPadding(new Insets(10,0,10,75));
 	users.setText("User Info");
-	storage.setText("Storage Info");
+	///storage.setText("Storage Info");
 	users.setContent(hbox);
-	storage.setContent(hbox2);
+	//storage.setContent(hbox2);
 	grid.add(users, x, y);
-	grid.add(storage, x-1, y);
+	//grid.add(storage, x-1, y);
 	
 }
 public static void checkAvailability(VBox vbox,GridPane grid) {

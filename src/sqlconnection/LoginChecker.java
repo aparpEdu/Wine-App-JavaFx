@@ -39,6 +39,7 @@ public class LoginChecker {
 					Account.getInstance().setUsername(username);
 					Account.getInstance().setPassword(password);
 					Account.getInstance().setRole(rs.getString("roles"));
+					Account.getInstance().setId(rs.getInt("user_id"));
 					con.close();
 					return true;
 				}

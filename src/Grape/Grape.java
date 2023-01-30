@@ -8,6 +8,7 @@ public class Grape {
 	private Color grapeColor;
 	private int winePerKg;
 	private Variety grapeVariety;	
+	private int id;
 	public Grape(Color grapeColor, Variety grapeVariety) {
 		
 		this.grapeColor = grapeColor;
@@ -31,6 +32,12 @@ public class Grape {
 	}
 	public void setGrapeVariety(Variety grapeVariety) {
 		this.grapeVariety = grapeVariety;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

@@ -3,6 +3,9 @@ package controlers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import Storage.Storage;
+import Users.Account;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -15,6 +18,11 @@ public class StorageAccessController {
 	private static final String TABLE_NAME = "userss.\"storageaccess\"";
 	private static final String TABLE_NAME2 = "userss.\"storage\"";
 	private static final String TABLE_NAME3 = "userss.\"Users\"";
+	private static final String TABLE_NAME4 = "userss.\"bottle\"";
+	private static final String TABLE_NAME5 = "userss.\"grape\"";
+	private static final String TABLE_NAME6 = "userss.\"wine\"";
+	private static final String TABLE_NAME7 = "userss.\"bottled_wine\"";
+	private static final String TABLE_NAME8 = "userss.\"storaged_goods\"";
 	private static final String CONDITION_NAME = "storage_name";
 	private static final String CONDITION_NAME2 = "username";
 	private static final String columnName ="storage_id";
@@ -90,6 +98,54 @@ public class StorageAccessController {
 		
 	    
 	}
+//	public void checkUserStorage() throws SQLException {
+//		String[] joinConditions = {"storage_id","storage_id","bottle_id","grape_id","wine_id","bottled_wineid"};
+//		String[] tableNames = {TABLE_NAME,TABLE_NAME2,TABLE_NAME8,TABLE_NAME8,TABLE_NAME8,TABLE_NAME8};
+//		String[] tableNames3 = {TABLE_NAME2,TABLE_NAME8,TABLE_NAME4,TABLE_NAME5,TABLE_NAME6,TABLE_NAME7};
+//		//String[] tableNames4 = {TABLE_NAME2,TABLE_NAME4,TABLE_NAME5,TABLE_NAME6,TABLE_NAME7};
+//		int condition = Account.getInstance().getId();
+//		ResultSet result = SQLHelper.selectWithJoin(TABLE_NAME,condition,columnName2,joinConditions,tableNames,tableNames3);
+//		
+//	    if(result==null) return;
+//	   
+//	    ObservableList<String> data = FXCollections.observableArrayList();
+//	    while (result.next()) {
+//	    	if (result.isBeforeFirst()) {
+//	    		  System.out.println("No data found in the result set");
+//	    		} else {
+//	    		  while (result.next()) {
+//	    		    String storageName = result.getString("storage_id");
+//	    		    data.add(storageName);
+//	    		  }
+//	    		 System.out.println(data);
+//	    		}
+//	    }
+//	   
+//	}
+	public void checkUserStorage() throws SQLException {
+	    String[] joinConditions = {"storage_id","storage_id","bottle_id","grape_id","wine_id","bottled_wineid"};
+	    String[] tableNames = {TABLE_NAME,TABLE_NAME2,TABLE_NAME8,TABLE_NAME8,TABLE_NAME8,TABLE_NAME8};
+	    String[] tableNames3 = {TABLE_NAME2,TABLE_NAME8,TABLE_NAME4,TABLE_NAME5,TABLE_NAME6,TABLE_NAME7};
+	    int condition = Account.getInstance().getId();
+	    ResultSet result = SQLHelper.selectWithJoin(TABLE_NAME,condition,columnName2,joinConditions,tableNames,tableNames3);
+
+	    if(result==null) return;
+	   
+	    ObservableList<Integer> data = FXCollections.observableArrayList();
+	    while (result.next()) {
+	        //String storageName = result.getString("storage_id");
+	    	int id = result.getInt("grape_kg");
+	        data.add(id);
+	    	
+	    }
+	    
+	    if (data.isEmpty()) {
+	        System.out.println("No data found in the result set");
+	    } else {
+	        System.out.println(data);
+	    }
+	}
+	
 	
 	
 	

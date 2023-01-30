@@ -1,10 +1,15 @@
 package Users;
 
+import properties.StorageAccessProperties;
+
 public  class Account {
+	private int id;
 	private String username;
 	private String password;
 	private String role;
+	private StorageAccessProperties storage;
 	private static Account instance = null;
+	
 	
 	private Account() {
 		
@@ -39,6 +44,18 @@ public  class Account {
 	}
 	public static void resetInstance() {
 		instance = null;
+	}
+	public StorageAccessProperties getStorage() {
+		return storage;
+	}
+	public void setStorage(StorageAccessProperties storage) {
+		this.storage = storage;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

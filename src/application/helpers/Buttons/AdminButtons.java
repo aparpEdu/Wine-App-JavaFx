@@ -270,15 +270,13 @@ public class AdminButtons extends Buttons {
 				final ToggleGroup group = new ToggleGroup();
 				RadioButton rb1 = new RadioButton("By Role");
 				RadioButton rb2 = new RadioButton("By Username");
-				RadioButton rb3 = new RadioButton("By ID");
 				rb1.setToggleGroup(group);
 				rb1.setSelected(true);
 				rb1.setUserData("role");
 				rb1.requestFocus();
 				rb2.setToggleGroup(group);
 				rb2.setUserData("username");
-				rb3.setToggleGroup(group);
-				rb3.setUserData("id");
+			
 				Button search = new Button("Search");
 				Label labelRole = new Label("Role: ");
 				Label labelID = new Label("ID: ");
@@ -301,7 +299,7 @@ public class AdminButtons extends Buttons {
 				VBox vbox = new VBox();
 				vbox.setPadding(new Insets(0, 120, 0, 120));
 				vbox.setSpacing(5);
-				vbox.getChildren().addAll(rb1, rb2, rb3);
+				vbox.getChildren().addAll(rb1, rb2);
 				HBox searchHBox = new HBox();
 				search.setOnAction(new EventHandler<ActionEvent>() {
 					@Override

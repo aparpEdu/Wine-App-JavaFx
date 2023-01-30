@@ -9,6 +9,8 @@ import java.util.Map;
 import Grape.GrapeVariety;
 import Users.Account;
 import controlers.AccountController;
+import controlers.BottleController;
+import controlers.GrapeController;
 import controlers.StorageAccessController;
 import enums.Color;
 import enums.Variety;
@@ -27,7 +29,9 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import properties.BottleProperties;
 import properties.GrapeEvaluationProperty;
+import properties.GrapeProperties;
 import properties.PickedVariety;
 import properties.StorageAccessProperties;
 import properties.UserProperties;
@@ -114,13 +118,53 @@ public class Tables {
 	}
 	
 
-	public static void storageInfoTable(GridPane grid, int x, int y) {
+	@SuppressWarnings("unchecked")
+	public static void bottlesInfoTable(GridPane grid, int x, int y,String condition,String startDate,String endDate,String choice) throws SQLException {
 		StorageUI.checkAvailability(vbox1, grid);
-		TableView table = new TableView();
-		TableColumn bottleSize = new TableColumn("Bottle Size");
-		TableColumn bottleQuantity = new TableColumn("Quantity");
-		TableColumn bottleDate = new TableColumn("Date");
-		table.getColumns().addAll(bottleSize, bottleQuantity, bottleDate);
+		TableView<BottleProperties> table = new TableView<BottleProperties>();
+		TableColumn<BottleProperties, String> bottleSize = new TableColumn<BottleProperties, String>("Bottle Size");
+		TableColumn<BottleProperties, String> bottleQuantity = new TableColumn<BottleProperties, String>("Quantity");
+		TableColumn<BottleProperties, String> bottleDate = new TableColumn<BottleProperties, String>("Date");
+		bottleSize.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("Bottle_size"));
+		bottleQuantity.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("quantity"));
+		bottleDate.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("date"));
+		BottleController bc = new BottleController();
+		if(choice.equalsIgnoreCase("all")) {
+			bc.searchBottles(table,startDate,endDate);
+			table.getColumns().addAll(bottleSize, bottleQuantity, bottleDate);
+		}
+		else if(choice.equalsIgnoreCase("specific")) {
+			bc.searchSpecific(table,startDate,endDate,condition);
+			table.getColumns().addAll(bottleSize, bottleQuantity, bottleDate);
+		}
+		
+		table.setPrefSize(600, 600);
+		VBox vbox = new VBox();
+		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(0, 40, 0, 100));
+		vbox.setPrefSize(620, 600);
+		vbox.getChildren().addAll(table);
+		grid.add(vbox, x, y);
+		vbox1 = vbox;
+	}
+	public static void bottlesInfoTable(GridPane grid, int x, int y,String condition,String startDate,String endDate) throws SQLException {
+		StorageUI.checkAvailability(vbox1, grid);
+		TableView<BottleProperties> table = new TableView<BottleProperties>();
+		TableColumn<BottleProperties, String> bottleSize = new TableColumn<BottleProperties, String>("Bottle Size");
+		TableColumn<BottleProperties, String> bottleQuantity = new TableColumn<BottleProperties, String>("Quantity");
+		TableColumn<BottleProperties, String> bottleDate = new TableColumn<BottleProperties, String>("Date");
+		bottleSize.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("Bottle_size"));
+		bottleQuantity.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("quantity"));
+		bottleDate.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("date"));
+		BottleController bc = new BottleController();
+		
+		
+		
+		
+			bc.searchSpecific(table,startDate,endDate,condition);
+			table.getColumns().addAll(bottleSize, bottleQuantity, bottleDate);
+		
+		
 		table.setPrefSize(600, 600);
 		VBox vbox = new VBox();
 		vbox.setSpacing(5);
@@ -131,14 +175,32 @@ public class Tables {
 		vbox1 = vbox;
 	}
 
-	public static void storedGrapesTable(GridPane grid, int x, int y) {
+	public static void storedGrapesTable(GridPane grid, int x, int y,String startDate,String endDate,String condition,String choice) throws SQLException {
 		StorageUI.checkAvailability(vbox1, grid);
-		TableView table = new TableView();
-		TableColumn grapeVariety = new TableColumn("Variety");
-		TableColumn kg = new TableColumn("KG");
-		TableColumn color = new TableColumn("Color");
-		TableColumn grapeDate = new TableColumn("Date");
-		table.getColumns().addAll(grapeVariety, color, kg, grapeDate);
+		TableView<GrapeProperties> table = new TableView<GrapeProperties>();
+		TableColumn<GrapeProperties,String> grapeVariety = new TableColumn<GrapeProperties, String>("Variety");
+		TableColumn<GrapeProperties, String> kg = new TableColumn<GrapeProperties, String>("KG");
+		TableColumn<GrapeProperties, String> color = new TableColumn<GrapeProperties, String>("Color");
+		TableColumn<GrapeProperties, String> WKG = new TableColumn<GrapeProperties, String>("WKG");
+		TableColumn<GrapeProperties, String> grapeDate = new TableColumn<GrapeProperties, String>("Date");
+		grapeVariety.setCellValueFactory(new PropertyValueFactory<GrapeProperties, String>("variety"));
+		kg.setCellValueFactory(new PropertyValueFactory<GrapeProperties, String>("kg"));
+		color.setCellValueFactory(new PropertyValueFactory<GrapeProperties, String>("color"));
+		WKG.setCellValueFactory(new PropertyValueFactory<GrapeProperties, String>("wkg"));
+		grapeDate.setCellValueFactory(new PropertyValueFactory<GrapeProperties, String>("date"));
+		GrapeController gp = new GrapeController();
+		if(choice.equalsIgnoreCase("all")) {
+		gp.searchGrapes(table, startDate, endDate);
+		table.getColumns().addAll(grapeVariety, color, kg,WKG ,grapeDate);
+		}
+		else if(choice.equalsIgnoreCase("var")) {
+			gp.searchByVariety(table, startDate, endDate, condition);
+			table.getColumns().addAll(grapeVariety, color, kg,WKG ,grapeDate);
+			}
+		else if(choice.equalsIgnoreCase("color")) {
+			gp.searchByColor(table, startDate, endDate, condition);
+			table.getColumns().addAll(grapeVariety, color, kg,WKG ,grapeDate);
+		}
 		table.setPrefSize(800, 600);
 		VBox vbox = new VBox();
 		vbox.setSpacing(5);

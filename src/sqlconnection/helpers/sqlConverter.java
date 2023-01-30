@@ -11,9 +11,8 @@ public class sqlConverter {
 		
 		try{
 			
-			
-			Double d = Double.parseDouble((String) object);
-			
+			Float d = Float.parseFloat(object.toString());
+			System.out.println("Converted");
 			return Types.NUMERIC;
 		}
 		catch(Exception e) {
@@ -21,11 +20,10 @@ public class sqlConverter {
 		}
 		
 	}
-public static double doubleParse(Object object) {
+public static double floatParse(Object object) {
 		
 		try{
-			System.out.println(object);
-			Double d = Double.valueOf((String) object);
+						Float d =Float.parseFloat(object.toString());
 			System.out.println("d = " + d);
 			return d;
 		}

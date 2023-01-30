@@ -4,7 +4,9 @@ import java.sql.SQLException;
 
 import application.helpers.StorageUI;
 import application.helpers.Tables;
+import controlers.BottleController;
 import controlers.GrapeController;
+import controlers.StorageAccessController;
 import enums.BottleSize;
 import enums.Color;
 import enums.Variety;
@@ -61,6 +63,20 @@ public class StorageButtons {
 					    );
 				cb.setItems(options);
 				cb.getSelectionModel().selectFirst();
+				check.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent e) {
+						
+						BottleController bc  = new BottleController();
+						try {
+							bc.storeBottles(cb.getSelectionModel().getSelectedItem().toString(), quantity.getValue());
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
 				TextField t = new TextField();
 				t.setPrefSize(100, 0);
 				HBox hbox2 = new HBox();
@@ -185,7 +201,7 @@ public class StorageButtons {
 					@Override
 					public void handle(ActionEvent e) {
 						
-						Tables.storedGrapesTable(grid, x-1, y+5);
+						//. Tables.storedGrapesTable(grid, x-1, y+5);
 					}
 				});
 				varietyHbox.getChildren().addAll(varietyCB,colorCB,sizeCB);
@@ -275,8 +291,30 @@ public class StorageButtons {
 
 					@Override
 					public void handle(ActionEvent e) {
-						
-						Tables.storedGrapesTable(grid, x-1, y+5);
+						if(tg.getSelectedToggle() == everyVariety) {
+						try {
+							Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),null,"all");
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						}
+						else if(tg.getSelectedToggle() == byVariety) {
+							try {
+								Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),varietyCB.getSelectionModel().getSelectedItem().toString(),"var");
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						else if(tg.getSelectedToggle() == byColor) {
+							try {
+								Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),colorCB.getSelectionModel().getSelectedItem().toString(),"color");
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 					}
 				});
 				varietyHbox.getChildren().addAll(varietyCB,colorCB);
@@ -362,9 +400,10 @@ public class StorageButtons {
 				RadioButton bySize = new RadioButton("By Size");
 				RadioButton everySize = new RadioButton("All Sizes");
 				everySize.setToggleGroup(tg);
+				bySize.setToggleGroup(tg);
 				everySize.setUserData("yes");
 				bySize.setUserData("no");
-				bySize.setToggleGroup(tg);
+				
 				tg.selectToggle(everySize);
 				Label sizeLabel = new Label("Size: ");
 				//sizeLabel.setPrefWidth(70);
@@ -393,36 +432,33 @@ public class StorageButtons {
 				dateLabels.getChildren().addAll(firstDateLabel,secondDateLabel);
 				date.getChildren().addAll(dayOne,dayTwo);
 				sizeLabel.setPrefWidth(100);
-				if (tg.getSelectedToggle() != null) {
-					if (tg.getSelectedToggle().getUserData().toString().equals("yes")) {
-						sizeHbox.setDisable(true);
-						
-					} else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("no") == 0) {
-						sizeHbox.setDisable(false);
-					}
-					
-				}
-				tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-				    public void changed(ObservableValue<? extends Toggle> ov,
-				        Toggle old_toggle, Toggle new_toggle) {
-				            if (tg.getSelectedToggle() != null) {
-				            	if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("no") == 0) {
-				            		sizeHbox.setDisable(false);
-								}
-				            	else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("yes") == 0) {
-				            		sizeHbox.setDisable(true);
-				            	}
-				            }                
-				        }
-				});
+			
+				
 				searchBottleButton.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent e) {
-
-						Tables.storageInfoTable(grid, x-1, y+5);
+						if(tg.getSelectedToggle() == everySize) {
+						
+						try {
+							tg.selectToggle(everySize);
+							Tables.bottlesInfoTable(grid, x-1, y+5,sizeCB.getSelectionModel().getSelectedItem().toString(),dayOne.getValue().toString(),dayTwo.getValue().toString(),"all");
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+						else if(tg.getSelectedToggle() == bySize) {
+							try {
+								Tables.bottlesInfoTable(grid, x-1, y+5,sizeCB.getSelectionModel().getSelectedItem().toString(),dayOne.getValue().toString(),dayTwo.getValue().toString());
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 					}
 				});
+
 				sizeHbox.getChildren().addAll(sizeLabel,sizeCB);
 				vbox.getChildren().addAll(everySize,bySize,sizeHbox,dateLabels,date,searchBottleButton);
 				vbox.setSpacing(5);
