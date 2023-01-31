@@ -1,42 +1,21 @@
 package application.helpers.Buttons;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-
 import application.forms.AdminForm;
 import application.forms.LoggedForm;
 import application.forms.StorageForm;
 import application.forms.WineProductionForm;
 import application.helpers.StorageUI;
-import application.helpers.Tables;
-import enums.BottleSize;
-import enums.Color;
 import enums.Roles;
-import enums.Variety;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Buttons {
-	private static VBox vbox1 = null;
+//	private static VBox vbox1 = null;
 //	static HBox hboxA = null;
 
 	public static void backButton(GridPane grid, final Stage stage, final LoggedForm loggedForm, int x, int y) {

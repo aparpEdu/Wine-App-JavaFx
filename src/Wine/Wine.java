@@ -3,13 +3,12 @@ package Wine;
 import java.util.TreeMap;
 
 import Grape.Grape;
-import enums.Color;
 
 public class Wine {
 	private int wineQuantity;
 	TreeMap<Integer,Grape> grapes=new TreeMap<Integer,Grape>();
 	private int id;
-	public Wine(TreeMap grapes)
+	public Wine(TreeMap<Integer, Grape> grapes)
 	{this.grapes=grapes;
 		
 	}

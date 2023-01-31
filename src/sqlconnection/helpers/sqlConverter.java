@@ -11,8 +11,9 @@ public class sqlConverter {
 		
 		try{
 			
+			@SuppressWarnings("unused")
 			Float d = Float.parseFloat(object.toString());
-			System.out.println("Converted");
+			
 			return Types.NUMERIC;
 		}
 		catch(Exception e) {
@@ -24,7 +25,7 @@ public static double floatParse(Object object) {
 		
 		try{
 						Float d =Float.parseFloat(object.toString());
-			System.out.println("d = " + d);
+			
 			return d;
 		}
 		catch(Exception e) {

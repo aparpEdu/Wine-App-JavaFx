@@ -1,7 +1,5 @@
 package application.helpers;
 
-import javax.swing.JOptionPane;
-
 import Users.Account;
 import application.forms.LoggedForm;
 import application.forms.LoginForm;

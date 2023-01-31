@@ -1,20 +1,15 @@
 package controlers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import Users.Account;
-import application.helpers.Tables;
 import enums.Roles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import properties.UserProperties;
-import sqlconnection.JDBCON;
 import sqlconnection.helpers.SQLHelper;
 
 public class AccountController {

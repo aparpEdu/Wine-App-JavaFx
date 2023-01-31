@@ -13,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import properties.BottleProperties;
 import properties.GrapeProperties;
-import properties.UserProperties;
 import sqlconnection.helpers.SQLHelper;
 
 public class GrapeController {
@@ -248,7 +245,7 @@ public void evaluateGrape(String value,String variety,String kg) throws SQLExcep
 	
 }
 public TreeMap<Integer,Grape> getAll() throws SQLException
-{TreeMap gr=new TreeMap<Integer,Grape>();
+{TreeMap<Integer, Grape> gr=new TreeMap<Integer,Grape>();
 	ResultSet result=SQLHelper.selectAllFromTable(TABLE_NAME);
 	if(result==null) return null;
 	

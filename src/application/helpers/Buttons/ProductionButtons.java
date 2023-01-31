@@ -3,13 +3,11 @@ package application.helpers.Buttons;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import application.forms.StorageForm;
 import application.helpers.StorageUI;
 import application.helpers.Tables;
 import controlers.GrapeController;
 import controlers.WineController;
 import enums.BottleSize;
-import enums.Color;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,8 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import properties.GrapeProperties;
 
 public class ProductionButtons {
 	private static VBox vbox1 = null;
@@ -50,7 +46,7 @@ public class ProductionButtons {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				VBox vbox = new VBox();
+				
 				try {
 					produceWine(grid, x, y);
 				} catch (SQLException e1) {

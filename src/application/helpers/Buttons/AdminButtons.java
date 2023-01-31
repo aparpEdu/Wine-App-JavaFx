@@ -6,9 +6,7 @@ import application.helpers.NumberTextField;
 import application.helpers.StorageUI;
 import application.helpers.Tables;
 import controlers.AccountController;
-import controlers.StorageAccessController;
 import enums.Roles;
-import enums.Variety;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,7 +24,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import properties.StorageProperties;
 
 public class AdminButtons extends Buttons {
 
@@ -37,118 +34,9 @@ public class AdminButtons extends Buttons {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void addStorageAccess(HBox hbox, final GridPane grid, final int x, final int y) {
-		Button checkStorageButton = new Button("Add Storage Access");
-		checkStorageButton.setPrefSize(150, 60);
-		checkStorageButton.setOnAction(new EventHandler<ActionEvent>() {
+	
 
-			@Override
-			public void handle(ActionEvent e) {
-				StorageUI.checkAvailability(vbox1, grid);
-
-				Button add = new Button("Add");
-				Label userLabel = new Label("Username: ");
-				Label storageLabel = new Label("Storage: ");
-				userLabel.setPrefSize(100, 0);
-				storageLabel.setPrefSize(100, 0);
-				TextField t = new TextField();
-				t.setPrefSize(100, 0);
-				ComboBox<String> storageCB = new ComboBox<String>();
-				storageCB.setPrefWidth(100);
-				HBox hbox2 = new HBox();
-				HBox hbox3 = new HBox();
-				hbox2.setSpacing(5);
-				hbox3.setSpacing(5);
-				hbox2.getChildren().add(userLabel);
-				hbox2.getChildren().add(t);
-				hbox3.getChildren().add(storageLabel);
-				StorageAccessController  sac = new StorageAccessController();
-				try {
-					sac.viewAll(storageCB);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				storageCB.getSelectionModel().select(0);
-				hbox3.getChildren().add(storageCB);
-				add.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						
-						sac.grantAccess(t.getText(), storageCB.getSelectionModel().getSelectedItem().toString());
-
-					}
-				});
-				VBox vbox = new VBox();
-				vbox.setPadding(new Insets(0, 120, 0, 120));
-				vbox.setSpacing(5);
-				
-				vbox.getChildren().add(hbox2);
-				vbox.getChildren().add(hbox3);
-				vbox.getChildren().add(add);
-				grid.add(vbox, x, y + 5);
-				
-				vbox1 = vbox;
-
-			}
-		});
-		hbox.getChildren().add(checkStorageButton);
-
-	}
-
-	public static void checkStorageButton(HBox hbox, final GridPane grid, final int x, final int y) {
-		Button checkStorageButton = new Button("Check Storage Access");
-		checkStorageButton.setPrefSize(150, 60);
-		checkStorageButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent e) {
-				StorageUI.checkAvailability(vbox1, grid);
-				ComboBox<String> storageCB = new ComboBox<String>();
-				StorageAccessController sac = new StorageAccessController();
-				try {
-					sac.viewAll(storageCB);
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				storageCB.getSelectionModel().select(0);
-
-				final Button check = new Button("Check");
-				Label label = new Label("storage: ");
-				
-						check.setOnAction(new EventHandler<ActionEvent>() {
-
-							@Override
-							public void handle(ActionEvent e) {
-								try {
-									Tables.storageTable(grid, "storage_name", storageCB.getSelectionModel().getSelectedItem().toString());
-								} catch (SQLException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-
-							}
-						});
-
-				HBox hbox2 = new HBox();
-				hbox2.setSpacing(5);
-				hbox2.getChildren().addAll(label,storageCB);
-				
-				
-				VBox vbox = new VBox();
-				vbox.setPadding(new Insets(0, 120, 0, 120));
-				vbox.setSpacing(5);
-				vbox.getChildren().add(hbox2);
-				vbox.getChildren().add(check);
-				grid.add(vbox, x, y + 5);
-				vbox1 = vbox;
-
-			}
-		});
-		hbox.getChildren().add(checkStorageButton);
-
-	}
+	
 
 	public static void editButton(HBox hbox, final GridPane grid, final int x, final int y) {
 		Button editButton = new Button("Edit User");

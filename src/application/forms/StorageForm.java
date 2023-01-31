@@ -1,12 +1,10 @@
 package application.forms;
 
 import application.helpers.StorageUI;
-import application.helpers.Tables;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class StorageForm {

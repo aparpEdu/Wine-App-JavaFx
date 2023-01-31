@@ -1,8 +1,5 @@
 package Grape;
 
-import enums.Color;
-import enums.Variety;
-
 
 public class Grape {
 	

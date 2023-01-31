@@ -10,7 +10,7 @@ public enum BottleSize {
 	 LARGE(750);
 
 	    private int value;
-	    private static Map map = new HashMap<>();
+	    private static Map<Object, Object> map = new HashMap<>();
 
 	    private BottleSize(int value) {
 	        this.value = value;

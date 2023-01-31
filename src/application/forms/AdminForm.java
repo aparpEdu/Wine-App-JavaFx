@@ -4,16 +4,10 @@ import java.sql.SQLException;
 
 import application.helpers.StorageUI;
 import application.helpers.Tables;
-import application.helpers.Buttons.Buttons;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AdminForm {

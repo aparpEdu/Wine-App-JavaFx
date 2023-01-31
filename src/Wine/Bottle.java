@@ -1,7 +1,5 @@
 package Wine;
 
-import enums.BottleSize;
-
 public class Bottle {
 private String size;
 

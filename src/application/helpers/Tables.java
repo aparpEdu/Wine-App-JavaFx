@@ -5,35 +5,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Storage.Storage;
 import controlers.AccountController;
 import controlers.BottleController;
 import controlers.GrapeController;
-import controlers.StorageAccessController;
 import controlers.WineController;
 import enums.Color;
 import enums.Variety;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.util.converter.FloatStringConverter;
 import properties.BottleProperties;
 import properties.GrapeProperties;
-import properties.StorageAccessProperties;
 import properties.UserProperties;
 import properties.VarietyProperty;
 import properties.WineProperty;
@@ -97,27 +87,6 @@ public class Tables {
 		vbox1 = vbox;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static void storageTable(GridPane grid,String choice,String condition) throws SQLException {
-		StorageAccessController sac = new StorageAccessController();
-		StorageUI.checkAvailability(vbox1, grid);
-		TableView<StorageAccessProperties> table = new TableView<StorageAccessProperties>();
-		TableColumn<StorageAccessProperties, String> username = new TableColumn<StorageAccessProperties, String>("Username");
-		TableColumn<StorageAccessProperties, String> storage_name = new TableColumn<StorageAccessProperties, String>("Storage name");
-		username.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("username"));
-		storage_name.setCellValueFactory(new PropertyValueFactory<StorageAccessProperties, String>("storage_name"));
-
-		sac.checkAccess(table, choice, condition);
-		table.getColumns().addAll(storage_name, username);
-		table.setPrefSize(750, 300);
-		VBox vbox = new VBox();
-		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(0, 230, 0, 100));
-		vbox.setPrefSize(750, 1000);
-		vbox.getChildren().addAll(table);
-		grid.add(vbox, 5, 5);
-		vbox1 = vbox;
-	}
 	
 
 	@SuppressWarnings("unchecked")
@@ -373,9 +342,9 @@ public class Tables {
 							if (item.getColor() == Color.WHITE) {
 								for (VarietyProperty variety : myClassList) {
 									if (variety.getColor() == Color.RED) {
-										// Get the checkbox corresponding to this variety
+									
 										CheckBox checkbox = checkboxMap.get(variety);
-										// Disable the checkbox
+									
 										checkbox.setDisable(true);
 									}
 								}
@@ -383,9 +352,9 @@ public class Tables {
 							} else if (item.getColor() == Color.RED) {
 								for (VarietyProperty variety : myClassList) {
 									if (variety.getColor() == Color.WHITE) {
-										// Get the checkbox corresponding to this variety
+									
 										CheckBox checkbox = checkboxMap.get(variety);
-										// Disable the checkbox
+										
 										checkbox.setDisable(true);
 									}
 								}
@@ -398,9 +367,9 @@ public class Tables {
 								if (whiteCheckedCounter == 0) {
 									for (VarietyProperty variety : myClassList) {
 										if (variety.getColor() == Color.RED) {
-											// Get the checkbox corresponding to this variety
+											
 											CheckBox checkbox = checkboxMap.get(variety);
-											// Enable the checkbox
+											
 											checkbox.setDisable(false);
 										}
 									}
@@ -410,9 +379,9 @@ public class Tables {
 								if (redCheckedCounter == 0) {
 									for (VarietyProperty variety : myClassList) {
 										if (variety.getColor() == Color.WHITE) {
-											// Get the checkbox corresponding to this variety
+											
 											CheckBox checkbox = checkboxMap.get(variety);
-											// Enable the checkbox
+											
 											checkbox.setDisable(false);
 										}
 									}

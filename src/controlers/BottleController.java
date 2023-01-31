@@ -2,8 +2,6 @@ package controlers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import properties.BottleProperties;
-import properties.UserProperties;
 import sqlconnection.helpers.SQLHelper;
 
 public class BottleController {
@@ -57,7 +54,6 @@ public class BottleController {
 		
 	}
 	public void searchSpecific(TableView<BottleProperties> table,String startDate,String endDate,String condition) throws SQLException {
-		System.out.println("dd");
 		ResultSet result = SQLHelper.selectAllDateCondition("storaged_goods_with_dates",startDate,endDate, condition,KEY_CONDITION);
 	    if(result==null) return;
 	   
@@ -72,10 +68,10 @@ public class BottleController {
 	    }
 	    table.setItems(data);
 	}
-	public ArrayList getAllBottle() throws SQLException
+	public ArrayList<Bottle> getAllBottle() throws SQLException
 	{
 		ResultSet rs=SQLHelper.selectAllFromTable(TABLE_NAME);
-		ArrayList al=new ArrayList<Bottle>();
+		ArrayList<Bottle> al=new ArrayList<Bottle>();
 		while(rs.next())
 		{
 			Bottle b=new Bottle(rs.getString("bottle_size"));

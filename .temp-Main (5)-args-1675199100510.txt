@@ -8,4 +8,6 @@ javafx.controls,javafx.fxml
 -classpath
 "C:\\Users\\ShittyRestaurant\\eclipse-workspace\\WineProject\\bin;C:\\Users\\ShittyRestaurant\\eclipse-workspace\\WineProject\\postgresql-42.5.1.jar;C:\\New folder (5)\\apache-log4j-2.19.0-bin\\log4j-api-2.19.0.jar;C:\\New folder (5)\\apache-log4j-2.19.0-bin\\log4j-core-2.19.0.jar"
 -XX:+ShowCodeDetailsInExceptionMessages
+--add-modules
+jdk.jcmd
 application.Main

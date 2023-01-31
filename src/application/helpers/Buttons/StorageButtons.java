@@ -6,7 +6,6 @@ import application.helpers.StorageUI;
 import application.helpers.Tables;
 import controlers.BottleController;
 import controlers.GrapeController;
-import controlers.StorageAccessController;
 import enums.BottleSize;
 import enums.Color;
 import enums.Variety;
@@ -45,7 +44,7 @@ public class StorageButtons {
 				StorageUI.checkAvailability(vbox1, grid);
 				//Tables.removeTable(grid);
 
-				ComboBox cb = new ComboBox();
+				ComboBox<String> cb = new ComboBox<String>();
 			    cb.setPrefWidth(155);
 			    Spinner<Integer> quantity = new Spinner<Integer>(1,99,1);
 				Button check = new Button("Store");
@@ -464,7 +463,32 @@ public class StorageButtons {
 				dateLabels.getChildren().addAll(firstDateLabel,secondDateLabel);
 				date.getChildren().addAll(dayOne,dayTwo);
 				sizeLabel.setPrefWidth(100);
-			
+				if (tg.getSelectedToggle() != null) {
+					if (tg.getSelectedToggle().getUserData().toString().equals("yes")) {
+						sizeCB.setDisable(true);
+						
+						
+					} else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("no") == 0) {
+						sizeCB.setDisable(false);
+					}
+					
+				}
+				tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+				    public void changed(ObservableValue<? extends Toggle> ov,
+				        Toggle old_toggle, Toggle new_toggle) {
+				            if (tg.getSelectedToggle() != null) {
+				            	if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("no") == 0) {
+				            		sizeCB.setDisable(false);
+				            		
+								}
+				            	else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("yes") == 0) {
+				            		sizeCB.setDisable(true);
+				            		
+				            	}
+				            	
+				            }                
+				        }
+				});
 				
 				searchBottleButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -473,7 +497,7 @@ public class StorageButtons {
 						if(tg.getSelectedToggle() == everySize) {
 						
 						try {
-							tg.selectToggle(everySize);
+							
 							Tables.bottlesInfoTable(grid, x-1, y+5,sizeCB.getSelectionModel().getSelectedItem().toString(),dayOne.getValue().toString(),dayTwo.getValue().toString(),"all");
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block

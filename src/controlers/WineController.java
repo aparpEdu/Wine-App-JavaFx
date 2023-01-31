@@ -2,17 +2,12 @@ package controlers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Grape.Grape;
-import Storage.Storage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import properties.GrapeProperties;
-import properties.VarietyProperty;
 import properties.WineProperty;
 import sqlconnection.helpers.SQLHelper;
 
@@ -147,9 +142,9 @@ public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size
 	String[] arr1= {"wineperkg","grape_kg"};
 
 		
-	   float winekg1=Float.parseFloat(wkg1);
-	   float winekg2=Float.parseFloat(wkg2);
-	   float kg=Float.parseFloat(kgneeded1);
+//	   float winekg1=Float.parseFloat(wkg1);
+//	   float winekg2=Float.parseFloat(wkg2);
+//	   float kg=Float.parseFloat(kgneeded1);
 	   String[] arr= {kg1,wkg1};
 	   String[] arr2= {kg2,wkg2};
 	   Float newkg1=Float.parseFloat(kg1)-Float.parseFloat(kgneeded1);
