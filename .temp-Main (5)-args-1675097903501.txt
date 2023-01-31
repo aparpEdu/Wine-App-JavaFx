@@ -1,0 +1,11 @@
+--module-path
+"C:\\Java\\javafx-sdk-19\\lib"
+--add-modules
+javafx.controls,javafx.fxml
+-Dfile.encoding=UTF-8
+-p
+"C:\\Java\\javafx-sdk-19\\lib\\javafx-swt.jar;C:\\Java\\javafx-sdk-19\\lib\\javafx.base.jar;C:\\Java\\javafx-sdk-19\\lib\\javafx.controls.jar;C:\\Java\\javafx-sdk-19\\lib\\javafx.fxml.jar;C:\\Java\\javafx-sdk-19\\lib\\javafx.graphics.jar;C:\\Java\\javafx-sdk-19\\lib\\javafx.media.jar;C:\\Java\\javafx-sdk-19\\lib\\javafx.swing.jar;C:\\Java\\javafx-sdk-19\\lib\\javafx.web.jar;C:\\Users\\ShittyRestaurant\\.p2\\pool\\plugins\\org.eclipse.fx.ide.css.jfx8_3.8.0.202204150904.jar"
+-classpath
+"C:\\Users\\ShittyRestaurant\\eclipse-workspace\\WineProject\\bin;C:\\Users\\ShittyRestaurant\\eclipse-workspace\\WineProject\\postgresql-42.5.1.jar"
+-XX:+ShowCodeDetailsInExceptionMessages
+application.Main

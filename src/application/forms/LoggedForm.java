@@ -1,5 +1,8 @@
 package application.forms;
 
+import java.sql.SQLException;
+
+import Storage.StorageFiller;
 import application.helpers.StorageUI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,7 +17,7 @@ public class LoggedForm {
     
 	private Stage stage;
 
-	public void formLoad(final Stage secondStage) {
+	public void formLoad(final Stage secondStage) throws SQLException {
 		this.stage = secondStage;
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_LEFT);
@@ -30,12 +33,19 @@ public class LoggedForm {
 		secondStage.setScene(scene);
 		secondStage.show();
 		
+		loadResources();
 		
 
 	}
 	public void closeStage() {
         stage.close();
     }
+	private void loadResources() throws SQLException
+	{
+		StorageFiller s=new StorageFiller();
+		s.fillGrape();
+		s.fillBottle();
+	}
 	
 
 	

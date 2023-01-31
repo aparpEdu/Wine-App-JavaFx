@@ -2,9 +2,11 @@ package controlers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import Wine.Bottle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -23,7 +25,7 @@ public class BottleController {
 	public void storeBottles(String size,int quantity) throws SQLException {
 		Map<String,Object> data = new HashMap<String, Object>();
 		data.put("bottle_size", size);
-		data.put("bottle_quantity", quantity);
+		for(int i=0;i<quantity;i++)
 		SQLHelper.insertData(TABLE_NAME, data);
 		
 		
@@ -38,11 +40,10 @@ public class BottleController {
 		    ObservableList<BottleProperties> data = FXCollections.observableArrayList();
 		    while (result.next()) {
 		        String size = result.getString("bottle_size");
-		        int quantity = result.getInt("bottle_quantity");
+
 		        String date = result.getString("date_stored");
 		        BottleProperties bp = new BottleProperties();
 		        bp.setBottle_size(size);
-		        bp.setQuantity(String.valueOf(quantity));
 		        bp.setDate(date);
 		        data.add(bp);
 		    }
@@ -60,15 +61,26 @@ public class BottleController {
 	    ObservableList<BottleProperties> data = FXCollections.observableArrayList();
 	    while (result.next()) {
 	        String size = result.getString("bottle_size");
-	        int quantity = result.getInt("bottle_quantity");
 	        String date = result.getString("date_stored");
 	        BottleProperties bp = new BottleProperties();
 	        bp.setBottle_size(size);
-	        bp.setQuantity(String.valueOf(quantity));
 	        bp.setDate(date);
 	        data.add(bp);
 	    }
 	    table.setItems(data);
+	}
+	public ArrayList getAllBottle() throws SQLException
+	{
+		ResultSet rs=SQLHelper.selectAllFromTable(TABLE_NAME);
+		ArrayList al=new ArrayList<Bottle>();
+		while(rs.next())
+		{
+			Bottle b=new Bottle(rs.getString("bottle_size"));
+			al.add(b);
+		}
+		
+		
+		return al;
 	}
 	
 }

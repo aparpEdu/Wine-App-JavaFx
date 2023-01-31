@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import Users.Account;
 
 
@@ -40,6 +43,8 @@ public class LoginChecker {
 					Account.getInstance().setPassword(password);
 					Account.getInstance().setRole(rs.getString("roles"));
 					Account.getInstance().setId(rs.getInt("user_id"));
+					Logger log = LogManager.getLogger(LoginChecker.class);
+					log.info("User: "+ username+" logged in");
 					con.close();
 					return true;
 				}

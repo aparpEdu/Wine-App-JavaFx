@@ -111,6 +111,40 @@ public class SQLHelper {
 	    	JDBCON.closeResources(conn, stmt);
 	    }
 	}
+	public static void update(String tableName,String[] conditions,String column,String value,String[] keyConditions) {
+		Connection conn = null;
+	    PreparedStatement stmt = null;
+	    try {
+	        conn = JDBCON.getConnection();
+
+	        int i =0;
+	        int j =0;
+            String sql = "UPDATE " + tableName + " SET " + column + "="+value+" WHERE " +keyConditions[i]+" = "+"\'"+conditions[j]+"' AND "+ keyConditions[++i] + " = " +conditions[++j];
+	        stmt = conn.prepareStatement(sql);
+	        stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	JDBCON.closeResources(conn, stmt);
+	    }
+	}
+//	public static void update(String tableName) {
+//		Connection conn = null;
+//	    PreparedStatement stmt = null;
+//	    try {
+//	        conn = JDBCON.getConnection();
+//
+//	        int i =0;
+//	        int j =0;
+//            String sql = "UPDATE "+tableName+"  SET  wineperkg  = 99.00  WHERE grape_color ='WHITE' AND grape_kg = 33.00 AND grape_variety = 'Marsanne'";
+//	        stmt = conn.prepareStatement(sql);
+//	        stmt.executeUpdate();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	    	JDBCON.closeResources(conn, stmt);
+//	    }
+//	}
 	public static void delete(String tableName,String condition, String keyCondition) {
 		Connection conn = null;
 	    PreparedStatement stmt = null;

@@ -18,6 +18,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import application.helpers.StorageUI;
@@ -80,7 +83,12 @@ public class LoginForm {
 	            		alert.initOwner(btn.getScene().getWindow());
 	            		alert.showAndWait();
 	            		LoggedForm f = new LoggedForm();
-	            		f.formLoad(new Stage());
+	            		try {
+							f.formLoad(new Stage());
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 	            		primaryStage.close();
 	            	}
 	            	else

@@ -2,10 +2,13 @@ package controlers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import Grape.Grape;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import properties.VarietyProperty;
 import properties.WineProperty;
 import sqlconnection.helpers.SQLHelper;
 
@@ -134,5 +137,15 @@ public void searchBySize(TableView<WineProperty> table,String startDate,String e
 	
 	
 }
+public void CreateWine(ArrayList<VarietyProperty> selectedRows,String size)
+{
+//	float quantity=0;
+//	for (VarietyProperty selectedRow : selectedRows) {
+//	   selectedRow.ge
+//		
+//	}
+//	SQLHelper.in
+//	}
 
+}
 }

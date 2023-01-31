@@ -6,6 +6,7 @@ public class BottleProperties {
 private String size;
 private String quantity;
 private String date;
+private int id;
  
 
 public String getBottle_size() {

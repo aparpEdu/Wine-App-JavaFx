@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import Storage.Storage;
 import controlers.AccountController;
 import controlers.BottleController;
 import controlers.GrapeController;
@@ -35,6 +36,7 @@ public class Tables {
 	private static VBox vbox1 = null;
 	private static int whiteCheckedCounter = 0;
 	private static int redCheckedCounter = 0;
+	private static boolean needed = false;
 
 	public Tables() {
 
@@ -116,19 +118,18 @@ public class Tables {
 		StorageUI.checkAvailability(vbox1, grid);
 		TableView<BottleProperties> table = new TableView<BottleProperties>();
 		TableColumn<BottleProperties, String> bottleSize = new TableColumn<BottleProperties, String>("Bottle Size");
-		TableColumn<BottleProperties, String> bottleQuantity = new TableColumn<BottleProperties, String>("Quantity");
 		TableColumn<BottleProperties, String> bottleDate = new TableColumn<BottleProperties, String>("Date");
 		bottleSize.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("Bottle_size"));
-		bottleQuantity.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("quantity"));
+		
 		bottleDate.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("date"));
 		BottleController bc = new BottleController();
 		if(choice.equalsIgnoreCase("all")) {
 			bc.searchBottles(table,startDate,endDate);
-			table.getColumns().addAll(bottleSize, bottleQuantity, bottleDate);
+			table.getColumns().addAll(bottleSize, bottleDate);
 		}
 		else if(choice.equalsIgnoreCase("specific")) {
 			bc.searchSpecific(table,startDate,endDate,condition);
-			table.getColumns().addAll(bottleSize, bottleQuantity, bottleDate);
+			table.getColumns().addAll(bottleSize, bottleDate);
 		}
 		
 		table.setPrefSize(600, 600);
@@ -145,10 +146,10 @@ public class Tables {
 		StorageUI.checkAvailability(vbox1, grid);
 		TableView<BottleProperties> table = new TableView<BottleProperties>();
 		TableColumn<BottleProperties, String> bottleSize = new TableColumn<BottleProperties, String>("Bottle Size");
-		TableColumn<BottleProperties, String> bottleQuantity = new TableColumn<BottleProperties, String>("Quantity");
+		
 		TableColumn<BottleProperties, String> bottleDate = new TableColumn<BottleProperties, String>("Date");
 		bottleSize.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("Bottle_size"));
-		bottleQuantity.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("quantity"));
+		
 		bottleDate.setCellValueFactory(new PropertyValueFactory<BottleProperties, String>("date"));
 		BottleController bc = new BottleController();
 		
@@ -156,7 +157,7 @@ public class Tables {
 		
 		
 			bc.searchSpecific(table,startDate,endDate,condition);
-			table.getColumns().addAll(bottleSize, bottleQuantity, bottleDate);
+			table.getColumns().addAll(bottleSize, bottleDate);
 		
 		
 		table.setPrefSize(600, 600);
@@ -206,7 +207,7 @@ public class Tables {
 		vbox1 = vbox;
 	}
 	@SuppressWarnings("unchecked")
-	public static void grapeEvaluationTable(GridPane grid, int x, int y) throws SQLException {
+	public static void grapeEvaluationTable(GridPane grid, int x, int y,String value) throws SQLException {
 		StorageUI.checkAvailability(vbox1, grid);
 		TableView<GrapeProperties> table = new TableView<GrapeProperties>();
 		TableColumn<GrapeProperties, String> grapeVariety = new TableColumn<GrapeProperties,String >("Variety");
@@ -220,78 +221,17 @@ public class Tables {
 		Map<GrapeProperties, CheckBox> checkboxMap = new HashMap<>();
 		TableColumn<GrapeProperties, String> winePerKG = new TableColumn<>("WKG");
 		winePerKG.setCellValueFactory(new PropertyValueFactory<>("wkg"));
-//		winePerKG.setCellFactory(column -> {
-//		        return new TableCell<GrapeProperties, TextField>() {
-//		            private final TextField textField = new TextField();
-//
-//		            {
-//		                textField.setEditable(false);
-//		                textField.textProperty().addListener((obs, oldValue, newValue) -> {
-//		                    if (!newValue.matches("\\d*")) {
-//		                        textField.setText(newValue.replaceAll("[^\\d]", ""));
-//		                    }
-//		                });
-//		            }
-//		            
-//		            @Override
-//		            protected void updateItem(TextField item, boolean empty) {
-//		                super.updateItem(item, empty);
-//
-//		                if (empty || item == null) {
-//		                    setGraphic(null);
-//		                } else {
-//		                    setGraphic(textField);
-//		                    textField.setText(item.toString());
-//		                    GrapeProperties variety = getTableView().getItems().get(getIndex());
-//		                    textfieldMap.put(getTableView().getItems().get(getIndex()), textField);
-//		                    CheckBox checkbox = checkboxMap.get(variety);
-//		                    textField.setDisable(!checkbox.isSelected());
-//		                }
-//		            }
-//		        };
-//		    });
 		winePerKG.setEditable(true);
-		TableColumn<GrapeProperties, Boolean> pickColumn = new TableColumn<>("Pick");
-		pickColumn.setCellValueFactory(new PropertyValueFactory<>("picked"));
-		pickColumn.setCellFactory(column -> {
-		    return new TableCell<GrapeProperties, Boolean>() {
-		        private final CheckBox checkBox = new CheckBox();
-
-		        {
-		            checkBox.setOnAction(event -> {
-		            	GrapeProperties item = getTableView().getItems().get(getIndex());
-		                item.setPicked(checkBox.isSelected());
-
-//		                // Enable/disable the corresponding WinePerKG textfield
-//		                TextField winePerKGTextField = textfieldMap.get(getTableView().getItems().get(getIndex()));
-//		                winePerKGTextField.setDisable(!checkBox.isSelected());
-		            });
-		        }
-
-		        @Override
-		        protected void updateItem(Boolean item, boolean empty) {
-		        	super.updateItem(item, empty);
-
-					if (empty || item == null) {
-						setGraphic(null);
-					} else {
-						setGraphic(checkBox);
-						checkBox.setSelected(item);
-						checkboxMap.put(getTableView().getItems().get(getIndex()), checkBox);
-						//TextField winePerKGTextField = textfieldMap.get(getTableView().getItems().get(getIndex()));
-					}
-				}
-			};
-		});
-		ArrayList<GrapeProperties> myArrayList = new ArrayList<>();
-		
-		// populate the array list with data
-		ObservableList<GrapeProperties> myObservableList = FXCollections.observableArrayList(myArrayList);
-		
-		table.setItems(myObservableList);
 		GrapeController gc = new GrapeController();
-		gc.showGrapesForEvaluation(table);
-		table.getColumns().addAll(grapeVariety, color, kg, grapeDate,pickColumn,winePerKG);
+		gc.showAll(table);
+		 
+		
+		
+	
+	
+		
+		
+		table.getColumns().addAll(grapeVariety, color, kg, grapeDate,winePerKG);
 		table.setPrefSize(900, 600);
 		VBox vbox = new VBox();
 		vbox.setSpacing(5);
@@ -338,6 +278,7 @@ public class Tables {
 		Map<VarietyProperty, CheckBox> checkboxMap = new HashMap<>();
 		TableColumn<VarietyProperty, Boolean> grapePicker = new TableColumn<>("Pick");
 		grapePicker.setCellValueFactory(new PropertyValueFactory<>("picked"));
+		ArrayList<VarietyProperty> selectedRows = new ArrayList<>();
 		grapePicker.setCellFactory(column -> {
 			return new TableCell<VarietyProperty, Boolean>() {
 				private final CheckBox checkBox = new CheckBox();
@@ -351,6 +292,7 @@ public class Tables {
 						item.setPicked(checkBox.isSelected());
 
 						if (checkBox.isSelected()) {
+							selectedRows.add(item);
 							if (item.getColor() == Color.WHITE) {
 								for (VarietyProperty variety : myClassList) {
 									if (variety.getColor() == Color.RED) {
@@ -373,6 +315,7 @@ public class Tables {
 								redCheckedCounter++;
 							}
 						} else {
+							selectedRows.remove(item);
 							if (item.getColor() == Color.WHITE) {
 								whiteCheckedCounter--;
 								if (whiteCheckedCounter == 0) {
@@ -510,6 +453,14 @@ public class Tables {
 
 	public static void removeTable(GridPane grid) {
 		StorageUI.checkAvailability(vbox1, grid);
+	}
+
+	public static boolean isNeeded() {
+		return needed;
+	}
+
+	public static void setNeeded(boolean needed) {
+		Tables.needed = needed;
 	}
 
 }

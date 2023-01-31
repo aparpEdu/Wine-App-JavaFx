@@ -48,7 +48,12 @@ public class Buttons {
 			public void handle(ActionEvent e) {
 				stage.close();
 
-				loggedForm.formLoad(new Stage());
+				try {
+					loggedForm.formLoad(new Stage());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		grid.add(back, x, y);
