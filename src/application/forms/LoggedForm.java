@@ -2,8 +2,10 @@ package application.forms;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.TreeMap;
+
+import Grape.Grape;
 import Storage.Storage;
-import Storage.StorageFiller;
 import Wine.Bottle;
 import application.helpers.StorageUI;
 import javafx.geometry.Insets;
@@ -39,9 +41,9 @@ public class LoggedForm {
 		
 		ResourceLoader.loadResources();
 		ArrayList<Bottle> bottleList = Storage.getInstance().getBottles();
-		//ArrayList<Grape> grapeList = Storage.getInstance().getGrapes();
+		TreeMap<Integer, Grape> grapeList = Storage.getInstance().getGrapes();
 		StorageChecker.criticalMinimum(bottleList);
-		//criticalMinimumGrapes(grapeList);
+		StorageChecker.criticalMinimumGrapes(grapeList);
 		
 
 	}
