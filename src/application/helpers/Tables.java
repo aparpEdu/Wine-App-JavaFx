@@ -13,17 +13,24 @@ import controlers.StorageAccessController;
 import controlers.WineController;
 import enums.Color;
 import enums.Variety;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.FloatStringConverter;
 import properties.BottleProperties;
 import properties.GrapeProperties;
 import properties.StorageAccessProperties;
@@ -218,10 +225,80 @@ public class Tables {
 		kg.setCellValueFactory(new PropertyValueFactory<>("kg"));
 		color.setCellValueFactory(new PropertyValueFactory<>("color"));
 		grapeDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+		
+		TableColumn<GrapeProperties, String> winePerKG = new TableColumn<>("WKG");
+		winePerKG.setCellValueFactory(new PropertyValueFactory<>("wkg"));
+		winePerKG.setEditable(true);
+		Map<GrapeProperties, CheckBox> checkboxMap = new HashMap<>();
+		ArrayList<GrapeProperties> selectedRows = new ArrayList<>();
+		
+
+
+
+
+		TableColumn<GrapeProperties, CheckBox> checkboxColumn = new TableColumn<>("Check");
+		checkboxColumn.setCellValueFactory(data -> {
+		    CheckBox checkBox = new CheckBox();
+		    GrapeProperties grapeProperties = data.getValue();
+		    checkboxMap.put(grapeProperties, checkBox);
+		    return new SimpleObjectProperty<>(checkBox);
+		});
+		
+		for (Map.Entry<GrapeProperties, CheckBox> entry : checkboxMap.entrySet()) {
+		    GrapeProperties grapeProperties = entry.getKey();
+		    CheckBox checkBox = entry.getValue();
+		    checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+		        if (newValue) {
+		            selectedRows.add(grapeProperties);
+		            grapeProperties.setKgneeded(1f);
+		        } else {
+		            selectedRows.remove(grapeProperties);
+		            grapeProperties.setKgneeded(0f);
+		        }
+		    });
+		}
+		GrapeController gc = new GrapeController();
+	    gc.showAll(table);
+		 
+		
+		
+	
+	
+		
+		//table.setItems(FXCollections.observableArrayList(Storage.getInstance().getGrapes()));
+		table.getColumns().addAll(grapeVariety, color, kg, grapeDate,winePerKG,checkboxColumn);
+		table.setPrefSize(900, 600);
+		VBox vbox = new VBox();
+		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(0, 0, 0, 240));
+		vbox.setPrefSize(900, 700);
+		vbox.getChildren().addAll(table);
+		grid.add(vbox, x, y);
+		vbox1 = vbox;
+	}
+	@SuppressWarnings("unchecked")
+	public static void grapeEvaluationTable2(GridPane grid, int x, int y,String value) throws SQLException {
+		StorageUI.checkAvailability(vbox1, grid);
+		TableView<GrapeProperties> table = new TableView<GrapeProperties>();
+		TableColumn<GrapeProperties, String> grapeVariety = new TableColumn<GrapeProperties,String >("Variety");
+		TableColumn<GrapeProperties, String> kg = new TableColumn<GrapeProperties, String>("KG");
+		TableColumn<GrapeProperties, String> color = new TableColumn<GrapeProperties, String>("Color");
+		TableColumn<GrapeProperties, String> grapeDate = new TableColumn<GrapeProperties, String>("Date");
+		grapeVariety.setCellValueFactory(new PropertyValueFactory<>("variety"));
+		kg.setCellValueFactory(new PropertyValueFactory<>("kg"));
+		color.setCellValueFactory(new PropertyValueFactory<>("color"));
+		grapeDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 		Map<GrapeProperties, CheckBox> checkboxMap = new HashMap<>();
 		TableColumn<GrapeProperties, String> winePerKG = new TableColumn<>("WKG");
 		winePerKG.setCellValueFactory(new PropertyValueFactory<>("wkg"));
 		winePerKG.setEditable(true);
+		TableColumn<GrapeProperties, CheckBox> checkboxColumn = new TableColumn<>("Check");
+		checkboxColumn.setCellValueFactory(data -> {
+		    CheckBox checkBox = new CheckBox();
+		    GrapeProperties grapeProperties = data.getValue();
+		    checkboxMap.put(grapeProperties, checkBox);
+		    return new SimpleObjectProperty<>(checkBox);
+		});
 		GrapeController gc = new GrapeController();
 		gc.showAll(table);
 		 
@@ -230,7 +307,7 @@ public class Tables {
 	
 	
 		
-		
+		//table.setItems(FXCollections.observableArrayList(Storage.getInstance().getGrapes()));
 		table.getColumns().addAll(grapeVariety, color, kg, grapeDate,winePerKG);
 		table.setPrefSize(900, 600);
 		VBox vbox = new VBox();
@@ -414,32 +491,18 @@ public class Tables {
 		TableView<WineProperty> table = new TableView<WineProperty>();
 		TableColumn<WineProperty,String> wineVariety = new TableColumn<WineProperty, String>("Variety");
 		TableColumn<WineProperty, String> size = new TableColumn<WineProperty, String>("Bottle size");
-		TableColumn<WineProperty, String> color = new TableColumn<WineProperty, String>("Color");
 		TableColumn<WineProperty, String> quantity = new TableColumn<WineProperty, String>("Quantity");
 		TableColumn<WineProperty, String> wineDate = new TableColumn<WineProperty, String>("Date");
 		TableColumn<WineProperty, String> filled = new TableColumn<WineProperty, String>("Filled");
 		wineVariety.setCellValueFactory(new PropertyValueFactory<WineProperty, String>("variety"));
 		size.setCellValueFactory(new PropertyValueFactory<WineProperty, String>("size"));
-		color.setCellValueFactory(new PropertyValueFactory<WineProperty, String>("color"));
 		quantity.setCellValueFactory(new PropertyValueFactory<WineProperty, String>("quantity"));
 		wineDate.setCellValueFactory(new PropertyValueFactory<WineProperty, String>("date"));
 		filled.setCellValueFactory(new PropertyValueFactory<WineProperty, String>("filled"));
 		WineController wc = new WineController();
 		if(choice.equalsIgnoreCase("all")) {
 		wc.searchWine(table, startDate, endDate);
-		table.getColumns().addAll(wineVariety, color, size,quantity ,filled,wineDate);
-		}
-		else if(choice.equalsIgnoreCase("var")) {
-			wc.searchByVariety(table, startDate, endDate, condition);
-			table.getColumns().addAll(wineVariety, color, size,quantity,filled ,wineDate);
-			}
-		else if(choice.equalsIgnoreCase("color")) {
-			wc.searchByColor(table, startDate, endDate, condition);
-			table.getColumns().addAll(wineVariety, color, size,quantity,filled ,wineDate);
-		}
-		else if(choice.equalsIgnoreCase("size")) {
-			wc.searchBySize(table, startDate, endDate, condition);
-			table.getColumns().addAll(wineVariety, color, size,quantity,filled ,wineDate);
+		table.getColumns().addAll(wineVariety,  size,quantity ,filled,wineDate);
 		}
 		table.setPrefSize(800, 600);
 		VBox vbox = new VBox();

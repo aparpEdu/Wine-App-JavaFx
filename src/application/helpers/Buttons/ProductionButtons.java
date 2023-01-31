@@ -7,6 +7,7 @@ import application.forms.StorageForm;
 import application.helpers.StorageUI;
 import application.helpers.Tables;
 import controlers.GrapeController;
+import controlers.WineController;
 import enums.BottleSize;
 import enums.Color;
 import javafx.beans.value.ChangeListener;
@@ -66,11 +67,64 @@ public class ProductionButtons {
 
 		VBox vbox = new VBox();
 		Button produceWine = new Button("Produce");
+		
 		produceWine.setPrefSize(120, 60);
 		GrapeController gc = new GrapeController();
-	
+		Label  winevar = new Label("New variety:");
+		Label withKg = new Label("Find kg:");
+		
+		
+		ComboBox<String> kgCB = new ComboBox<String>();
+		try {
+			gc.showKG(kgCB);
+			kgCB.getSelectionModel().selectFirst();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		Label withKg2 = new Label("Second kg:");
+		
+		ComboBox<String> kgCB2 = new ComboBox<String>();
+		try {
+			gc.showKG(kgCB2);
+			kgCB.getSelectionModel().selectFirst();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		HBox kgboxa = new HBox();
+		kgboxa.getChildren().addAll(withKg,kgCB,withKg2,kgCB2);
+		TextField varField = new TextField();
+		HBox varbox = new HBox();
+		Label kgneeded1 = new Label("Kg for first option:");
+		Label kgneeded2 = new Label("Kg for second option:");
+		TextField kgneededfield1 = new TextField();
+		kgneededfield1.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("^-?\\d*\\.?\\d*")) {
+		        	kgneededfield1.setText(oldValue);
+		        }
+		    }
+		});
+		TextField kgneededfield2 = new TextField();
+		kgneededfield2.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("^-?\\d*\\.?\\d*")) {
+		        	kgneededfield2.setText(oldValue);
+		        }
+		    }
+		});
+		HBox kgneededbox = new HBox();
+		
 		ComboBox<String> wkgCB = new ComboBox<String>();
 		gc.showWKG(wkgCB);
+		ComboBox<String> wkgCB2 = new ComboBox<String>();
+		gc.showWKG(wkgCB2);
 		ComboBox<String> sizeCB = new ComboBox<String>();
 		ObservableList<String> options = FXCollections.observableArrayList(
 				BottleSize.LARGE.toString().concat(BottleSize.LARGE.getSize()),
@@ -79,7 +133,7 @@ public class ProductionButtons {
 				BottleSize.TINY.toString().concat(BottleSize.TINY.getSize())
 
 		);
-		Label quantityLabel = new Label("Quantity: ");
+		Label quantityLabel = new Label("Fill bottle with: ");
 		quantityLabel.setPrefWidth(100);
 		TextField fillQuantity = new TextField();
 		fillQuantity.setPrefWidth(105);
@@ -115,7 +169,12 @@ public class ProductionButtons {
 		HBox quantityBox = new HBox();
 		HBox wkgBox = new HBox();
 		Label wkgLabel = new Label("WKG: ");
-		wkgBox.getChildren().addAll(wkgLabel,wkgCB);
+		Label wkgLabel2 = new Label("WKG2:");
+		varbox.getChildren().addAll(winevar,varField);
+		varbox.setSpacing(5);
+		wkgBox.getChildren().addAll(wkgLabel,wkgCB,wkgLabel2,wkgCB2);
+		kgneededbox.getChildren().addAll(kgneeded1,kgneededfield1,kgneeded2,kgneededfield2);
+		kgneededbox.setSpacing(5);
 		wkgBox.setSpacing(5);
 		quantityBox.getChildren().addAll(quantityLabel,fillQuantity,optimal);
 		quantityBox.setSpacing(5);
@@ -134,6 +193,8 @@ public class ProductionButtons {
 				alert.setContentText("Are you sure you want to produce with selected options?");
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
+					WineController wc = new WineController();
+					wc.CreateWine(wkgCB.getSelectionModel().getSelectedItem().toString(), wkgCB2.getSelectionModel().getSelectedItem(), kgCB.getSelectionModel().getSelectedItem(), kgCB2.getSelectionModel().getSelectedItem(), sizeCB.getSelectionModel().getSelectedItem(), kgneededfield1.getText(),kgneededfield2.getText(),fillQuantity.getText(),varField.getText());
 					StorageUI.checkAvailability(vbox1, grid);
 					Tables.removeTable(grid);
 					
@@ -141,7 +202,7 @@ public class ProductionButtons {
 
 			}
 		});
-		vbox.getChildren().addAll(quantityBox,sizeBox,wkgBox,produceWine);
+		vbox.getChildren().addAll(kgneededbox,quantityBox,sizeBox,wkgBox,kgboxa,varbox,produceWine);
 		vbox.setSpacing(10);
 		vbox1 = vbox;
 		grid.add(vbox, x, y + 5);
@@ -158,6 +219,15 @@ public class ProductionButtons {
 			public void handle(ActionEvent e) {
 				StorageUI.checkAvailability(vbox1, grid);
 				TextField evaluateField = new TextField();
+				evaluateField.textProperty().addListener(new ChangeListener<String>() {
+				    @Override
+				    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+				        String newValue) {
+				        if (!newValue.matches("^-?\\d*\\.?\\d*")) {
+				        	evaluateField.setText(oldValue);
+				        }
+				    }
+				});
 				ComboBox<String> varCB = new ComboBox<String>();
 				
 				GrapeController gc = new GrapeController();
@@ -207,7 +277,7 @@ public class ProductionButtons {
 
 							try {
 								gc.evaluateGrape(evaluateField.getText(), varCB.getSelectionModel().getSelectedItem().toString(), kgCB.getSelectionModel().getSelectedItem().toString());
-								Tables.grapeEvaluationTable(grid, x - 1, y + 5, evaluateField.getText());
+								Tables.grapeEvaluationTable2(grid, x - 1, y + 5, evaluateField.getText());
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -219,7 +289,7 @@ public class ProductionButtons {
 				});
 				try {
 					
-					Tables.grapeEvaluationTable(grid, x - 1, y + 5,evaluateField.getText());
+					Tables.grapeEvaluationTable2(grid, x - 1, y + 5,evaluateField.getText());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

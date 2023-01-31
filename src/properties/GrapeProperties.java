@@ -9,6 +9,7 @@ private String kg;
 private String wkg;
 private String date;
 private boolean picked;
+private float kgneeded;
 private TextField winePerKGTextField;
 
 	public String getVariety() {
@@ -67,6 +68,14 @@ public boolean isPicked() {
 
 public void setPicked(boolean picked) {
 	this.picked = picked;
+}
+
+public float getKgneeded() {
+	return kgneeded;
+}
+
+public void setKgneeded(float kgneeded) {
+	this.kgneeded = kgneeded;
 }
 
 }

@@ -53,6 +53,22 @@ public class SQLHelper {
 	    	JDBCON.closeResources(conn, stmt);
 	    }
 	}
+	public static void deleteOne(String tablename,String keyCondition,String condition) {
+		Connection conn = null;
+	    PreparedStatement stmt = null;
+	    try {
+	        conn = JDBCON.getConnection();
+
+	        String sql = "DELETE FROM " + tablename + " WHERE " + keyCondition + " = ? ";
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, condition);
+	        stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	JDBCON.closeResources(conn, stmt);
+	    }
+	}
 	public static void insertConditionData(ArrayList<String> data) {
 	    Connection conn = null;
 	    PreparedStatement stmt = null;

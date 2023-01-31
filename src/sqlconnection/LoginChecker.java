@@ -14,8 +14,8 @@ import Users.Account;
 public class LoginChecker {
 	private static final String dbDriver="org.postgresql.Driver";
 	private static final String dbUrl="jdbc:postgresql://localhost:5432/postgres";
-	private static  String dbUsername="postgres";
-	private static String dbPassword="dancho39";
+	private static  String dbUsername="WineDB";
+	private static String dbPassword="123456";
 	//private String masterUser="dancho39";
 	//private String masterPass="maximus1";
 	public LoginChecker()
