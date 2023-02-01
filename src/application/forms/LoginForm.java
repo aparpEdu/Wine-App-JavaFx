@@ -55,47 +55,7 @@ public class LoginForm {
 			StorageUI.setIcon(primaryStage);
 			HBox hbBtn = new HBox(10);
 			Buttons.logInButton(hbBtn, userTextField, pwBox, grid, primaryStage);
-//			Button btn = new Button("Log in");
-//			
-			
-//			hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-//			hbBtn.getChildren().add(btn);
-//			grid.add(hbBtn, 1, 4);
-//			final Text actiontarget = new Text();
-//	        grid.add(actiontarget, 1, 6);
-//	        btn.setOnAction(new EventHandler<ActionEvent>() {
-//	        	 
-//	            @Override
-//	            public void handle(ActionEvent e) {
-//	            	LoginChecker lc=new LoginChecker();
-//	            	if(lc.check(userTextField.getText(), pwBox.getText()))
-//	            	{
-//	            		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//	            		alert.setTitle("Information Dialog");
-//	            		alert.setHeaderText(null);
-//	            		alert.setContentText("You have logged in successfully!");
-//	            		alert.initOwner(btn.getScene().getWindow());
-//	            		alert.showAndWait();
-//	            		LoggedForm f = new LoggedForm();
-//	            		try {
-//							f.formLoad(new Stage());
-//						} catch (SQLException e1) {
-//							// TODO Auto-generated catch block
-//							e1.printStackTrace();
-//						}
-//	            		primaryStage.close();
-//	            	}
-//	            	else
-//	            	{
-//	            		JOptionPane.showMessageDialog(null, "Try Again");
-//	            		
-//	            		
-//	            		
-//	            	}
-//	            }
-//	            
-//	        }
-//	        );
+
 	        primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

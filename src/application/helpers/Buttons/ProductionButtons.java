@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import application.helpers.StorageUI;
 import application.helpers.Tables;
+import application.helpers.alerts.InfoAlerts;
+import application.helpers.alerts.WarningAlerts;
 import controlers.GrapeController;
 import controlers.WineController;
 import enums.BottleSize;
@@ -150,12 +152,7 @@ public class ProductionButtons {
 
 			@Override
 			public void handle(ActionEvent e) {
-				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setTitle("BOOM RADIATOR");
-        		alert.setHeaderText(null);
-        		alert.setContentText("WORK IN PROGRESS SEE YOU NEXT PATCH!");
-        		//alert.initOwner(btn.getScene().getWindow());
-        		alert.showAndWait();
+			InfoAlerts.wip(); 
 
 			}
 		});
@@ -202,12 +199,7 @@ public class ProductionButtons {
 					Tables.removeTable(grid);
 					}
 					else {
-						Alert alerts = new Alert(Alert.AlertType.WARNING);
-						alerts.setTitle("ERROR");
-						alerts.setHeaderText(null);
-						alerts.setContentText("Inputs were not set!");
-	            		//alert.initOwner(btn.getScene().getWindow());
-						alerts.showAndWait();
+						WarningAlerts.valuesWarning();
 					}
 					
 				}

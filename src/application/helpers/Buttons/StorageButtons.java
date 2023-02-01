@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import application.helpers.StorageUI;
 import application.helpers.Tables;
+import application.helpers.alerts.InfoAlerts;
+import application.helpers.alerts.WarningAlerts;
 import controlers.BottleController;
 import controlers.GrapeController;
 import controlers.WineController;
@@ -16,7 +18,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -72,12 +73,7 @@ public class StorageButtons {
 						BottleController bc  = new BottleController();
 						try {
 							bc.storeBottles(cb.getSelectionModel().getSelectedItem().toString(), quantity.getValue());
-							Alert alert = new Alert(Alert.AlertType.INFORMATION);
-							alert.setTitle("Success");
-		            		alert.setHeaderText(null);
-		            		alert.setContentText("bottle: "+cb.getSelectionModel().getSelectedItem().toString()+" was successfully stored");
-		            		//alert.initOwner(btn.getScene().getWindow());
-		            		alert.showAndWait();
+							InfoAlerts.bottleInsertSuccess(cb);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -212,12 +208,7 @@ public class StorageButtons {
 								Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), null, "all");
 								 }
 								 else {
-									 Alert alert = new Alert(Alert.AlertType.WARNING);
-					            		alert.setTitle("ERROR");
-					            		alert.setHeaderText(null);
-					            		alert.setContentText("DATES WERE NOT INSERTED");
-					            		//alert.initOwner(btn.getScene().getWindow());
-					            		alert.showAndWait();
+									 WarningAlerts.dateWarning();
 								 }
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
@@ -230,12 +221,7 @@ public class StorageButtons {
 									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), varietyCB.getSelectionModel().getSelectedItem().toString(), "var");
 								 }
 									else {
-										 Alert alert = new Alert(Alert.AlertType.WARNING);
-						            		alert.setTitle("ERROR");
-						            		alert.setHeaderText(null);
-						            		alert.setContentText("DATES WERE NOT INSERTED");
-						            		//alert.initOwner(btn.getScene().getWindow());
-						            		alert.showAndWait();
+										WarningAlerts.dateWarning();
 									 }
 								} catch (SQLException e1) {
 									// TODO Auto-generated catch block
@@ -249,12 +235,7 @@ public class StorageButtons {
 									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), sizeCB.getSelectionModel().getSelectedItem().toString(), "size");
 									}
 									else {
-										 Alert alert = new Alert(Alert.AlertType.WARNING);
-						            		alert.setTitle("ERROR");
-						            		alert.setHeaderText(null);
-						            		alert.setContentText("DATES WERE NOT INSERTED");
-						            		//alert.initOwner(btn.getScene().getWindow());
-						            		alert.showAndWait();
+										WarningAlerts.dateWarning();
 									 }
 									} catch (SQLException e1) {
 									// TODO Auto-generated catch block
@@ -356,12 +337,7 @@ public class StorageButtons {
 							Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),null,"all");
 							}
 							else {
-								 Alert alert = new Alert(Alert.AlertType.WARNING);
-				            		alert.setTitle("ERROR");
-				            		alert.setHeaderText(null);
-				            		alert.setContentText("DATES WERE NOT INSERTED");
-				            		//alert.initOwner(btn.getScene().getWindow());
-				            		alert.showAndWait();
+								WarningAlerts.dateWarning();
 							 }
 							
 							} catch (SQLException e1) {
@@ -375,12 +351,7 @@ public class StorageButtons {
 								Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),varietyCB.getSelectionModel().getSelectedItem().toString(),"var");
 								}
 								else {
-									 Alert alert = new Alert(Alert.AlertType.WARNING);
-					            		alert.setTitle("ERROR");
-					            		alert.setHeaderText(null);
-					            		alert.setContentText("DATES WERE NOT INSERTED");
-					            		//alert.initOwner(btn.getScene().getWindow());
-					            		alert.showAndWait();
+									WarningAlerts.dateWarning();
 								 }
 								} catch (SQLException e1) {
 								// TODO Auto-generated catch block
@@ -393,12 +364,7 @@ public class StorageButtons {
 								Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),colorCB.getSelectionModel().getSelectedItem().toString(),"color");
 								}
 								else {
-									 Alert alert = new Alert(Alert.AlertType.WARNING);
-					            		alert.setTitle("ERROR");
-					            		alert.setHeaderText(null);
-					            		alert.setContentText("DATES WERE NOT INSERTED");
-					            		//alert.initOwner(btn.getScene().getWindow());
-					            		alert.showAndWait();
+									WarningAlerts.dateWarning();
 								 }
 								} catch (SQLException e1) {
 								// TODO Auto-generated catch block
@@ -454,20 +420,10 @@ public class StorageButtons {
 						try {
 							if(!grapeKgField.getText().isBlank() && !grapeKgField.getText().isEmpty()) {
 							gc.storeGrapes(varietyCB.getSelectionModel().getSelectedItem(), Double.parseDouble(grapeKgField.getText()));
-							Alert alert = new Alert(Alert.AlertType.INFORMATION);
-							alert.setTitle("Success");
-		            		alert.setHeaderText(null);
-		            		alert.setContentText("grape: "+varietyCB.getSelectionModel().getSelectedItem().toString()+" was successfully stored");
-		            		//alert.initOwner(btn.getScene().getWindow());
-		            		alert.showAndWait();
+							InfoAlerts.grapeInsertSuccess(varietyCB);
 							}
 							else {
-								Alert alert = new Alert(Alert.AlertType.WARNING);
-			            		alert.setTitle("ERROR");
-			            		alert.setHeaderText(null);
-			            		alert.setContentText("Kilograms were not set!");
-			            		//alert.initOwner(btn.getScene().getWindow());
-			            		alert.showAndWait();
+								WarningAlerts.kgWarning();
 							}
 						} 
 						 catch (SQLException e1) {
@@ -575,12 +531,7 @@ public class StorageButtons {
 							Tables.bottlesInfoTable(grid, x-1, y+5,sizeCB.getSelectionModel().getSelectedItem().toString(),dayOne.getValue().toString(),dayTwo.getValue().toString(),"all");
 							}
 							else {
-								 Alert alert = new Alert(Alert.AlertType.WARNING);
-				            		alert.setTitle("ERROR");
-				            		alert.setHeaderText(null);
-				            		alert.setContentText("DATES WERE NOT INSERTED");
-				            		//alert.initOwner(btn.getScene().getWindow());
-				            		alert.showAndWait();
+								WarningAlerts.dateWarning();
 							 }
 							} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -593,12 +544,7 @@ public class StorageButtons {
 								Tables.bottlesInfoTable(grid, x-1, y+5,sizeCB.getSelectionModel().getSelectedItem().toString(),dayOne.getValue().toString(),dayTwo.getValue().toString());
 								}
 								else {
-									 Alert alert = new Alert(Alert.AlertType.WARNING);
-					            		alert.setTitle("ERROR");
-					            		alert.setHeaderText(null);
-					            		alert.setContentText("DATES WERE NOT INSERTED");
-					            		//alert.initOwner(btn.getScene().getWindow());
-					            		alert.showAndWait();
+									WarningAlerts.dateWarning();
 								 }
 								} catch (SQLException e1) {
 								// TODO Auto-generated catch block

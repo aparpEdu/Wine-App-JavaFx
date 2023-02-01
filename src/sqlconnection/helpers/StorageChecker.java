@@ -5,8 +5,8 @@ import java.util.TreeMap;
 
 import Grape.Grape;
 import Wine.Bottle;
+import application.helpers.alerts.WarningAlerts;
 import enums.BottleSize;
-import javafx.scene.control.Alert;
 
 public class StorageChecker {
 
@@ -72,11 +72,7 @@ public class StorageChecker {
 				}
 				
 				msg+=sb.toString();
-				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setTitle("Warning Dialog");
-				alert.setHeaderText(null);
-				alert.setContentText(msg);
-				alert.showAndWait();
+				WarningAlerts.bottleMinimumWarning(msg);
 			}
 	}
 	public static void criticalMinimumGrapes(TreeMap<Integer,Grape> grapes)
@@ -92,11 +88,7 @@ public class StorageChecker {
 		if(!sb.toString().equals(msg))
 		{
 		
-			Alert alert = new Alert(Alert.AlertType.WARNING);
-			alert.setTitle("Warning Dialog");
-			alert.setHeaderText(null);
-			alert.setContentText(sb.toString());
-			alert.showAndWait();
+			WarningAlerts.grapeMinimumWarning(sb.toString());
 		}
 			}
 			

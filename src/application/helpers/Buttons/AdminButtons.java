@@ -2,9 +2,10 @@ package application.helpers.Buttons;
 
 import java.sql.SQLException;
 
-import application.helpers.NumberTextField;
 import application.helpers.StorageUI;
 import application.helpers.Tables;
+import application.helpers.alerts.InfoAlerts;
+import application.helpers.alerts.WarningAlerts;
 import controlers.AccountController;
 import enums.Roles;
 import javafx.beans.value.ChangeListener;
@@ -13,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -71,20 +71,10 @@ public class AdminButtons extends Buttons {
 						if(!username.getText().isBlank() && !newname.getText().isBlank() && !pass.getText().isBlank()) {
 						AccountController ac = new AccountController();
 						ac.editUser(username.getText(),newname.getText(), pass.getText(), role.getSelectionModel().getSelectedItem());
-						Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	            		alert.setTitle("Success");
-	            		alert.setHeaderText(null);
-	            		alert.setContentText("User "+username.getText()+" was successfully edited");
-	            		//alert.initOwner(btn.getScene().getWindow());
-	            		alert.showAndWait();
+						InfoAlerts.editSuccessfull(username.getText());
 						}
 						else {
-							Alert alert = new Alert(Alert.AlertType.WARNING);
-		            		alert.setTitle("ERROR");
-		            		alert.setHeaderText(null);
-		            		alert.setContentText("Some values were not set!");
-		            		//alert.initOwner(btn.getScene().getWindow());
-		            		alert.showAndWait();
+							WarningAlerts.valuesWarning();
 						}
 						}
 				});
@@ -121,7 +111,6 @@ public class AdminButtons extends Buttons {
 				try {
 					Tables.userTable(grid);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -149,20 +138,10 @@ public class AdminButtons extends Buttons {
 						AccountController ac = new AccountController();
 						ac.removeUser(t.getText());
 						
-						Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	            		alert.setTitle("Success");
-	            		alert.setHeaderText(null);
-	            		alert.setContentText("User "+t.getText()+" was successfully removed");
-	            		//alert.initOwner(btn.getScene().getWindow());
-	            		alert.showAndWait();
+						InfoAlerts.userRemovalSuccess(t.getText());
 						}
 						else {
-							Alert alert = new Alert(Alert.AlertType.WARNING);
-		            		alert.setTitle("ERROR");
-		            		alert.setHeaderText(null);
-		            		alert.setContentText("username was  not set!");
-		            		//alert.initOwner(btn.getScene().getWindow());
-		            		alert.showAndWait();
+							WarningAlerts.usernameWarning();
 						}
 					}
 				});
@@ -201,7 +180,6 @@ public class AdminButtons extends Buttons {
 			
 				Button search = new Button("Search");
 				Label labelRole = new Label("Role: ");
-				Label labelID = new Label("ID: ");
 				Label labelUsername = new Label("Username: ");
 				TextField t = new TextField();
 				
@@ -229,7 +207,6 @@ public class AdminButtons extends Buttons {
 							try {
 								Tables.userFinderTable(grid, role.getSelectionModel().getSelectedItem().toString(),"byRole");
 							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
@@ -242,15 +219,9 @@ public class AdminButtons extends Buttons {
 								
 								}
 								else {
-									Alert alert = new Alert(Alert.AlertType.WARNING);
-				            		alert.setTitle("ERROR");
-				            		alert.setHeaderText(null);
-				            		alert.setContentText("username was not set!");
-				            		//alert.initOwner(btn.getScene().getWindow());
-				            		alert.showAndWait();
+									WarningAlerts.usernameWarning();
 								}
 								} catch (SQLException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
@@ -329,20 +300,10 @@ public class AdminButtons extends Buttons {
 						if(!username.getText().isBlank() && !pass.getText().isBlank()) {
 						AccountController ac = new AccountController();
 						ac.insert(username.getText(), pass.getText(), role.getSelectionModel().getSelectedItem());
-						Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	            		alert.setTitle("Success");
-	            		alert.setHeaderText(null);
-	            		alert.setContentText("User "+username.getText()+" was successfully created!");
-	            		//alert.initOwner(btn.getScene().getWindow());
-	            		alert.showAndWait();
+						InfoAlerts.accountCreatedSuccess(username.getText());
 						}
 						else {
-							Alert alert = new Alert(Alert.AlertType.WARNING);
-		            		alert.setTitle("ERROR");
-		            		alert.setHeaderText(null);
-		            		alert.setContentText("username and/or password were not set!");
-		            		//alert.initOwner(btn.getScene().getWindow());
-		            		alert.showAndWait();
+							WarningAlerts.userCreationWarning();
 						}
 						}
 				});

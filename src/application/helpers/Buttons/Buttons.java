@@ -7,11 +7,12 @@ import application.forms.LoggedForm;
 import application.forms.StorageForm;
 import application.forms.WineProductionForm;
 import application.helpers.StorageUI;
+import application.helpers.alerts.InfoAlerts;
+import application.helpers.alerts.WarningAlerts;
 import enums.Roles;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -22,8 +23,7 @@ import javafx.stage.Stage;
 import sqlconnection.LoginChecker;
 
 public class Buttons {
-//	private static VBox vbox1 = null;
-//	static HBox hboxA = null;
+
 
 	public static void backButton(GridPane grid, final Stage stage, final LoggedForm loggedForm, int x, int y) {
 		Button back = new Button("Back");
@@ -37,7 +37,7 @@ public class Buttons {
 				try {
 					loggedForm.formLoad(new Stage());
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 			}
@@ -59,7 +59,7 @@ public class Buttons {
 				try {
 					af.formLoad(new Stage());
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 				loggedForm.closeStage();
@@ -122,12 +122,7 @@ public class Buttons {
             	LoginChecker lc=new LoginChecker();
             	if(lc.check(field.getText(), field2.getText()))
             	{
-            		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            		alert.setTitle("Information Dialog");
-            		alert.setHeaderText(null);
-            		alert.setContentText("You have logged in successfully!");
-            		alert.initOwner(btn.getScene().getWindow());
-            		alert.showAndWait();
+            		InfoAlerts.logInSuccessfull(btn);
             		LoggedForm f = new LoggedForm();
             		try {
 						f.formLoad(new Stage());
@@ -139,15 +134,7 @@ public class Buttons {
             	}
             	else
             	{
-            		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            		alert.setTitle("Information Dialog");
-            		alert.setHeaderText(null);
-            		alert.setContentText("Wrong credential, try again!");
-            		alert.initOwner(btn.getScene().getWindow());
-            		alert.showAndWait();
-            	
-            		
-            		
+            		WarningAlerts.logInWarning(btn);	
             		
             	}
             }
