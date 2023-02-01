@@ -473,6 +473,14 @@ public class Tables {
 		wc.searchWine(table, startDate, endDate);
 		table.getColumns().addAll(wineVariety,  size,quantity ,filled,wineDate);
 		}
+		else if(choice.equalsIgnoreCase("var")) {
+			wc.searchByVariety(table, startDate, endDate, condition);
+			table.getColumns().addAll(wineVariety,  size,quantity ,filled,wineDate);
+		}
+		else if(choice.equalsIgnoreCase("size")) {
+			wc.searchBySize(table, startDate, endDate, condition);
+			table.getColumns().addAll(wineVariety,  size,quantity ,filled,wineDate);
+		}
 		table.setPrefSize(800, 600);
 		VBox vbox = new VBox();
 		vbox.setSpacing(5);

@@ -150,7 +150,12 @@ public class ProductionButtons {
 
 			@Override
 			public void handle(ActionEvent e) {
-				// optimalniq method za zapulvane
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("BOOM RADIATOR");
+        		alert.setHeaderText(null);
+        		alert.setContentText("WORK IN PROGRESS SEE YOU NEXT PATCH!");
+        		//alert.initOwner(btn.getScene().getWindow());
+        		alert.showAndWait();
 
 			}
 		});
@@ -189,10 +194,21 @@ public class ProductionButtons {
 				alert.setContentText("Are you sure you want to produce with selected options?");
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
+					if(!kgneededfield1.getText().isBlank() && !kgneededfield2.getText().isBlank() &&!fillQuantity.getText().isBlank()&&!varField.getText().isBlank()) {
+					StorageUI.checkAvailability(vbox1, grid);
 					WineController wc = new WineController();
 					wc.CreateWine(wkgCB.getSelectionModel().getSelectedItem().toString(), wkgCB2.getSelectionModel().getSelectedItem(), kgCB.getSelectionModel().getSelectedItem(), kgCB2.getSelectionModel().getSelectedItem(), sizeCB.getSelectionModel().getSelectedItem(), kgneededfield1.getText(),kgneededfield2.getText(),fillQuantity.getText(),varField.getText());
 					StorageUI.checkAvailability(vbox1, grid);
 					Tables.removeTable(grid);
+					}
+					else {
+						Alert alerts = new Alert(Alert.AlertType.WARNING);
+						alerts.setTitle("ERROR");
+						alerts.setHeaderText(null);
+						alerts.setContentText("Inputs were not set!");
+	            		//alert.initOwner(btn.getScene().getWindow());
+						alerts.showAndWait();
+					}
 					
 				}
 
@@ -272,8 +288,18 @@ public class ProductionButtons {
 						if (result.get() == ButtonType.OK) {
 
 							try {
+								if(!evaluateField.getText().isBlank() || !evaluateField.getText().isEmpty()) {
 								gc.evaluateGrape(evaluateField.getText(), varCB.getSelectionModel().getSelectedItem().toString(), kgCB.getSelectionModel().getSelectedItem().toString());
 								Tables.grapeEvaluationTable2(grid, x - 1, y + 5, evaluateField.getText());
+								}
+								else {
+									Alert alerts = new Alert(Alert.AlertType.WARNING);
+				            		alerts.setTitle("ERROR");
+				            		alerts.setHeaderText(null);
+				            		alerts.setContentText("Wine per kg was not set!");
+				            		//alert.initOwner(btn.getScene().getWindow());
+				            		alerts.showAndWait();
+								}
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();

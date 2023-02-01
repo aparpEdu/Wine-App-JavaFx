@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -67,9 +68,25 @@ public class AdminButtons extends Buttons {
 				edit.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent e) {
+						if(!username.getText().isBlank() && !newname.getText().isBlank() && !pass.getText().isBlank()) {
 						AccountController ac = new AccountController();
 						ac.editUser(username.getText(),newname.getText(), pass.getText(), role.getSelectionModel().getSelectedItem());
-					}
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	            		alert.setTitle("Success");
+	            		alert.setHeaderText(null);
+	            		alert.setContentText("User "+username.getText()+" was successfully edited");
+	            		//alert.initOwner(btn.getScene().getWindow());
+	            		alert.showAndWait();
+						}
+						else {
+							Alert alert = new Alert(Alert.AlertType.WARNING);
+		            		alert.setTitle("ERROR");
+		            		alert.setHeaderText(null);
+		            		alert.setContentText("Some values were not set!");
+		            		//alert.initOwner(btn.getScene().getWindow());
+		            		alert.showAndWait();
+						}
+						}
 				});
 				HBox hbox2 = new HBox();
 				HBox hbox3 = new HBox();
@@ -128,8 +145,25 @@ public class AdminButtons extends Buttons {
 				remove.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent e) {
+						if(!t.getText().isBlank()) {
 						AccountController ac = new AccountController();
 						ac.removeUser(t.getText());
+						
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	            		alert.setTitle("Success");
+	            		alert.setHeaderText(null);
+	            		alert.setContentText("User "+t.getText()+" was successfully removed");
+	            		//alert.initOwner(btn.getScene().getWindow());
+	            		alert.showAndWait();
+						}
+						else {
+							Alert alert = new Alert(Alert.AlertType.WARNING);
+		            		alert.setTitle("ERROR");
+		            		alert.setHeaderText(null);
+		            		alert.setContentText("username was  not set!");
+		            		//alert.initOwner(btn.getScene().getWindow());
+		            		alert.showAndWait();
+						}
 					}
 				});
 				HBox hbox2 = new HBox();
@@ -170,8 +204,7 @@ public class AdminButtons extends Buttons {
 				Label labelID = new Label("ID: ");
 				Label labelUsername = new Label("Username: ");
 				TextField t = new TextField();
-				NumberTextField id = new NumberTextField();
-				id.setPrefWidth(50);
+				
 				ComboBox<Roles> role = new ComboBox<Roles>();
 				role.setItems(FXCollections.observableArrayList(Roles.values()));
 				role.getSelectionModel().select(0);
@@ -181,7 +214,7 @@ public class AdminButtons extends Buttons {
 				userHbox.setSpacing(5);
 				userHbox.getChildren().addAll(labelUsername, t);
 				HBox IDHBox = new HBox();
-				IDHBox.getChildren().addAll(labelID, id);
+				
 				HBox roleHBox = new HBox();
 				roleHBox.getChildren().addAll(labelRole, role);
 				VBox vbox = new VBox();
@@ -202,8 +235,21 @@ public class AdminButtons extends Buttons {
 						}
 						else if(group.getSelectedToggle().getUserData().toString().equalsIgnoreCase("username")) {
 							try {
+								if(!t.getText().isBlank()) {
+			
+								
 								Tables.userFinderTable(grid, t.getText(),"byName");
-							} catch (SQLException e1) {
+								
+								}
+								else {
+									Alert alert = new Alert(Alert.AlertType.WARNING);
+				            		alert.setTitle("ERROR");
+				            		alert.setHeaderText(null);
+				            		alert.setContentText("username was not set!");
+				            		//alert.initOwner(btn.getScene().getWindow());
+				            		alert.showAndWait();
+								}
+								} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -280,9 +326,25 @@ public class AdminButtons extends Buttons {
 				add.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent e) {
+						if(!username.getText().isBlank() && !pass.getText().isBlank()) {
 						AccountController ac = new AccountController();
 						ac.insert(username.getText(), pass.getText(), role.getSelectionModel().getSelectedItem());
-					}
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	            		alert.setTitle("Success");
+	            		alert.setHeaderText(null);
+	            		alert.setContentText("User "+username.getText()+" was successfully created!");
+	            		//alert.initOwner(btn.getScene().getWindow());
+	            		alert.showAndWait();
+						}
+						else {
+							Alert alert = new Alert(Alert.AlertType.WARNING);
+		            		alert.setTitle("ERROR");
+		            		alert.setHeaderText(null);
+		            		alert.setContentText("username and/or password were not set!");
+		            		//alert.initOwner(btn.getScene().getWindow());
+		            		alert.showAndWait();
+						}
+						}
 				});
 				HBox hbox2 = new HBox();
 				hbox2.setSpacing(5);

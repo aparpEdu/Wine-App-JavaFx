@@ -2,13 +2,9 @@ package application.forms;
 
 
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,12 +15,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
-
-import javax.swing.JOptionPane;
-
 import application.helpers.StorageUI;
-import sqlconnection.LoginChecker;
+import application.helpers.Buttons.Buttons;
 
 public class LoginForm {
 	public LoginForm()
@@ -60,48 +52,50 @@ public class LoginForm {
 			final PasswordField pwBox = new PasswordField();
 			pwBox.setText("pass123");
 			grid.add(pwBox, 1, 2);
-			
-			Button btn = new Button("Log in");
 			StorageUI.setIcon(primaryStage);
 			HBox hbBtn = new HBox(10);
-			hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-			hbBtn.getChildren().add(btn);
-			grid.add(hbBtn, 1, 4);
-			final Text actiontarget = new Text();
-	        grid.add(actiontarget, 1, 6);
-	        btn.setOnAction(new EventHandler<ActionEvent>() {
-	        	 
-	            @Override
-	            public void handle(ActionEvent e) {
-	            	LoginChecker lc=new LoginChecker();
-	            	if(lc.check(userTextField.getText(), pwBox.getText()))
-	            	{
-	            		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	            		alert.setTitle("Information Dialog");
-	            		alert.setHeaderText(null);
-	            		alert.setContentText("You have logged in successfully!");
-	            		alert.initOwner(btn.getScene().getWindow());
-	            		alert.showAndWait();
-	            		LoggedForm f = new LoggedForm();
-	            		try {
-							f.formLoad(new Stage());
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-	            		primaryStage.close();
-	            	}
-	            	else
-	            	{
-	            		JOptionPane.showMessageDialog(null, "Try Again");
-	            		
-	            		
-	            		
-	            	}
-	            }
-	            
-	        }
-	        );
+			Buttons.logInButton(hbBtn, userTextField, pwBox, grid, primaryStage);
+//			Button btn = new Button("Log in");
+//			
+			
+//			hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+//			hbBtn.getChildren().add(btn);
+//			grid.add(hbBtn, 1, 4);
+//			final Text actiontarget = new Text();
+//	        grid.add(actiontarget, 1, 6);
+//	        btn.setOnAction(new EventHandler<ActionEvent>() {
+//	        	 
+//	            @Override
+//	            public void handle(ActionEvent e) {
+//	            	LoginChecker lc=new LoginChecker();
+//	            	if(lc.check(userTextField.getText(), pwBox.getText()))
+//	            	{
+//	            		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//	            		alert.setTitle("Information Dialog");
+//	            		alert.setHeaderText(null);
+//	            		alert.setContentText("You have logged in successfully!");
+//	            		alert.initOwner(btn.getScene().getWindow());
+//	            		alert.showAndWait();
+//	            		LoggedForm f = new LoggedForm();
+//	            		try {
+//							f.formLoad(new Stage());
+//						} catch (SQLException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						}
+//	            		primaryStage.close();
+//	            	}
+//	            	else
+//	            	{
+//	            		JOptionPane.showMessageDialog(null, "Try Again");
+//	            		
+//	            		
+//	            		
+//	            	}
+//	            }
+//	            
+//	        }
+//	        );
 	        primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

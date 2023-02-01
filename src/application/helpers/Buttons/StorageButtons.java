@@ -6,6 +6,7 @@ import application.helpers.StorageUI;
 import application.helpers.Tables;
 import controlers.BottleController;
 import controlers.GrapeController;
+import controlers.WineController;
 import enums.BottleSize;
 import enums.Color;
 import enums.Variety;
@@ -15,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -70,6 +72,12 @@ public class StorageButtons {
 						BottleController bc  = new BottleController();
 						try {
 							bc.storeBottles(cb.getSelectionModel().getSelectedItem().toString(), quantity.getValue());
+							Alert alert = new Alert(Alert.AlertType.INFORMATION);
+							alert.setTitle("Success");
+		            		alert.setHeaderText(null);
+		            		alert.setContentText("bottle: "+cb.getSelectionModel().getSelectedItem().toString()+" was successfully stored");
+		            		//alert.initOwner(btn.getScene().getWindow());
+		            		alert.showAndWait();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -112,23 +120,26 @@ public class StorageButtons {
 				ToggleGroup tg = new ToggleGroup();
 				RadioButton byVariety = new RadioButton("By Variety");
 				RadioButton everyVariety = new RadioButton("All Wine");
-				RadioButton byColor = new RadioButton("By color");
+				
 				RadioButton byBottle = new RadioButton("By bottle");
 				everyVariety.setToggleGroup(tg);
 				everyVariety.setUserData("var");
-				byColor.setUserData("color");
+			
 				byBottle.setToggleGroup(tg);
 				byBottle.setUserData("bottle");
-				byColor.setToggleGroup(tg);
+			
 				byVariety.setUserData("no");
 				byVariety.setToggleGroup(tg);
 				tg.selectToggle(everyVariety);
-				ComboBox<Variety> varietyCB = new ComboBox<Variety>();
-				varietyCB.setItems(FXCollections.observableArrayList(Variety.values()));
+				WineController winecon = new WineController();
+				ComboBox<String> varietyCB = new ComboBox<String>();
+				try {
+					winecon.viewVars(varietyCB);
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				varietyCB.getSelectionModel().selectFirst();
-				ComboBox<Color> colorCB = new ComboBox<Color>();
-				colorCB.setItems(FXCollections.observableArrayList(Color.values()));
-				colorCB.getSelectionModel().selectFirst();
 				ComboBox<String> sizeCB = new ComboBox<String>();
 				ObservableList<String> options = 
 					    FXCollections.observableArrayList(
@@ -143,7 +154,7 @@ public class StorageButtons {
 				Button searchGrapeButton = new Button("Search");
 				VBox vbox = new VBox();
 				HBox choice = new HBox();
-				choice.getChildren().addAll(byVariety,byColor,byBottle);
+				choice.getChildren().addAll(byVariety,byBottle);
 				choice.setSpacing(50);
 				HBox varietyHbox =  new HBox();
 				varietyHbox.setSpacing(30);
@@ -160,7 +171,7 @@ public class StorageButtons {
 				if (tg.getSelectedToggle() != null) {
 					if (tg.getSelectedToggle().getUserData().toString().equals("var")) {
 						varietyCB.setDisable(true);
-						colorCB.setDisable(true);
+						
 						sizeCB.setDisable(true);
 						
 					} else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("no") == 0) {
@@ -174,22 +185,17 @@ public class StorageButtons {
 				            if (tg.getSelectedToggle() != null) {
 				            	if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("no") == 0) {
 				            		varietyCB.setDisable(false);
-				            		colorCB.setDisable(true);
+				            	
 				            		sizeCB.setDisable(true);
 								}
 				            	else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("var") == 0) {
 				            		varietyCB.setDisable(true);
-				            		colorCB.setDisable(true);
+				            		
 				            		sizeCB.setDisable(true);
-				            	}
-				            	else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("color") == 0) {
-				            		varietyCB.setDisable(true);
-				            		sizeCB.setDisable(true);
-				            		colorCB.setDisable(false);
 				            	}
 				            	else if (tg.getSelectedToggle().getUserData().toString().compareToIgnoreCase("bottle") == 0) {
 				            		varietyCB.setDisable(true);
-				            		colorCB.setDisable(true);
+				            		
 				            		sizeCB.setDisable(false);
 				            	}
 				            }                
@@ -202,7 +208,17 @@ public class StorageButtons {
 						
 						 if(tg.getSelectedToggle() == everyVariety) {
 							 try {
+								 if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
 								Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), null, "all");
+								 }
+								 else {
+									 Alert alert = new Alert(Alert.AlertType.WARNING);
+					            		alert.setTitle("ERROR");
+					            		alert.setHeaderText(null);
+					            		alert.setContentText("DATES WERE NOT INSERTED");
+					            		//alert.initOwner(btn.getScene().getWindow());
+					            		alert.showAndWait();
+								 }
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -210,31 +226,44 @@ public class StorageButtons {
 						 }
 						 else if(tg.getSelectedToggle() == byVariety) {
 							 try {
+								 if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
 									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), varietyCB.getSelectionModel().getSelectedItem().toString(), "var");
+								 }
+									else {
+										 Alert alert = new Alert(Alert.AlertType.WARNING);
+						            		alert.setTitle("ERROR");
+						            		alert.setHeaderText(null);
+						            		alert.setContentText("DATES WERE NOT INSERTED");
+						            		//alert.initOwner(btn.getScene().getWindow());
+						            		alert.showAndWait();
+									 }
 								} catch (SQLException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 						 }
-						 else if(tg.getSelectedToggle() == byColor) {
-							 try {
-									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), colorCB.getSelectionModel().getSelectedItem().toString(), "color");
-								} catch (SQLException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-						 }
+						 
 						 else if(tg.getSelectedToggle() == byBottle) {
 								try {
-									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), colorCB.getSelectionModel().getSelectedItem().toString(), "size");
-								} catch (SQLException e1) {
+									if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
+									Tables.wineTable(grid, x-1, y+5, dayOne.getValue().toString(), dayTwo.getValue().toString(), sizeCB.getSelectionModel().getSelectedItem().toString(), "size");
+									}
+									else {
+										 Alert alert = new Alert(Alert.AlertType.WARNING);
+						            		alert.setTitle("ERROR");
+						            		alert.setHeaderText(null);
+						            		alert.setContentText("DATES WERE NOT INSERTED");
+						            		//alert.initOwner(btn.getScene().getWindow());
+						            		alert.showAndWait();
+									 }
+									} catch (SQLException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 							}
 					}
 				});
-				varietyHbox.getChildren().addAll(varietyCB,colorCB,sizeCB);
+				varietyHbox.getChildren().addAll(varietyCB,sizeCB);
 				vbox.getChildren().addAll(everyVariety,choice,varietyHbox,dateLabels,date,searchGrapeButton);
 				vbox.setSpacing(5);
 				vbox1 = vbox;
@@ -323,24 +352,55 @@ public class StorageButtons {
 					public void handle(ActionEvent e) {
 						if(tg.getSelectedToggle() == everyVariety) {
 						try {
+							if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
 							Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),null,"all");
-						} catch (SQLException e1) {
+							}
+							else {
+								 Alert alert = new Alert(Alert.AlertType.WARNING);
+				            		alert.setTitle("ERROR");
+				            		alert.setHeaderText(null);
+				            		alert.setContentText("DATES WERE NOT INSERTED");
+				            		//alert.initOwner(btn.getScene().getWindow());
+				            		alert.showAndWait();
+							 }
+							
+							} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						}
 						else if(tg.getSelectedToggle() == byVariety) {
 							try {
+								if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
 								Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),varietyCB.getSelectionModel().getSelectedItem().toString(),"var");
-							} catch (SQLException e1) {
+								}
+								else {
+									 Alert alert = new Alert(Alert.AlertType.WARNING);
+					            		alert.setTitle("ERROR");
+					            		alert.setHeaderText(null);
+					            		alert.setContentText("DATES WERE NOT INSERTED");
+					            		//alert.initOwner(btn.getScene().getWindow());
+					            		alert.showAndWait();
+								 }
+								} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
 						else if(tg.getSelectedToggle() == byColor) {
 							try {
+								if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
 								Tables.storedGrapesTable(grid, x-1, y+5,dayOne.getValue().toString(),dayTwo.getValue().toString(),colorCB.getSelectionModel().getSelectedItem().toString(),"color");
-							} catch (SQLException e1) {
+								}
+								else {
+									 Alert alert = new Alert(Alert.AlertType.WARNING);
+					            		alert.setTitle("ERROR");
+					            		alert.setHeaderText(null);
+					            		alert.setContentText("DATES WERE NOT INSERTED");
+					            		//alert.initOwner(btn.getScene().getWindow());
+					            		alert.showAndWait();
+								 }
+								} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -392,11 +452,25 @@ public class StorageButtons {
 
 						GrapeController gc = new GrapeController();
 						try {
+							if(!grapeKgField.getText().isBlank() && !grapeKgField.getText().isEmpty()) {
 							gc.storeGrapes(varietyCB.getSelectionModel().getSelectedItem(), Double.parseDouble(grapeKgField.getText()));
-						} catch (NumberFormatException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (SQLException e1) {
+							Alert alert = new Alert(Alert.AlertType.INFORMATION);
+							alert.setTitle("Success");
+		            		alert.setHeaderText(null);
+		            		alert.setContentText("grape: "+varietyCB.getSelectionModel().getSelectedItem().toString()+" was successfully stored");
+		            		//alert.initOwner(btn.getScene().getWindow());
+		            		alert.showAndWait();
+							}
+							else {
+								Alert alert = new Alert(Alert.AlertType.WARNING);
+			            		alert.setTitle("ERROR");
+			            		alert.setHeaderText(null);
+			            		alert.setContentText("Kilograms were not set!");
+			            		//alert.initOwner(btn.getScene().getWindow());
+			            		alert.showAndWait();
+							}
+						} 
+						 catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
@@ -497,17 +571,36 @@ public class StorageButtons {
 						if(tg.getSelectedToggle() == everySize) {
 						
 						try {
-							
+							if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
 							Tables.bottlesInfoTable(grid, x-1, y+5,sizeCB.getSelectionModel().getSelectedItem().toString(),dayOne.getValue().toString(),dayTwo.getValue().toString(),"all");
-						} catch (SQLException e1) {
+							}
+							else {
+								 Alert alert = new Alert(Alert.AlertType.WARNING);
+				            		alert.setTitle("ERROR");
+				            		alert.setHeaderText(null);
+				            		alert.setContentText("DATES WERE NOT INSERTED");
+				            		//alert.initOwner(btn.getScene().getWindow());
+				            		alert.showAndWait();
+							 }
+							} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					}
 						else if(tg.getSelectedToggle() == bySize) {
 							try {
+								if(dayOne.getValue()!= null && dayTwo.getValue() !=null) {
 								Tables.bottlesInfoTable(grid, x-1, y+5,sizeCB.getSelectionModel().getSelectedItem().toString(),dayOne.getValue().toString(),dayTwo.getValue().toString());
-							} catch (SQLException e1) {
+								}
+								else {
+									 Alert alert = new Alert(Alert.AlertType.WARNING);
+					            		alert.setTitle("ERROR");
+					            		alert.setHeaderText(null);
+					            		alert.setContentText("DATES WERE NOT INSERTED");
+					            		//alert.initOwner(btn.getScene().getWindow());
+					            		alert.showAndWait();
+								 }
+								} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}

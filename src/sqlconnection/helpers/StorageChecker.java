@@ -6,7 +6,6 @@ import java.util.TreeMap;
 import Grape.Grape;
 import Wine.Bottle;
 import enums.BottleSize;
-import enums.Variety;
 import javafx.scene.control.Alert;
 
 public class StorageChecker {
