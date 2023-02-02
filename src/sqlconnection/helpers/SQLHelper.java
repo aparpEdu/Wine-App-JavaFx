@@ -112,6 +112,23 @@ public class SQLHelper {
 	    	JDBCON.closeResources(conn, stmt);
 	    }
 	}
+	public static void updateSelect(String tableName,String[] conditions,String column,String value,String[] keyConditions,String tableName2) {
+		Connection conn = null;
+	    PreparedStatement stmt = null;
+	    try {
+	        conn = JDBCON.getConnection();
+
+	        int i =0;
+	        int j =0;
+            String sql = "UPDATE " + tableName2 + " SET " + column + " = "+value+" WHERE " +keyConditions[i]+" = ( SELECT "+  keyConditions[i] +" FROM "+ tableName2 + " WHERE " +keyConditions[++i] +" = " + conditions[j] + " AND " +keyConditions[++i] + " = "+ conditions[++j] + " AND " + keyConditions[++i] + " = '"+ conditions[++j] +"' LIMIT 1);" ;
+	        stmt = conn.prepareStatement(sql);
+	        stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	JDBCON.closeResources(conn, stmt);
+	    }
+	}
 
 	public static void delete(String tableName,String condition, String keyCondition) {
 		Connection conn = null;

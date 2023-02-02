@@ -21,7 +21,10 @@ public class WineController {
 	final static String KEY_CONDITION2 = "grape_color";
 	final static String KEY_CONDITION3 = "bottle_size";
 	final static String KEY_CONDITION4 = "bottle_id";
-	
+	final static String KEY_CONDITION5 = "grape_kg";
+	final static String KEY_CONDITION6 = "grape_id";
+	final static String KEY_CONDITION7 = "wineperkg";
+	final static String KEY_CONDITION8 = "grape_variety";
 public void searchWine(TableView<WineProperty> table,String startDate,String endDate) throws SQLException {
 		
 		
@@ -128,25 +131,25 @@ public void searchBySize(TableView<WineProperty> table,String startDate,String e
 	
 }
 
-public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size,String kgneeded1,String kgneeded2,String filled,String var)
+public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size,String kgneeded1,String kgneeded2,String filled,String var,String grvar,String grvar2)
 {
 	
 	float quantity=0;
-	String[] arr1= {"wineperkg","grape_kg"};
+	String[] arr1= {KEY_CONDITION6,KEY_CONDITION7,KEY_CONDITION5,KEY_CONDITION8};
 
 		
 //	   float winekg1=Float.parseFloat(wkg1);
 //	   float winekg2=Float.parseFloat(wkg2);
 //	   float kg=Float.parseFloat(kgneeded1);
-	   String[] arr= {kg1,wkg1};
-	   String[] arr2= {kg2,wkg2};
+	   String[] arr= {wkg1,kg1,grvar};
+	   String[] arr2= {wkg2,kg2,grvar2};
 	   Float newkg1=Float.parseFloat(kg1)-Float.parseFloat(kgneeded1);
 	   Float newkg2=Float.parseFloat(kg2)-Float.parseFloat(kgneeded2);
 	  
 	   quantity+=Float.parseFloat(kgneeded1)*Float.parseFloat(wkg1);
 	   quantity+=Float.parseFloat(kgneeded2)*Float.parseFloat(wkg2);
-	   SQLHelper.update(TABLE1, arr, "grape_kg",String.valueOf(newkg1),arr1 );
-	   SQLHelper.update(TABLE1, arr2, "grape_kg",String.valueOf(newkg2),arr1 );
+	   SQLHelper.updateSelect(TABLE3, arr, KEY_CONDITION5,String.valueOf(newkg1),arr1,TABLE1 );
+	   SQLHelper.updateSelect(TABLE3, arr2, KEY_CONDITION5,String.valueOf(newkg2),arr1,TABLE1 );
 	   
 	
 	
@@ -162,6 +165,7 @@ public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size
 	
 	
 	SQLHelper.deleteSelect(TABLE3,size, KEY_CONDITION3,TABLE2,KEY_CONDITION4);
+
 	SQLHelper.insertData(TABLE_NAME, data);
 	
 

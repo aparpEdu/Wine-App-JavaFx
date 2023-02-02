@@ -70,7 +70,27 @@ public class ProductionButtons {
 		GrapeController gc = new GrapeController();
 		Label  winevar = new Label("New variety:");
 		Label withKg = new Label("Find kg:");
-		
+		HBox varietyBox = new HBox();
+		ComboBox<String> varCB = new ComboBox<String>();
+		Label varLabel = new Label("Variety:");
+		try {
+			gc.showVariety(varCB);
+			varCB.getSelectionModel().selectFirst();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		ComboBox<String> varCB2 = new ComboBox<String>();
+		Label varLabel2 = new Label("Variety 2:");
+		try {
+			gc.showVariety(varCB2);
+			varCB2.getSelectionModel().selectFirst();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		varietyBox.getChildren().addAll(varLabel,varCB,varLabel2,varCB2);
+		varietyBox.setSpacing(5);
 		
 		ComboBox<String> kgCB = new ComboBox<String>();
 		try {
@@ -85,7 +105,7 @@ public class ProductionButtons {
 		ComboBox<String> kgCB2 = new ComboBox<String>();
 		try {
 			gc.showKG(kgCB2);
-			kgCB.getSelectionModel().selectFirst();
+			kgCB2.getSelectionModel().selectFirst();
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -121,8 +141,10 @@ public class ProductionButtons {
 		
 		ComboBox<String> wkgCB = new ComboBox<String>();
 		gc.showWKG(wkgCB);
+		wkgCB.getSelectionModel().selectFirst();
 		ComboBox<String> wkgCB2 = new ComboBox<String>();
 		gc.showWKG(wkgCB2);
+		wkgCB2.getSelectionModel().selectFirst();
 		ComboBox<String> sizeCB = new ComboBox<String>();
 		ObservableList<String> options = FXCollections.observableArrayList(
 				BottleSize.LARGE.toString().concat(BottleSize.LARGE.getSize()),
@@ -194,7 +216,7 @@ public class ProductionButtons {
 					if(!kgneededfield1.getText().isBlank() && !kgneededfield2.getText().isBlank() &&!fillQuantity.getText().isBlank()&&!varField.getText().isBlank()) {
 					StorageUI.checkAvailability(vbox1, grid);
 					WineController wc = new WineController();
-					wc.CreateWine(wkgCB.getSelectionModel().getSelectedItem().toString(), wkgCB2.getSelectionModel().getSelectedItem(), kgCB.getSelectionModel().getSelectedItem(), kgCB2.getSelectionModel().getSelectedItem(), sizeCB.getSelectionModel().getSelectedItem(), kgneededfield1.getText(),kgneededfield2.getText(),fillQuantity.getText(),varField.getText());
+					wc.CreateWine(wkgCB.getSelectionModel().getSelectedItem().toString(), wkgCB2.getSelectionModel().getSelectedItem(), kgCB.getSelectionModel().getSelectedItem(), kgCB2.getSelectionModel().getSelectedItem(), sizeCB.getSelectionModel().getSelectedItem(), kgneededfield1.getText(),kgneededfield2.getText(),fillQuantity.getText(),varField.getText(),varCB.getSelectionModel().getSelectedItem().toString(),varCB2.getSelectionModel().getSelectedItem().toString());
 					StorageUI.checkAvailability(vbox1, grid);
 					Tables.removeTable(grid);
 					}
@@ -206,7 +228,7 @@ public class ProductionButtons {
 
 			}
 		});
-		vbox.getChildren().addAll(kgneededbox,quantityBox,sizeBox,wkgBox,kgboxa,varbox,produceWine);
+		vbox.getChildren().addAll(kgneededbox,quantityBox,sizeBox,wkgBox,kgboxa,varietyBox,varbox,produceWine);
 		vbox.setSpacing(10);
 		vbox1 = vbox;
 		grid.add(vbox, x, y + 5);
