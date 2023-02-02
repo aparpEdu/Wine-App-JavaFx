@@ -20,6 +20,7 @@ public class WineController {
 	final static String KEY_CONDITION = "wine_variety";
 	final static String KEY_CONDITION2 = "grape_color";
 	final static String KEY_CONDITION3 = "bottle_size";
+	final static String KEY_CONDITION4 = "bottle_id";
 	
 public void searchWine(TableView<WineProperty> table,String startDate,String endDate) throws SQLException {
 		
@@ -87,7 +88,7 @@ public void viewVars(ComboBox<String> cb) throws SQLException {
 	    while (result.next()) {
 	        String variety = result.getString("wine_variety");
 	        
-	  
+	   
 	        data.add(variety);
 	    }
 	    
@@ -160,7 +161,7 @@ public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size
 	data.put("grapekg_needed2", Float.parseFloat(kgneeded2));
 	
 	
-	//SQLHelper.deleteOne(TABLE2, KEY_CONDITION3, size);
+	SQLHelper.deleteSelect(TABLE3,size, KEY_CONDITION3,TABLE2,KEY_CONDITION4);
 	SQLHelper.insertData(TABLE_NAME, data);
 	
 
