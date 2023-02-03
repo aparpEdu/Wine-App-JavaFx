@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import Grape.Grape;
+import Storage.Storage;
 import Wine.Bottle;
 import application.helpers.alerts.WarningAlerts;
 import enums.BottleSize;
@@ -92,7 +93,24 @@ public class StorageChecker {
 		}
 			}
 			
-		
-		
+	public static int bottleCheck(String bottle) {
+		ArrayList<Bottle> bot=	Storage.getInstance().getBottles();
+		int counter=0;
+		for(Bottle b:bot)
+		{
+			if(bottle.equals(b.getSize()))
+			{
+				counter++;
+				if(counter==2)
+				{
+					bot.remove(b);
+					return counter;
+				}
+			}
+		}
+			return counter;
+			
+		}
+	
 	
 }

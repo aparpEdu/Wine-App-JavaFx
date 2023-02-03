@@ -5,12 +5,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import application.helpers.alerts.WarningAlerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import properties.WineProperty;
 import sqlconnection.helpers.SQLHelper;
+import sqlconnection.helpers.StorageChecker;
 
 public class WineController {
 	final static String TABLE_NAME = "userss.\"wine\"";
@@ -140,7 +142,10 @@ public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size
 		
 //	   float winekg1=Float.parseFloat(wkg1);
 //	   float winekg2=Float.parseFloat(wkg2);
-//	   float kg=Float.parseFloat(kgneeded1);
+//	   float parsedkg=Float.parseFloat(kgneeded1);
+//	   float  parsedkg2=Float.parseFloat(kgneeded2);
+	
+	if(Float.parseFloat(kgneeded1) <= Float.parseFloat(kg1) && Float.parseFloat(kgneeded2) <=Float.parseFloat(kg2)) {
 	   String[] arr= {wkg1,kg1,grvar};
 	   String[] arr2= {wkg2,kg2,grvar2};
 	   Float newkg1=Float.parseFloat(kg1)-Float.parseFloat(kgneeded1);
@@ -148,6 +153,7 @@ public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size
 	  
 	   quantity+=Float.parseFloat(kgneeded1)*Float.parseFloat(wkg1);
 	   quantity+=Float.parseFloat(kgneeded2)*Float.parseFloat(wkg2);
+	   if(ValidateKg(quantity,size)) {
 	   SQLHelper.updateSelect(TABLE3, arr, KEY_CONDITION5,String.valueOf(newkg1),arr1,TABLE1 );
 	   SQLHelper.updateSelect(TABLE3, arr2, KEY_CONDITION5,String.valueOf(newkg2),arr1,TABLE1 );
 	   
@@ -162,12 +168,67 @@ public void CreateWine(String wkg1,String wkg2,String kg1,String kg2,String size
 	data.put("wine_variety", var);
 	data.put("grapekg_needed", Float.parseFloat(kgneeded1));
 	data.put("grapekg_needed2", Float.parseFloat(kgneeded2));
-	
+	int result=StorageChecker.bottleCheck(size);
+	if(result >1) {
 	
 	SQLHelper.deleteSelect(TABLE3,size, KEY_CONDITION3,TABLE2,KEY_CONDITION4);
-
 	SQLHelper.insertData(TABLE_NAME, data);
+	}
+	else if(result == 1) {
+		SQLHelper.deleteSelects(TABLE3,size, KEY_CONDITION3,TABLE2,KEY_CONDITION4);
+		SQLHelper.insertData(TABLE_NAME, data);
+	}
+	else if(result == 0) {
+		WarningAlerts.notEnoughBottles();
+	}
 	
+	}
+	else {
+		WarningAlerts.largeMargin();
+	}
+	}
+	else
+	{
+		
+	}
 
+}
+private boolean ValidateKg(float quantity ,String size)
+{
+	String[] sp=size.split("[ ]");
+	StringBuffer sb= new StringBuffer(sp[1]);
+	
+	for(int i=0;i<3;i++)
+	{
+		sb.deleteCharAt(sb.length()-1);  
+	}
+	sb.deleteCharAt(0); 
+	float a=Float.parseFloat(sb.toString());
+	if(a>=quantity)
+		return true;
+	return false;
+	}
+public void optimal(ComboBox<String> sizeCB,String wkg1,String wkg2,String kgneeded1,String kgneeded2) {
+	
+	float quantity = 0;
+	 quantity+=Float.parseFloat(kgneeded1)*Float.parseFloat(wkg1);
+	   quantity+=Float.parseFloat(kgneeded2)*Float.parseFloat(wkg2);
+	   int i=0;
+	   if(quantity<=187) {
+		   i=3;}
+	   else if(quantity>187&&quantity<=200)
+	   {
+		   i=2;
+	   }
+	   else if(quantity<=350&&quantity>200)
+	   {
+		   i=1;
+	   }
+	   else if(quantity<=750&&quantity>350)
+	   {
+		   i=0;
+	   }
+	sizeCB.getSelectionModel().select(i);
+	
 }
 }

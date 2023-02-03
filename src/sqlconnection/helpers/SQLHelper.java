@@ -129,6 +129,7 @@ public class SQLHelper {
 	    	JDBCON.closeResources(conn, stmt);
 	    }
 	}
+	
 
 	public static void delete(String tableName,String condition, String keyCondition) {
 		Connection conn = null;
@@ -151,7 +152,22 @@ public class SQLHelper {
 	    try {
 	        conn = JDBCON.getConnection();
 
-	        String sql = "DELETE FROM "+tableName+" WHERE "+keyCondition2+"= ( SELECT "+keyCondition2+" FROM "+tableName2+" WHERE "+keyCondition+" = "+"\'"+condition+"\' LIMIT 1);"  ;
+	        String sql = "DELETE FROM "+tableName+" WHERE "+keyCondition2+" = ( SELECT "+keyCondition2+" FROM "+tableName2+" WHERE "+keyCondition+" = "+"'"+condition+"' LIMIT 1);"  ;
+	        stmt = conn.prepareStatement(sql);
+	        stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	JDBCON.closeResources(conn, stmt);
+	    }
+	}
+	public static void deleteSelects(String tableName,String condition,String keyCondition,String tableName2,String keyCondition2) {
+		Connection conn = null;
+	    PreparedStatement stmt = null;
+	    try {
+	        conn = JDBCON.getConnection();
+
+	        String sql = "DELETE FROM "+tableName+" WHERE "+keyCondition2+" = ( SELECT "+keyCondition2+" FROM "+tableName2+" WHERE "+keyCondition+" = "+"\'"+condition+"\' );"  ;
 	        stmt = conn.prepareStatement(sql);
 	        stmt.executeUpdate();
 	    } catch (SQLException e) {

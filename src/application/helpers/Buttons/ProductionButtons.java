@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import application.helpers.StorageUI;
 import application.helpers.Tables;
-import application.helpers.alerts.InfoAlerts;
 import application.helpers.alerts.WarningAlerts;
 import controlers.GrapeController;
 import controlers.WineController;
@@ -174,8 +173,13 @@ public class ProductionButtons {
 
 			@Override
 			public void handle(ActionEvent e) {
-			InfoAlerts.wip(); 
-
+			WineController wc = new WineController();
+			if(!kgneededfield1.getText().isBlank()) {
+			wc.optimal(sizeCB, wkgCB.getSelectionModel().getSelectedItem().toString(), wkgCB2.getSelectionModel().getSelectedItem().toString(), kgneededfield1.getText().toString(), kgneededfield2.getText().toString());
+			}
+			else {
+				WarningAlerts.valuesWarning();
+			}
 			}
 		});
 		Label sizeLabel = new Label("Size: ");
@@ -359,6 +363,7 @@ public class ProductionButtons {
 				BottleSize.TINY.toString().concat(BottleSize.TINY.getSize())
 
 		);
+		
 		Label quantityLabel = new Label("Quantity: ");
 		quantityLabel.setPrefWidth(100);
 		TextField fillQuantity = new TextField();

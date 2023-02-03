@@ -10,6 +10,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		LoginForm login=new LoginForm();
 		login.formLoad(primaryStage);
+		
 	}
 	
 	public static void main(String[] args) {

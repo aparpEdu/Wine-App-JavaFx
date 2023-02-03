@@ -64,5 +64,19 @@ public class WarningAlerts {
 		alert.setContentText(msg);
 		alert.showAndWait();
 	}
+	public static void largeMargin() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Warning Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("Your kilograms needed exceeds the remaining amount!");
+		alert.showAndWait();
+	}
+	public static void notEnoughBottles() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Warning Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("There are no bottles left with this size");
+		alert.showAndWait();
+	}
 
 }
